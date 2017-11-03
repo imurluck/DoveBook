@@ -25,4 +25,11 @@
         android:background="#fafafa"
         android:src="@mipmap/icon_voice" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/textGrey"
+        />
+
 </RelativeLayout>
