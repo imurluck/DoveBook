@@ -1,35 +1,75 @@
 package com.example.dovebook;
 
+import android.Manifest;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+
+import permission.util.PermissionFail;
+import permission.util.PermissionGen;
+import permission.util.PermissionSuccess;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
 
     BottomNavigationBar bottomNavigationBar;
 
-    bookPageFragment bookFragment;
-    homePageFragment homeFragment;
-    locationPageFragment locationFragment;
+    BookPageFragment bookFragment;
+    HomePageFragment homeFragment;
+    LocationPageFragment locationFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bookFragment = new bookPageFragment();
-        homeFragment = new homePageFragment();
-        locationFragment = new locationPageFragment();
+        bookFragment = new BookPageFragment();
+        homeFragment = new HomePageFragment();
+        locationFragment = new LocationPageFragment();
 
         /*隐藏底部导航栏*/
         hideBottomUIMenu();
+        initViews();
+        this.setDefaultFragment();
+        //requestPermissions();
+    }
 
+    private void requestPermissions() {
+        PermissionGen
+                .with(this)
+                .permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                             Manifest.permission.CAMERA)
+                .addRequestCode(100)
+                .request();
+    }
 
+    @PermissionSuccess(requestCode = 100)
+    private void requestPermissionSuccess() {
+        Toast.makeText(this, "permission rquest success",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @PermissionFail(requestCode = 100)
+    public void requestPermissionFail() {
+        Toast.makeText(this, "permission request failed",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+    }
+
+    private void initViews() {
         bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_SHIFTING);
         bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC );
@@ -44,9 +84,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 .initialise();
 
         bottomNavigationBar.setTabSelectedListener(this);
-
-        this.setDefaultFragment();
-
     }
 
     @Override
@@ -57,25 +94,25 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         switch (position) {
             case 0:
                 if (bookFragment == null) {
-                    bookFragment = new bookPageFragment();
+                    bookFragment = new BookPageFragment();
                 }
                 fragmentTransaction.replace(R.id.tb, bookFragment);
                 break;
             case 1:
                 if (locationFragment == null) {
-                    locationFragment = new locationPageFragment();
+                    locationFragment = new LocationPageFragment();
                 }
                 fragmentTransaction.replace(R.id.tb, locationFragment);
                 break;
             case 2:
                 if (homeFragment == null) {
-                    homeFragment = new homePageFragment();
+                    homeFragment = new HomePageFragment();
                 }
                 fragmentTransaction.replace(R.id.tb, homeFragment);
                 break;
             default:
                 if (homeFragment == null) {
-                    homeFragment = new homePageFragment();
+                    homeFragment = new HomePageFragment();
                 }
                 fragmentTransaction.replace(R.id.tb, bookFragment);
                 break;
@@ -96,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private void setDefaultFragment() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         if (locationFragment == null) {
-            locationFragment = new locationPageFragment();
+            locationFragment = new LocationPageFragment();
         }
         fragmentTransaction.replace(R.id.tb, locationFragment);
         fragmentTransaction.commit();
