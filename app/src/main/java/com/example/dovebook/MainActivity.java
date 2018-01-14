@@ -1,23 +1,13 @@
 package com.example.dovebook;
 
-import android.Manifest;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.example.dovebook.base.BaseActivity;
 
-import permission.util.PermissionFail;
-import permission.util.PermissionGen;
-import permission.util.PermissionSuccess;
-
-public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
+public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
     BottomNavigationBar bottomNavigationBar;
 
@@ -25,27 +15,47 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     HomePageFragment homeFragment;
     LocationPageFragment locationFragment;
 
+    /**
+     * 初始化内容布局
+     * @return
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected View initContentView() {
+        View view = getLayoutInflater().inflate(R.layout.activity_main, null);
+        return view;
+    }
 
+    /**
+     * 初始化一些设置
+     */
+    @Override
+    protected void initOptions() {
+        super.initOptions();
         bookFragment = new BookPageFragment();
         homeFragment = new HomePageFragment();
         locationFragment = new LocationPageFragment();
-
-        /*隐藏底部导航栏*/
-        hideBottomUIMenu();
         initViews();
         this.setDefaultFragment();
-        //requestPermissions();
+
     }
 
-    private void requestPermissions() {
+    /**
+     * 初始化Toolbar名称
+     * @return
+     */
+    @Override
+    protected String initToolbarTitle() {
+        return "附近的书籍";
+    }
+
+    /**
+     * 申请权限，暂时还不严谨此处先略过
+     */
+    /**private void requestPermissions() {
         PermissionGen
                 .with(this)
                 .permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                             Manifest.permission.CAMERA)
+                        Manifest.permission.CAMERA)
                 .addRequestCode(100)
                 .request();
     }
@@ -67,12 +77,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
-    }
+    }*/
 
+    /**
+     *初始化控件
+     */
     private void initViews() {
         bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_SHIFTING);
-        bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC );
+        bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
 
         bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.icon_bar_book, "Book"))
                 .addItem(new BottomNavigationItem(R.mipmap.icon_bar_location, "Location"))
@@ -97,18 +110,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                     bookFragment = new BookPageFragment();
                 }
                 fragmentTransaction.replace(R.id.tb, bookFragment);
+                setToolbarTitle("我的书籍");
                 break;
             case 1:
                 if (locationFragment == null) {
                     locationFragment = new LocationPageFragment();
                 }
                 fragmentTransaction.replace(R.id.tb, locationFragment);
+                setToolbarTitle("附近的书");
                 break;
             case 2:
                 if (homeFragment == null) {
                     homeFragment = new HomePageFragment();
                 }
                 fragmentTransaction.replace(R.id.tb, homeFragment);
+                setToolbarTitle("社区");
                 break;
             default:
                 if (homeFragment == null) {
@@ -139,17 +155,4 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         fragmentTransaction.commit();
     }
 
-    protected void hideBottomUIMenu() {
-        //隐藏虚拟按键，并且全屏
-        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
-            View v = this.getWindow().getDecorView();
-            v.setSystemUiVisibility(View.GONE);
-        } else if (Build.VERSION.SDK_INT >= 19) {
-            //for new api versions.
-            View decorView = getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
-        }
-    }
 }
