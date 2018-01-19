@@ -2,8 +2,11 @@ package com.example.dovebook.location;
 
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dovebook.R;
 import com.example.dovebook.base.BaseFragment;
@@ -35,25 +38,39 @@ public class LocationPageFragment extends BaseFragment {
         return R.layout.fragment_location_page;
     }
 
+
     @Override
     protected void initData() {
         initList();
         RecyclerAdapter<String> adapter = new RecyclerAdapter<String>() {
+            //传入item布局id
             @Override
             protected int getItemViewType(int position, String s) {
-                return 0;
+                return R.layout.location_fragment_recycler_item;
             }
 
             @Override
             protected ViewHolder<String> onCreateViewHolder(View root, int viewType) {
-                return null;
+                return new LocationPageFragment.ViewHolder(root);
+            }
+        };
+        mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()
+                , LinearLayoutManager.VERTICAL, false));
+        mRecycler.setAdapter(adapter);
+        adapter.setListener(new RecyclerAdapter.AdapterListener<String>() {
+            @Override
+            public void onItemClick(RecyclerAdapter.ViewHolder<String> holder, String s) {
+                ((ViewHolder) holder).tv.setText("item changed");
+                Toast.makeText(getActivity(), "item click", Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void update(String s, ViewHolder<String> holder) {
+            public void onItemLongClick(RecyclerAdapter.ViewHolder<String> holder, String s) {
 
             }
-        }
+        });
+        adapter.add("just an item");
+        adapter.add(list);
     }
 
     protected void initList() {
@@ -63,5 +80,21 @@ public class LocationPageFragment extends BaseFragment {
         for (int i = 0; i < 20; i++) {
             list.add("item " + (i + 1));
         }
+    }
+
+    static class ViewHolder extends RecyclerAdapter.ViewHolder<String> {
+
+        @BindView(R.id.txt)
+        TextView tv;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        protected void onBind(String s) {
+            tv.setText(s);
+        }
+
     }
 }

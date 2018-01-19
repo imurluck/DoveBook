@@ -211,6 +211,16 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
         void onItemLongClick(ViewHolder<Data> holder, Data data);
     }
 
+    @Override
+    public void update(Data data, ViewHolder<Data> holder) {
+        int position = holder.getAdapterPosition();
+        if (position >= 0) {
+            mDataList.remove(position);
+            mDataList.add(position, data);
+            notifyItemChanged(position);
+        }
+    }
+
     /**
      * 自定义的ViewHolder
      * @param <Data> 范型类型
