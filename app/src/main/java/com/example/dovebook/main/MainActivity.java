@@ -1,11 +1,15 @@
-package com.example.dovebook;
+package com.example.dovebook.main;
 
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.example.dovebook.R;
 import com.example.dovebook.base.BaseActivity;
+import com.example.dovebook.book.BookPageFragment;
+import com.example.dovebook.home.HomePageFragment;
+import com.example.dovebook.location.LocationPageFragment;
 
 public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 

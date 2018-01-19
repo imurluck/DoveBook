@@ -8,19 +8,38 @@ import android.widget.LinearLayout;
 
 import com.example.dovebook.R;
 
-public abstract class BaseActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    private Toolbar mToolbar;
-    private LinearLayout mRootLayout;
+public abstract class BaseActivity extends AppCompatActivity {
+    //toolbar
+    @BindView(R.id.toolbar_base)
+    Toolbar mToolbar;
+
+    @BindView(R.id.root_layout_base)
+    LinearLayout mRootLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
-        mRootLayout = (LinearLayout) findViewById(R.id.root_layout_base);
-        mRootLayout.addView(initContentView());
-        initToolbar();
-        initOptions();
+        ButterKnife.bind(this);
+        if (initArgs(savedInstanceState)) {
+            mRootLayout.addView(initContentView());
+            initToolbar();
+            initOptions();
+        } else {
+            finish();
+        }
+    }
+
+    /**
+     * 初始化从其他Activity传过来的参数
+     * @param bundle
+     * @return 参数错误则返回false，即没必要进行下一步界面的初始化，正确则返回true，默认返回true
+     */
+    protected boolean initArgs(Bundle bundle) {
+        return true;
     }
 
     /**
@@ -54,7 +73,6 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 初始化Toolbar
      */
     protected void initToolbar() {
-        mToolbar = (Toolbar) this.findViewById(R.id.toolbar_base);
         mToolbar.setTitle(initToolbarTitle());
         setSupportActionBar(mToolbar);
         initHomeButton();
@@ -67,7 +85,15 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * 点击导航返回按钮时则finish当前Activity
+     * @return
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return super.onSupportNavigateUp();
+    }
 
 
 }
