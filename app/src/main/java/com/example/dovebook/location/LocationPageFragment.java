@@ -5,8 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.dovebook.R;
 import com.example.dovebook.base.BaseFragment;
@@ -27,6 +25,8 @@ public class LocationPageFragment extends BaseFragment {
 
     private List<String> list;
 
+    RecyclerAdapter<String> adapter;
+
     public static LocationPageFragment newInstance(String param1) {
         LocationPageFragment fragment = new LocationPageFragment();
         return fragment;
@@ -42,11 +42,11 @@ public class LocationPageFragment extends BaseFragment {
     @Override
     protected void initData() {
         initList();
-        RecyclerAdapter<String> adapter = new RecyclerAdapter<String>() {
+        adapter = new RecyclerAdapter<String>() {
             //传入item布局id
             @Override
             protected int getItemViewType(int position, String s) {
-                return R.layout.location_fragment_recycler_item;
+                return R.layout.share_recycler_item;
             }
 
             @Override
@@ -54,10 +54,8 @@ public class LocationPageFragment extends BaseFragment {
                 return new LocationPageFragment.ViewHolder(root);
             }
         };
-        mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()
-                , LinearLayoutManager.VERTICAL, false));
-        mRecycler.setAdapter(adapter);
-        adapter.setListener(new RecyclerAdapter.AdapterListener<String>() {
+
+        /**adapter.setListener(new RecyclerAdapter.AdapterListener<String>() {
             @Override
             public void onItemClick(RecyclerAdapter.ViewHolder<String> holder, String s) {
                 ((ViewHolder) holder).tv.setText("item changed");
@@ -68,9 +66,17 @@ public class LocationPageFragment extends BaseFragment {
             public void onItemLongClick(RecyclerAdapter.ViewHolder<String> holder, String s) {
 
             }
-        });
+        });*/
         adapter.add("just an item");
         adapter.add(list);
+    }
+
+    @Override
+    protected void initWidget(View view) {
+        super.initWidget(view);
+        mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()
+                , LinearLayoutManager.VERTICAL, false));
+        mRecycler.setAdapter(adapter);
     }
 
     protected void initList() {
@@ -84,8 +90,8 @@ public class LocationPageFragment extends BaseFragment {
 
     static class ViewHolder extends RecyclerAdapter.ViewHolder<String> {
 
-        @BindView(R.id.txt)
-        TextView tv;
+//        @BindView(R.id.txt)
+//        TextView tv;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -93,7 +99,7 @@ public class LocationPageFragment extends BaseFragment {
 
         @Override
         protected void onBind(String s) {
-            tv.setText(s);
+            //tv.setText(s);
         }
 
     }

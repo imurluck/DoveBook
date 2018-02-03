@@ -22,6 +22,7 @@
 
     <!-- 使用步行AR导航，配置Camera权限 -->
     <application
+        android:name=".base.BaseApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="DoveBook"
@@ -39,8 +40,6 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="X6xZ5tLWckx7Ob9TgK363664HOa7xFTp" />
-
-        <activity android:name=".base.BaseActivity"></activity>
     </application>
 
 </manifest>

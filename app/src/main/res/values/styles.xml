@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorForgive</item>
         <item name="colorPrimaryDark">@color/colorForgive</item>
-        <item name="colorAccent">@color/lightGrey</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
 </resources>

@@ -138,8 +138,8 @@ public class PermissionGen {
     private static void showDialog(final String permission, Activity activity,
                                    final Object object, final int requestCode) {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
-        dialog.setMessage("without the " + permission + " permission"
-                    + " can not use some features,to aggree?")
+        dialog.setMessage("拒绝 " + permission + " 权限"
+                    + " 将不能使用某些功能,设置为同意?")
                 .setPositiveButton("confirm", new DialogInterface.OnClickListener() {
                     @RequiresApi(api = Build.VERSION_CODES.M)
                     @Override
@@ -184,7 +184,7 @@ public class PermissionGen {
                 if (!executeMethod.isAccessible()) {
                     executeMethod.setAccessible(true);
                 }
-                executeMethod.invoke(activity, null);
+                executeMethod.invoke(activity);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {

@@ -10,6 +10,7 @@ import com.example.dovebook.base.BaseActivity;
 import com.example.dovebook.book.BookPageFragment;
 import com.example.dovebook.home.HomePageFragment;
 import com.example.dovebook.location.LocationPageFragment;
+import com.example.dovebook.share.ShareFragment;
 
 public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
@@ -18,6 +19,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     BookPageFragment bookFragment;
     HomePageFragment homeFragment;
     LocationPageFragment locationFragment;
+    ShareFragment shareFragment;
 
     /**
      * 初始化内容布局
@@ -91,12 +93,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_SHIFTING);
         bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
 
-        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.icon_bar_book, "Book"))
-                .addItem(new BottomNavigationItem(R.mipmap.icon_bar_location, "Location"))
-                .addItem(new BottomNavigationItem(R.mipmap.icon_bar_friend, "Info"))
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.icon_bar_book, "我的书籍"))
+                .addItem(new BottomNavigationItem(R.mipmap.icon_bar_location, "附近的书"))
+                .addItem(new BottomNavigationItem(R.mipmap.icon_share, "分享"))
+                .addItem(new BottomNavigationItem(R.mipmap.icon_bar_friend, "社区"))
                 .setBarBackgroundColor(R.color.white)
-                .setActiveColor(R.color.colorForgive)
-                .setInActiveColor(R.color.textGrey)
+                .setActiveColor(R.color.colorPrimary)
+                .setInActiveColor(R.color.secondary_text)
                 .setFirstSelectedPosition(1)
                 .initialise();
 
@@ -124,6 +127,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 setToolbarTitle("附近的书");
                 break;
             case 2:
+                if (shareFragment == null) {
+                    shareFragment = new ShareFragment();
+                }
+                fragmentTransaction.replace(R.id.tb, shareFragment);
+                setToolbarTitle("分享");
+                break;
+            case 3:
                 if (homeFragment == null) {
                     homeFragment = new HomePageFragment();
                 }
