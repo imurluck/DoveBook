@@ -67,6 +67,17 @@ public class ImageManager {
     }
 
     /**
+     * 加载资源文件中的图片，使用具体的context
+     * @param context 上下文环境
+     * @param imgId 图片地址
+     * @param targetView 目标ImageView
+     */
+    public void loadImage(Context context, int imgId, ImageView targetView) {
+        Glide.with(context).load(imgId)
+                .into(targetView);
+    }
+
+    /**
      * 通过图片地址得到Bitmap
      * @param context 上下文环境
      * @param imageUrl 图片地址

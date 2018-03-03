@@ -58,5 +58,6 @@ public interface ShareContract {
          */
         void loadMore();
 
+
     }
 }

@@ -1,5 +1,8 @@
 package com.example.dovebook.share.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -8,7 +11,7 @@ import java.util.List;
  * Created by zzx on 18-1-24.
  */
 
-public class Moment {
+public class Moment implements Parcelable {
 
     private String momentId;
 
@@ -18,7 +21,7 @@ public class Moment {
     //分享时用户所在经度
     private double momentLongitude;
     //分享时用户所在地理范围
-    private String cmomentDetailloc;
+    private String commentDetailloc;
     //分享更新时间
     @SerializedName("updatedat")
     private long updateAt;
@@ -75,11 +78,11 @@ public class Moment {
     }
 
     public String getCmomentDetailloc() {
-        return cmomentDetailloc;
+        return commentDetailloc;
     }
 
     public void setCmomentDetailloc(String cmomentDetailloc) {
-        this.cmomentDetailloc = cmomentDetailloc;
+        this.commentDetailloc = cmomentDetailloc;
     }
 
     public long getUpdateAt() {
@@ -152,5 +155,59 @@ public class Moment {
 
     public void setCommentCount(int commentCount) {
         this.commentCount = commentCount;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int i) {
+        out.writeString(momentId);
+        out.writeString(userId);
+        out.writeDouble(momentLatitude);
+        out.writeDouble(momentLongitude);
+        out.writeString(commentDetailloc);
+        out.writeLong(updateAt);
+        out.writeLong(createAt);
+        out.writeString(momentContent);
+        out.writeInt(momentVoteCount);
+        out.writeList(pictureList);
+        out.writeString(userName);
+        out.writeString(userSex);
+        out.writeString(userAvatarPath);
+        out.writeInt(commentCount);
+    }
+
+    public static final Parcelable.Creator<Moment> CREATOR = new Parcelable
+            .Creator<Moment>() {
+
+        @Override
+        public Moment createFromParcel(Parcel parcel) {
+            return new Moment(parcel);
+        }
+
+        @Override
+        public Moment[] newArray(int i) {
+            return new Moment[i];
+        }
+    };
+
+    private Moment(Parcel in) {
+        momentId = in.readString();
+        userId = in.readString();
+        momentLatitude = in.readDouble();
+        momentLongitude = in.readDouble();
+        commentDetailloc = in.readString();
+        updateAt = in.readLong();
+        createAt = in.readLong();
+        momentContent = in.readString();
+        momentVoteCount = in.readInt();
+        pictureList = in.readArrayList(MomentPicture.class.getClassLoader());
+        userName = in.readString();
+        userSex = in.readString();
+        userAvatarPath = in.readString();
+        commentCount = in.readInt();
     }
 }
