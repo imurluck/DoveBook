@@ -1,17 +1,19 @@
 package com.example.dovebook.share;
 
+import android.content.Intent;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.dovebook.R;
 import com.example.dovebook.base.BaseFragment;
 import com.example.dovebook.images.ImageManager;
 import com.example.dovebook.share.model.Moment;
+import com.example.dovebook.sharedetail.ShareDetailActivity;
 import com.example.dovebook.utils.DateUtil;
 import com.example.dovebook.widget.recycler.RecyclerAdapter;
 
@@ -143,33 +145,6 @@ public class ShareFragment extends BaseFragment implements ShareContract.View {
         }
     }
 
-
-    class MyScrollListener extends RecyclerView.OnScrollListener {
-       private int lastPosition = -1;
-
-        @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            super.onScrollStateChanged(recyclerView, newState);
-            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                RecyclerView.LayoutManager layoutManager = mRecycler.getLayoutManager();
-                if (layoutManager instanceof LinearLayoutManager) {
-                    lastPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
-                }
-                Log.e(TAG, "onScrollStateChanged: lastPosition = " + lastPosition);
-                Log.e(TAG, "onScrollStateChanged: canScrollVertically = "
-                        + recyclerView.canScrollVertically(1));
-                if (!recyclerView.canScrollVertically(1) && lastPosition != -1) {
-                    if (mPresenter.canLoadMore()) {
-                        showLoadMoreView();
-                        mPresenter.loadMore();
-                    } else {
-                        showNoMoreView();
-                    }
-                }
-            }
-        }
-    }
-
     /**
      * 监听NestedScrollView滑动到底部类
      */
@@ -192,7 +167,7 @@ public class ShareFragment extends BaseFragment implements ShareContract.View {
     }
 
 
-    static class ViewHolder extends RecyclerAdapter.ViewHolder<Moment> {
+     class ViewHolder extends RecyclerAdapter.ViewHolder<Moment> {
         //用户头像
         @BindView(R.id.share_item_user_portrait)
         ImageView userPortraitImg;
@@ -214,13 +189,16 @@ public class ShareFragment extends BaseFragment implements ShareContract.View {
         //分享的图片
         @BindView(R.id.share_item_publish_img)
         ImageView publishImg;
+        //根布局
+        @BindView(R.id.share_item_root)
+        RelativeLayout root;
 
         public ViewHolder(View itemView) {
             super(itemView);
         }
 
         @Override
-        protected void onBind(Moment moment) {
+        protected void onBind(final Moment moment) {
             userNameTv.setText(moment.getUserName());
             ImageManager.getInstance().loadImage(mContext,
                     moment.getUserAvatarPath(),
@@ -232,6 +210,14 @@ public class ShareFragment extends BaseFragment implements ShareContract.View {
             voteCountTv.setText(String.valueOf(moment.getMomentVoteCount()));
             commentCountTv.setText(String.valueOf(moment.getCommentCount()));
             publishDateTv.setText(DateUtil.timeStampToDate(moment.getUpdateAt()));
+            root.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), ShareDetailActivity.class);
+                    intent.putExtra("moment", moment);
+                    startActivity(intent);
+                }
+            });
         }
     }
 }

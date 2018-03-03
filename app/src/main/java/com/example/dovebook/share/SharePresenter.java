@@ -221,7 +221,6 @@ public class SharePresenter implements ShareContract.Presenter {
         }
     }
 
-
     /**
      * 登录测试，非正式用途！！！
      */

@@ -42,17 +42,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         locationFragment = new LocationPageFragment();
         initViews();
         this.setDefaultFragment();
-
     }
 
-    /**
-     * 初始化Toolbar名称
-     * @return
-     */
-    @Override
-    protected String initToolbarTitle() {
-        return "附近的书籍";
-    }
 
     /**
      * 申请权限，暂时还不严谨此处先略过
@@ -117,28 +108,24 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                     bookFragment = new BookPageFragment();
                 }
                 fragmentTransaction.replace(R.id.tb, bookFragment);
-                setToolbarTitle("我的书籍");
                 break;
             case 1:
                 if (locationFragment == null) {
                     locationFragment = new LocationPageFragment();
                 }
                 fragmentTransaction.replace(R.id.tb, locationFragment);
-                setToolbarTitle("附近的书");
                 break;
             case 2:
                 if (shareFragment == null) {
                     shareFragment = new ShareFragment();
                 }
                 fragmentTransaction.replace(R.id.tb, shareFragment);
-                setToolbarTitle("分享");
                 break;
             case 3:
                 if (homeFragment == null) {
                     homeFragment = new HomePageFragment();
                 }
                 fragmentTransaction.replace(R.id.tb, homeFragment);
-                setToolbarTitle("社区");
                 break;
             default:
                 if (homeFragment == null) {
