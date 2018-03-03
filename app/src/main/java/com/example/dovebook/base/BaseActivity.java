@@ -33,6 +33,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+
     /**
      * 初始化从其他Activity传过来的参数
      * @param bundle
