@@ -29,6 +29,7 @@ public abstract class BaseFragment extends Fragment {
         if (mRoot == null) {
             //初始化当前的根布局，但是不在创建时就添加到container中，所以传入false
             mRoot = inflater.inflate(getContentLayoutId(), container, false);
+            ButterKnife.bind(this, mRoot);
             initWidget(mRoot);
         } else {
             if (mRoot.getParent() != null) {
@@ -36,7 +37,6 @@ public abstract class BaseFragment extends Fragment {
                 ((ViewGroup) mRoot.getParent()).removeView(mRoot);
             }
         }
-        ButterKnife.bind(this, mRoot);
         Log.e(TAG, "onCreateView: ");
         return mRoot;
     }

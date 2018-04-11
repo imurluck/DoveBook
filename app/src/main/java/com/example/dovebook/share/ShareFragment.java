@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -77,7 +78,7 @@ public class ShareFragment extends BaseFragment implements ShareContract.View {
 
     @Override
     protected void initWidget(View view) {
-        super.initWidget(view);
+
         //为NestedScrollView添加滑动监听器
         mNestedScrollView.setOnScrollChangeListener(new VerticalOnScrollListener());
         mRecycler.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL,
@@ -95,14 +96,14 @@ public class ShareFragment extends BaseFragment implements ShareContract.View {
         if (mEmptyView.getVisibility() == View.GONE) {
             mEmptyView.setVisibility(View.VISIBLE);
         }
-        if (mRecycler.getVisibility() == View.VISIBLE) {
-            mRecycler.setVisibility(View.GONE);
-        }
-        if (mLoadMoreTv.getVisibility() == View.VISIBLE) {
-            mLoadMoreTv.setVisibility(View.GONE);
-        }
-        if (mNoMoreView.getVisibility() == View.VISIBLE) {
-            mNoMoreView.setVisibility(View.GONE);
+            if (mRecycler.getVisibility() == View.VISIBLE) {
+                mRecycler.setVisibility(View.GONE);
+            }
+            if (mLoadMoreTv.getVisibility() == View.VISIBLE) {
+                mLoadMoreTv.setVisibility(View.GONE);
+            }
+            if (mNoMoreView.getVisibility() == View.VISIBLE) {
+                mNoMoreView.setVisibility(View.GONE);
         }
     }
 

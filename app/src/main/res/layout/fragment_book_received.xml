@@ -1,14 +1,20 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.dovebook.book.BookReceived_fragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/book_received_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="收到的书" />
+        android:visibility="gone"
+        android:layout_height="match_parent">
 
-</FrameLayout>
+    </android.support.v7.widget.RecyclerView>
+
+    <include
+        layout="@layout/recycler_empty"
+        android:visibility="visible" />
+
+</LinearLayout>

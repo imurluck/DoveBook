@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.dovebook.R;
+import com.example.dovebook.base.BaseFragment;
 
 import java.util.ArrayList;
 
@@ -27,7 +28,7 @@ import permission.util.PermissionSuccess;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BookPageFragment extends Fragment {
+public class BookPageFragment extends BaseFragment {
 
     private static final String TAG = "BookPageFragment";
 
@@ -41,7 +42,7 @@ public class BookPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+        super.onCreateView(inflater, container, savedInstanceState);
 
        View view = inflater.inflate(R.layout.fragment_book_page, container, false);
 
@@ -49,8 +50,13 @@ public class BookPageFragment extends Fragment {
         mFragment.add(new BookReceived_fragment());
         mFragment.add(new BookSent_fragment());
         initViews(view);
-        requestPermissions();
+//        requestPermissions();
         return view;
+    }
+
+    @Override
+    protected int getContentLayoutId() {
+        return R.layout.fragment_book_page;
     }
 
     private void initViews(View view) {
@@ -80,36 +86,5 @@ public class BookPageFragment extends Fragment {
                 }
             }
         });
-    }
-
-    private void requestPermissions() {
-        PermissionGen
-                .with(this)
-                .permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.CAMERA)
-                .addRequestCode(100)
-                .request();
-    }
-
-    @PermissionSuccess(requestCode = 100)
-    private void requestPermissionSuccess() {
-        Toast.makeText(this.getContext(), "permission rquest success",
-                Toast.LENGTH_SHORT).show();
-    }
-
-    @PermissionFail(requestCode = 100)
-    public void requestPermissionFail() {
-        Toast.makeText(this.getContext(), "permission request failed",
-                Toast.LENGTH_SHORT).show();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        Log.e(TAG, "onRequestPermissionsResult: ");
-        Toast.makeText(this.getContext(), "has result in fragment",
-                Toast.LENGTH_SHORT).show();
-        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
     }
 }

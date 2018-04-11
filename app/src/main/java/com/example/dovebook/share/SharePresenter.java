@@ -12,6 +12,7 @@ import com.example.dovebook.utils.ToastUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -35,7 +36,7 @@ public class SharePresenter implements ShareContract.Presenter {
     private List<Moment> mFriendList;
 
     //已登录用户的userId
-    private String mUserId = "f2edfaa3-eb93-11e7-89cb-54ab3abf07bf";
+    private String mUserId = "255883c7-0643-11e8-bd05-00163e0ac98c";
     //分享开始位置
     private int mAllStartPosition = 0;
     //分享末位置
@@ -89,6 +90,7 @@ public class SharePresenter implements ShareContract.Presenter {
 
     /**
      * 从服务器中得到所有用户的分享,每次10条
+     *
      * @return 返回Moment序列
      */
     @Override
@@ -141,6 +143,7 @@ public class SharePresenter implements ShareContract.Presenter {
 
     /**
      * 从服务器中得到所有好友的分享,每次10条
+     *
      * @param userId
      * @return 返回Moment序列
      */
@@ -195,6 +198,7 @@ public class SharePresenter implements ShareContract.Presenter {
 
     /**
      * 判断数据服务器端是否还有数据，包含两种，全部用户或者朋友，具体判断由presenter完成
+     *
      * @return 还有则返回true，没有则返回false; 默认返回true
      */
     @Override
@@ -226,6 +230,7 @@ public class SharePresenter implements ShareContract.Presenter {
      */
     public void login() {
         Api api = HttpManager.getInstance().getApiService(Constant.BASE_LOGIN_URL);
+
         api.login("zzxx", "1234567")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

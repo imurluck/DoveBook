@@ -3,6 +3,7 @@ package com.example.dovebook.net;
 import android.util.Log;
 
 import java.io.IOException;
+import java.net.HttpCookie;
 import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.concurrent.TimeUnit;
@@ -34,6 +35,9 @@ public class HttpManager {
 
     //保存用户的cookies
     private static HashSet<String> cookies;
+
+    //cookies
+    private static HttpCookie cookie;
 
     private HttpManager() {
         httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {

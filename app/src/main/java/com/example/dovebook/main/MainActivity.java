@@ -91,7 +91,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 .setBarBackgroundColor(R.color.white)
                 .setActiveColor(R.color.colorPrimary)
                 .setInActiveColor(R.color.secondary_text)
-                .setFirstSelectedPosition(1)
+                .setFirstSelectedPosition(0)
                 .initialise();
 
         bottomNavigationBar.setTabSelectedListener(this);
@@ -149,11 +149,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     private void setDefaultFragment() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        if (locationFragment == null) {
-            locationFragment = new LocationPageFragment();
+        if (bookFragment == null) {
+            bookFragment = new BookPageFragment();
         }
-        fragmentTransaction.replace(R.id.tb, locationFragment);
+        fragmentTransaction.replace(R.id.tb, bookFragment);
         fragmentTransaction.commit();
     }
+
+
 
 }
