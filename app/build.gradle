@@ -48,4 +48,10 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     testCompile 'junit:junit:4.12'
     compile files('libs/BaiduLBS_Android.jar')
+    //圆形图片
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    //压缩图片
+    compile 'top.zibin:Luban:1.0.9'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
 }

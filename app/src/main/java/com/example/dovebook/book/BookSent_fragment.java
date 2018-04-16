@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.dovebook.R;
 import com.example.dovebook.base.BaseFragment;
 import com.example.dovebook.book.model.Book;
+import com.example.dovebook.contact.contactAdapter;
 import com.example.dovebook.images.ImageManager;
 import com.example.dovebook.widget.recycler.RecyclerAdapter;
 
@@ -44,7 +45,7 @@ public class BookSent_fragment extends BaseFragment implements BookContract.View
             }
 
             @Override
-            protected ViewHolder<Book> onCreateViewHolder(View root, int viewType) {
+            protected ViewHolder onCreateViewHolder(View root, int viewType) {
                 return new BookSent_fragment.ViewHolder(root);
             }
         };

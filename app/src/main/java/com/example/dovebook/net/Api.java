@@ -8,9 +8,14 @@ import com.example.dovebook.share.model.Moment;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by zzx on 18-1-26.
@@ -54,30 +59,17 @@ public interface Api {
                                                         @Path("startPosition") int startPosition,
                                                         @Path("endPosition") int endPosition);
 
-    /**
-     * 登录
-     *
-     * @param userName     用户名
-     * @param userPassword 用户密码
-     * @return Rxjava的observable对象
-     */
-    @POST("{userName}/{userPassword}")
-    Observable<User> login(@Path("userName") String userName,
-                           @Path("userPassword") String userPassword);
-
 
     /**
-     *
      * 获取一个人的所有图书copy
      *
-     * @param userId        用户id
+     * @param userId 用户id
      * @return Rxjava的observable对象
      */
     @GET("usercopy/{userId}/?offset=0&limit=10")
     Observable<List<Copy>> selectAllBookCopy(@Path("userId") String userId);
 
     /**
-     *
      * 通过bookId获取对应的Book
      *
      * @param bookId 图书Id
@@ -90,10 +82,68 @@ public interface Api {
     /**
      * @param startPosition 起始位置
      * @param endPosition   末位置
-     * @return  Rxjava的observable对象
+     * @return Rxjava的observable对象
      */
     @GET("book/{startPosition}/{endPosition}")
     Observable<List<Book>> selectAllBooks(@Path("startPosition") int startPosition,
-                                    @Path("endPosition") int endPosition);
+                                          @Path("endPosition") int endPosition);
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    //用户数据操作
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * 登录
+     *
+     * @param userName     用户名
+     * @param userPassword 用户密码
+     * @return Rxjava的observable对象
+     */
+    @POST("{userName}/{userPassword}")
+    Observable<User> login(@Path("userName") String userName,
+                           @Path("userPassword") String userPassword);
+
+    /**
+     * 修改个人信息
+     *
+     * @param userId         用户Id
+     * @param userName       用户名
+     * @param userPhone      电话号码
+     * @param userEmail      邮箱
+     * @param userAge        用户年龄
+     * @param userAvatarPath 用户头像
+     * @return Rxjava的observable对象
+     */
+    @Multipart
+    @POST("{userId}")
+    Observable<User> updateUser(@Path("userId") String userId,
+                                @Part("userName") RequestBody userName,
+                                @Part("userPhone") long userPhone,
+                                @Part("userEmail") RequestBody userEmail,
+                                @Part("userAge") int userAge,
+                                @Part MultipartBody.Part userAvatarPath);
+
+    /**
+     * 注册
+     *
+     * @param userName     用户名
+     * @param userPassword 用户密码
+     * @return Rxjava的observable对象
+     */
+    @Multipart
+    @POST("user/")
+    Observable<User> register(@Part("userName") RequestBody userName,
+                              @Part("userPassword") RequestBody userPassword);
+
+    /**
+     * 获取好友列表
+     *
+     * @param userId        用户ID
+     * @param startPosition 起始位置
+     * @param endPosition   结束位置
+     */
+    @GET("friend/{userId}/{startPosition}/{endPosition}")
+    Observable<List<User>> getFriends(@Path("userId") String userId,
+                                      @Path("startPosition") int startPosition,
+                                      @Path("endPosition") int endPosition);
 }

@@ -12,4 +12,7 @@ public class Constant {
     public static final String BASE_MOMENT_URL = BASE_URL + "listmoment/";
 
     public static final String BASE_LOGIN_URL = BASE_URL + "login/";
+
+    public static final String BASE_UPDATE_URL=BASE_URL+"user/";
 }
+

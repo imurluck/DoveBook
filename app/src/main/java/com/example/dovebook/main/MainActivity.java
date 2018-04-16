@@ -1,5 +1,6 @@
 package com.example.dovebook.main;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
@@ -10,16 +11,18 @@ import com.example.dovebook.base.BaseActivity;
 import com.example.dovebook.book.BookPageFragment;
 import com.example.dovebook.home.HomePageFragment;
 import com.example.dovebook.location.LocationPageFragment;
+import com.example.dovebook.login.LoginActivity;
+import com.example.dovebook.login.TimeManager;
 import com.example.dovebook.share.ShareFragment;
 
 public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
     BottomNavigationBar bottomNavigationBar;
-
     BookPageFragment bookFragment;
     HomePageFragment homeFragment;
     LocationPageFragment locationFragment;
     ShareFragment shareFragment;
+    TimeManager mTimeManager;
 
     /**
      * 初始化内容布局
@@ -27,6 +30,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
      */
     @Override
     protected View initContentView() {
+        mTimeManager= new TimeManager(MainActivity.this);
+        if (!mTimeManager.isLoginTime()) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
         View view = getLayoutInflater().inflate(R.layout.activity_main, null);
         return view;
     }

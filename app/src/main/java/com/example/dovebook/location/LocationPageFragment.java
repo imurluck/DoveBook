@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.example.dovebook.R;
 import com.example.dovebook.base.BaseFragment;
+import com.example.dovebook.contact.contactAdapter;
 import com.example.dovebook.widget.recycler.RecyclerAdapter;
 
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class LocationPageFragment extends BaseFragment {
             }
 
             @Override
-            protected ViewHolder<String> onCreateViewHolder(View root, int viewType) {
+            protected ViewHolder onCreateViewHolder(View root, int viewType) {
                 return new LocationPageFragment.ViewHolder(root);
             }
         };

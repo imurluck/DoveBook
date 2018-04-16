@@ -16,7 +16,7 @@ public class User {
 
     private String userPassword;
 
-    private Long userPhone;
+    private long userPhone;
 
     private String userEmail;
     @SerializedName("userBgpath")
@@ -40,9 +40,9 @@ public class User {
     @SerializedName("userIsrequester")
     private Boolean userIsRequester;
 
-    private Date userArrive;
+    private long userArrive;
 
-    private Date userDepart;
+    private long userDepart;
 
     private String userLatitude;
 
@@ -80,7 +80,7 @@ public class User {
         return userPhone;
     }
 
-    public void setUserPhone(Long userPhone) {
+    public void setUserPhone(long userPhone) {
         this.userPhone = userPhone;
     }
 
@@ -172,19 +172,19 @@ public class User {
         this.userIsRequester = userIsRequester;
     }
 
-    public Date getUserArrive() {
+    public long getUserArrive() {
         return userArrive;
     }
 
-    public void setUserArrive(Date userArrive) {
+    public void setUserArrive(long userArrive) {
         this.userArrive = userArrive;
     }
 
-    public Date getUserDepart() {
+    public long getUserDepart() {
         return userDepart;
     }
 
-    public void setUserDepart(Date userDepart) {
+    public void setUserDepart(long userDepart) {
         this.userDepart = userDepart;
     }
 

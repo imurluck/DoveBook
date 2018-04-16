@@ -20,7 +20,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_base);
         mRootLayout = (RelativeLayout) findViewById(R.id.root_layout_base);
         if (initArgs(savedInstanceState)) {
-            mRootLayout.addView(initContentView());
+            mRootLayout.addView(initContentView(),new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
             ButterKnife.bind(this);
             initOptions();
         } else {
