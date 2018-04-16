@@ -48,4 +48,7 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     testCompile 'junit:junit:4.12'
     compile files('libs/BaiduLBS_Android.jar')
+
+    //悬浮按钮
+    compile 'com.android.support:design:25.3.1'
 }

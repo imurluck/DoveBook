@@ -56,7 +56,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="11dp"
             android:text="转借次数：15"
-            android:textColor="@color/textGrey" />
+            android:textColor="@color/textGray" />
 
     </RelativeLayout>
 

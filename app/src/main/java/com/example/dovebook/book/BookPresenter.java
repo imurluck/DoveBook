@@ -35,7 +35,11 @@ public class BookPresenter implements BookContract.Presenter {
 
     private static final int COPYENDPOSITION = 100;
 
-    //
+    //copy开始结束位置，直接获取所有数据
+    private static final int BOOKSTARTPOSITION = 0;
+
+    private static final int BOOKENDPOSITION = 10;
+
     private Disposable mDisposable;
 
     private BookSent_fragment mBookSentView;
@@ -46,26 +50,14 @@ public class BookPresenter implements BookContract.Presenter {
     //保存书籍
     private List<Book> mBooks;
 
-    private static boolean loginTag = false;
-
     public BookPresenter(BookSent_fragment bookView) {
         this.mBookSentView = bookView;
     }
 
-
-    @Override
     public void getInitData() {
-//        if (loginTag == false) {
-//            Log.d(TAG, "getInitData: 登陆调用");
-//            login();
-//            loginTag = true;
-//        }
-        if (mCopies == null) {
-            mCopies = new ArrayList<>();
-//            getAllCopy();
-        }
+        Log.d(TAG, "getInitData: running");
+        getAllBooks();
     }
-
 
     @Override
     public void getAllCopy() {
@@ -98,44 +90,32 @@ public class BookPresenter implements BookContract.Presenter {
                 });
     }
 
+    public void getAllBooks() {
+        Api api = HttpManager.getInstance().getApiService(Constant.BASE_URL);
+        api.selectAllBooks(BOOKSTARTPOSITION, BOOKENDPOSITION)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<Book>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
 
+                    @Override
+                    public void onNext(List<Book> books) {
+                        if (books != null) {
+                            mBookSentView.mAdapter.add(books);
+                        }
+                    }
 
-    /**
-     * 登陆测试数据
-     */
-//    public void login() {
-//
-//        Api api = HttpManager.getInstance().getApiService(Constant.BASE_LOGIN_URL);
-//
-//        api.login("zzxx", "1234567")
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<User>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(User user) {
-//                        Log.d(TAG, "loginOnNext: " + user.toString());
-//                        //getSelfListFromServer("02a618bf-0241-11e8-bd05-00163e0ac98c");
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.e(TAG, "loginOnError: " + e.getMessage());
-//                        //getSelfListFromServer("02a618bf-0241-11e8-bd05-00163e0ac98c");
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                        Log.d(TAG, "onComplete: 登陆成功");
-//                    }
-//                });
-//    }
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "onError: " + e.getMessage());
+                    }
 
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "onComplete: 请求成功");
+                    }
+                });
+    }
 }

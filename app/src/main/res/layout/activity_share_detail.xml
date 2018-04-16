@@ -3,7 +3,7 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light_grey">
+    android:background="@color/background_light_gray">
 
     <RelativeLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -82,7 +82,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
-            android:background="@color/background_light_grey"
+            android:background="@color/background_light_gray"
             android:text="it is test content"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/secondary_text_size" />

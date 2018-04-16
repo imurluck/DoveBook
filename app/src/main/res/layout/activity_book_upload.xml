@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_light_gray"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/iv_book_image"
+        android:layout_width="110dp"
+        android:layout_height="140dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/bookdemo"
+        android:elevation="2dp"
+        android:scaleType="fitCenter" />
+
+    <EditText
+        android:id="@+id/et_book_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/iv_book_image"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="35dp"
+        android:layout_toRightOf="@id/iv_book_image"
+        android:ems="10"
+        android:hint="书名"
+        android:inputType="textPersonName" />
+
+    <include layout="@layout/necessary_symb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/et_book_title"
+        android:layout_marginBottom="13dp"
+        android:layout_marginRight="4dp"
+        android:layout_alignBottom="@id/et_book_title"/>
+
+    <EditText
+        android:id="@+id/et_book_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/iv_book_image"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@id/iv_book_image"
+        android:ems="10"
+        android:hint="作者"
+        android:inputType="textPersonName" />
+
+    <include layout="@layout/necessary_symb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/et_book_author"
+        android:layout_marginBottom="13dp"
+        android:layout_marginRight="4dp"
+        android:layout_alignBottom="@id/et_book_author"/>
+
+    <EditText
+        android:id="@+id/et_book_publisher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_book_image"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:hint="出版商" />
+
+    <include layout="@layout/necessary_symb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/et_book_author"
+        android:layout_marginBottom="13dp"
+        android:layout_marginRight="4dp"
+        android:layout_alignBottom="@id/et_book_publisher"/>
+
+    <EditText
+        android:id="@+id/et_book_isbn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_book_publisher"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:hint="ISBN" />
+
+    <include layout="@layout/necessary_symb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/et_book_author"
+        android:layout_marginBottom="13dp"
+        android:layout_marginRight="4dp"
+        android:layout_alignBottom="@id/et_book_isbn"/>
+
+    <EditText
+        android:id="@+id/et_book_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_book_isbn"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:hint="书页" />
+
+    <EditText
+        android:id="@+id/et_book_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_book_page"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:hint="价格" />
+
+    <EditText
+        android:id="@+id/et_book_publishdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_book_price"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:hint="出版日期" />
+
+    <MultiAutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_below="@id/et_book_publishdate"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:hint="摘要"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>

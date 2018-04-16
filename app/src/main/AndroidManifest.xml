@@ -42,6 +42,7 @@
             android:value="X6xZ5tLWckx7Ob9TgK363664HOa7xFTp" />
 
         <activity android:name=".sharedetail.ShareDetailActivity" />
+        <activity android:name=".bookupload.BookUploadActivity" />
         <activity android:name=".base.BaseToolbarActivity"></activity>
     </application>
 

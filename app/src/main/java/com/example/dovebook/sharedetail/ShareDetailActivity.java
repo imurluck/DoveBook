@@ -94,7 +94,7 @@ public class ShareDetailActivity extends BaseToolbarActivity {
      */
     private void initViews() {
         //设置根布局背景色
-        mRootLayout.setBackgroundColor(getResources().getColor(R.color.background_light_grey));
+        mRootLayout.setBackgroundColor(getResources().getColor(R.color.background_light_gray));
         //显示moment的信息
         if (mMoment != null) {
             mUserName.setText(mMoment.getUserName());

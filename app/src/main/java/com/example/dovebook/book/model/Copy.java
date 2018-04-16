@@ -6,94 +6,94 @@ package com.example.dovebook.book.model;
 
 public class Copy{
 
-    private String mCopyId;
+    private String copyId;
 
-    private Boolean mCopyStatus;
+    private Boolean copyStatus;
 
-    private String mBookId;
+    private String bookId;
 
-    private String mUserId;
+    private String userId;
 
-    private String mCopyLatitude;
+    private String copyLatitude;
 
-    private String mCopyLongitude;
+    private String copyLongitude;
 
-    private String mCopyDetailloc;
+    private String copyDetailloc;
 
-    private long mCreatedat;
+    private long createdat;
 
-    private long mUpdatedat;
+    private long updatedat;
 
     public String getCopyId() {
-        return mCopyId;
+        return copyId;
     }
 
     public void setCopyId(String copyId) {
-        this.mCopyId = copyId == null ? null : copyId.trim();
+        this.copyId = copyId == null ? null : copyId.trim();
     }
 
     public Boolean getCopyStatus() {
-        return mCopyStatus;
+        return copyStatus;
     }
 
     public void setCopyStatus(Boolean copyStatus) {
-        this.mCopyStatus = copyStatus;
+        this.copyStatus = copyStatus;
     }
 
     public String getBookId() {
-        return mBookId;
+        return bookId;
     }
 
     public void setBookId(String bookId) {
-        this.mBookId = bookId == null ? null : bookId.trim();
+        this.bookId = bookId == null ? null : bookId.trim();
     }
 
     public String getUserId() {
-        return mUserId;
+        return userId;
     }
 
     public void setUserId(String userId) {
-        this.mUserId = userId == null ? null : userId.trim();
+        this.userId = userId == null ? null : userId.trim();
     }
 
     public String getCopyLatitude() {
-        return mCopyLatitude;
+        return copyLatitude;
     }
 
     public void setCopyLatitude(String copyLatitude) {
-        this.mCopyLatitude = copyLatitude == null ? null : copyLatitude.trim();
+        this.copyLatitude = copyLatitude == null ? null : copyLatitude.trim();
     }
 
     public String getCopyLongitude() {
-        return mCopyLongitude;
+        return copyLongitude;
     }
 
     public void setCopyLongitude(String copyLongitude) {
-        this.mCopyLongitude = copyLongitude == null ? null : copyLongitude.trim();
+        this.copyLongitude = copyLongitude == null ? null : copyLongitude.trim();
     }
 
     public String getCopyDetailloc() {
-        return mCopyDetailloc;
+        return copyDetailloc;
     }
 
     public void setCopyDetailloc(String copyDetailloc) {
-        this.mCopyDetailloc = copyDetailloc == null ? null : copyDetailloc.trim();
+        this.copyDetailloc = copyDetailloc == null ? null : copyDetailloc.trim();
     }
 
     public long getCreatedat() {
-        return mCreatedat;
+        return createdat;
     }
 
     public void setCreatedat(long createdat) {
-        this.mCreatedat = createdat;
+        this.createdat = createdat;
     }
 
     public long getUpdatedat() {
-        return mUpdatedat;
+        return updatedat;
     }
 
     public void setUpdatedat(long updatedat) {
-        this.mUpdatedat = updatedat;
+        this.updatedat = updatedat;
     }
 
 

@@ -1,6 +1,8 @@
 package com.example.dovebook.book;
 
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +14,10 @@ import android.widget.TextView;
 import com.example.dovebook.R;
 import com.example.dovebook.base.BaseFragment;
 import com.example.dovebook.book.model.Book;
+import com.example.dovebook.bookupload.BookUploadActivity;
 import com.example.dovebook.images.ImageManager;
+import com.example.dovebook.main.MainActivity;
+import com.example.dovebook.utils.ToastUtil;
 import com.example.dovebook.widget.recycler.RecyclerAdapter;
 
 import butterknife.BindView;
@@ -26,16 +31,19 @@ public class BookSent_fragment extends BaseFragment implements BookContract.View
     private static final String TAG = "BookSent_fragment";
 
     private BookPresenter mPresenter;
+
     @BindView(R.id.book_sent_recycler)
     RecyclerView mRecycler;
 
-    RecyclerAdapter<Book> mAdapter;
+    @BindView(R.id.bt_book_add)
+    FloatingActionButton mBookAddButton;
 
-    private PresenterTest mPTest;
+
+    RecyclerAdapter<Book> mAdapter;
 
     public BookSent_fragment() {
 
-        mPTest = new PresenterTest(this);
+        mPresenter = new BookPresenter(this);
 
         mAdapter = new RecyclerAdapter<Book>() {
             @Override
@@ -58,15 +66,21 @@ public class BookSent_fragment extends BaseFragment implements BookContract.View
 
     @Override
     protected void initData() {
-        mPTest.getInitData();
+        mPresenter.getInitData();
     }
 
     @Override
     protected void initWidget(View view) {
-        super.initWidget(view);
-        Log.d(TAG, "initWidget: running");
         mRecycler.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         mRecycler.setAdapter(mAdapter);
+
+        mBookAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), BookUploadActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

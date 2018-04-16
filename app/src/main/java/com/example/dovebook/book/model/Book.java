@@ -3,142 +3,140 @@ package com.example.dovebook.book.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.Date;
-
 /**
  * Created by xulw on 2018/3/10.
  */
 
 public class Book implements Parcelable {
 
-    private String mBookId;
+    private String bookId;
     //书名
-    private String mBookTitle;
+    private String bookTitle;
     //作者
-    private String mBookAuthor;
+    private String bookAuthor;
     //书封面路径
-    private String mBookImagepath;
+    private String bookImagepath;
     //摘要
-    private String mBookSummary;
+    private String bookSummary;
     //出版商
-    private String mBookPublisher;
+    private String bookPublisher;
     //ISBN号
-    private String mBookIsbn;
+    private String bookIsbn;
     //书页
-    private Integer mBookPages;
+    private Integer bookPages;
     //书价
-    private Float mBookPrice;
+    private Float bookPrice;
     //出版时间
-    private String mBookPubdate;
+    private String bookPubdate;
     //
-    private String mBookAnthorintro;
+    private String bookAnthorintro;
     //上传时间
-    private Long mCreatedat;
+    private Long createdat;
     //更新时间
-    private Long mUpdatedat;
+    private Long updatedat;
 
     public String getBookId() {
-        return mBookId;
+        return bookId;
     }
 
     public void setBookId(String bookId) {
-        mBookId = bookId;
+        this.bookId = bookId;
     }
 
     public String getBookTitle() {
-        return mBookTitle;
+        return bookTitle;
     }
 
     public void setBookTitle(String bookTitle) {
-        mBookTitle = bookTitle;
+        this.bookTitle = bookTitle;
     }
 
     public String getBookAuthor() {
-        return mBookAuthor;
+        return bookAuthor;
     }
 
     public void setBookAuthor(String bookAuthor) {
-        mBookAuthor = bookAuthor;
+        this.bookAuthor = bookAuthor;
     }
 
     public String getBookImagepath() {
-        return mBookImagepath;
+        return bookImagepath;
     }
 
     public void setBookImagepath(String bookImagepath) {
-        mBookImagepath = bookImagepath;
+        this.bookImagepath = bookImagepath;
     }
 
     public String getBookSummary() {
-        return mBookSummary;
+        return bookSummary;
     }
 
     public void setBookSummary(String bookSummary) {
-        mBookSummary = bookSummary;
+        this.bookSummary = bookSummary;
     }
 
     public String getBookPublisher() {
-        return mBookPublisher;
+        return bookPublisher;
     }
 
     public void setBookPublisher(String bookPublisher) {
-        mBookPublisher = bookPublisher;
+        this.bookPublisher = bookPublisher;
     }
 
     public String getBookIsbn() {
-        return mBookIsbn;
+        return bookIsbn;
     }
 
     public void setBookIsbn(String bookIsbn) {
-        mBookIsbn = bookIsbn;
+        this.bookIsbn = bookIsbn;
     }
 
     public Integer getBookPages() {
-        return mBookPages;
+        return bookPages;
     }
 
     public void setBookPages(Integer bookPages) {
-        mBookPages = bookPages;
+        this.bookPages = bookPages;
     }
 
     public Float getBookPrice() {
-        return mBookPrice;
+        return bookPrice;
     }
 
     public void setBookPrice(Float bookPrice) {
-        mBookPrice = bookPrice;
+        this.bookPrice = bookPrice;
     }
 
     public String getBookPubdate() {
-        return mBookPubdate;
+        return bookPubdate;
     }
 
     public void setBookPubdate(String bookPubdate) {
-        mBookPubdate = bookPubdate;
+        this.bookPubdate = bookPubdate;
     }
 
     public String getBookAnthorintro() {
-        return mBookAnthorintro;
+        return bookAnthorintro;
     }
 
     public void setBookAnthorintro(String bookAnthorintro) {
-        mBookAnthorintro = bookAnthorintro;
+        this.bookAnthorintro = bookAnthorintro;
     }
 
     public Long getCreatedat() {
-        return mCreatedat;
+        return createdat;
     }
 
     public void setCreatedat(Long createdat) {
-        mCreatedat = createdat;
+        this.createdat = createdat;
     }
 
     public Long getUpdatedat() {
-        return mUpdatedat;
+        return updatedat;
     }
 
     public void setUpdatedat(Long updatedat) {
-        mUpdatedat = updatedat;
+        this.updatedat = updatedat;
     }
 
     @Override
@@ -148,19 +146,19 @@ public class Book implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mBookId);
-        dest.writeString(mBookTitle);
-        dest.writeString(mBookAuthor);
-        dest.writeString(mBookImagepath);
-        dest.writeString(mBookSummary);
-        dest.writeString(mBookPublisher);
-        dest.writeString(mBookIsbn);
-        dest.writeInt(mBookPages);
-        dest.writeFloat(mBookPrice);
-        dest.writeString(mBookPubdate);
-        dest.writeString(mBookAnthorintro);
-        dest.writeLong(mCreatedat);
-        dest.writeLong(mUpdatedat);
+        dest.writeString(bookId);
+        dest.writeString(bookTitle);
+        dest.writeString(bookAuthor);
+        dest.writeString(bookImagepath);
+        dest.writeString(bookSummary);
+        dest.writeString(bookPublisher);
+        dest.writeString(bookIsbn);
+        dest.writeInt(bookPages);
+        dest.writeFloat(bookPrice);
+        dest.writeString(bookPubdate);
+        dest.writeString(bookAnthorintro);
+        dest.writeLong(createdat);
+        dest.writeLong(updatedat);
     }
 
     public static final Parcelable.Creator<Book> CREATOR = new Parcelable.Creator<Book>() {
@@ -177,23 +175,23 @@ public class Book implements Parcelable {
     };
 
     private Book(Parcel in) {
-        mBookId = in.readString();
-        mBookTitle = in.readString();
-        mBookAuthor = in.readString();
-        mBookImagepath = in.readString();
-        mBookSummary = in.readString();
-        mBookPublisher = in.readString();
-        mBookIsbn = in.readString();
-        mBookPages = in.readInt();
-        mBookPrice = in.readFloat();
-        mBookPubdate = in.readString();
-        mBookAnthorintro = in.readString();
-        mCreatedat = in.readLong();
-        mUpdatedat = in.readLong();
+        bookId = in.readString();
+        bookTitle = in.readString();
+        bookAuthor = in.readString();
+        bookImagepath = in.readString();
+        bookSummary = in.readString();
+        bookPublisher = in.readString();
+        bookIsbn = in.readString();
+        bookPages = in.readInt();
+        bookPrice = in.readFloat();
+        bookPubdate = in.readString();
+        bookAnthorintro = in.readString();
+        createdat = in.readLong();
+        updatedat = in.readLong();
     }
 
     @Override
     public String toString() {
-        return "title:"+mBookTitle+" author:"+mBookAuthor+" id:"+mBookId;
+        return "title:"+ bookTitle +" author:"+ bookAuthor +" id:"+ bookId;
     }
 }
