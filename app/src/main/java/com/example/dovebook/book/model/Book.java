@@ -190,6 +190,10 @@ public class Book implements Parcelable {
         updatedat = in.readLong();
     }
 
+    public Book(){
+
+    }
+
     @Override
     public String toString() {
         return "title:"+ bookTitle +" author:"+ bookAuthor +" id:"+ bookId;

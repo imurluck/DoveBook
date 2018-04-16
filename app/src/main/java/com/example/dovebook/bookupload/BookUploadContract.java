@@ -12,8 +12,12 @@ public interface BookUploadContract {
     interface UploadPresenter {
 
         // 上传书到服务器
-//        void uploadBookToServer();
+//       void uploadBookToServer();
 
+        //创建副本
+//        void createCopy();
+        //上传副本
+//        void uploadCopyToServer();
 
     }
 }
