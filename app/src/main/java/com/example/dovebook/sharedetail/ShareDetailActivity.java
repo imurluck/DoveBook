@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.dovebook.R;
 import com.example.dovebook.base.BaseToolbarActivity;
+import com.example.dovebook.contact.contactAdapter;
 import com.example.dovebook.images.ImageManager;
 import com.example.dovebook.share.model.Moment;
 import com.example.dovebook.share.model.MomentPicture;
@@ -118,7 +119,7 @@ public class ShareDetailActivity extends BaseToolbarActivity {
             }
 
             @Override
-            protected ViewHolder<MomentPicture> onCreateViewHolder(View root, int viewType) {
+            protected ViewHolder onCreateViewHolder(View root, int viewType) {
                 return new ShareDetailActivity.ViewHolder(root);
             }
         };

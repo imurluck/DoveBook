@@ -44,6 +44,11 @@
         <activity android:name=".sharedetail.ShareDetailActivity" />
         <activity android:name=".bookupload.BookUploadActivity" />
         <activity android:name=".base.BaseToolbarActivity"></activity>
+        <activity android:name=".base.BaseToolbarActivity"/>
+        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".Information.InfoManager" />
+        <activity android:name=".register.register"/>
+        <activity android:name=".contact.contactManager"/>
     </application>
 
 </manifest>

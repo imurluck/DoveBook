@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.dovebook.R;
 import com.example.dovebook.base.BaseFragment;
+import com.example.dovebook.contact.contactAdapter;
 import com.example.dovebook.images.ImageManager;
 import com.example.dovebook.share.model.Moment;
 import com.example.dovebook.sharedetail.ShareDetailActivity;
@@ -54,7 +55,7 @@ public class ShareFragment extends BaseFragment implements ShareContract.View {
             }
 
             @Override
-            protected ViewHolder<Moment> onCreateViewHolder(View root, int viewType) {
+            protected ViewHolder onCreateViewHolder(View root, int viewType) {
                 return new ShareFragment.ViewHolder(root);
             }
         };
