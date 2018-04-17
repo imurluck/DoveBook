@@ -67,15 +67,15 @@ public class InfoManager extends BaseToolbarActivity {
         mUserManager = new UserManager(this);
         mInformationPresenter = new InformationPresenter(this);
         Glide.with(this).load(mUserManager.getUser().getUserAvatarPath()).into(circle_image);
-        if(!mUserManager.getUser().getUserName().equals("")) {
+        if(mUserManager.getUser().getUserName()!=null) {
             name_ediText.setText(mUserManager.getUser().getUserName());
             name_ediText.setHint(mUserManager.getUser().getUserName());
         }
         if(mUserManager.getUser().getUserPhone()!=-1) {
             tel_ediText.setText(mUserManager.getUser().getUserPhone().toString());
-            tel_ediText.setHint(String.valueOf(mUserManager.getUser().getUserPhone()));
+            tel_ediText.setHint(mUserManager.getUser().getUserPhone().toString());
         }
-        if(!mUserManager.getUser().getUserEmail().equals("")) {
+        if(mUserManager.getUser().getUserEmail()!=null) {
             mail_ediText.setText(mUserManager.getUser().getUserEmail());
             mail_ediText.setHint(mUserManager.getUser().getUserEmail());
         }

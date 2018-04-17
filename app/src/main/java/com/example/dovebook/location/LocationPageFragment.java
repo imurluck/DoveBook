@@ -13,34 +13,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
->>>>>>> feature_user_manager
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class LocationPageFragment extends BaseFragment {
-
+//
     @Override
     protected int getContentLayoutId() {
         return R.layout.fragment_location_page;
     }
 
-    @Override
-    protected void initData() {
-        initList();
-        adapter = new RecyclerAdapter<String>() {
-            //传入item布局id
-            @Override
-            protected int getItemViewType(int position, String s) {
-                return R.layout.share_recycler_item;
-            }
-
-            @Override
-            protected ViewHolder onCreateViewHolder(View root, int viewType) {
-                return new LocationPageFragment.ViewHolder(root);
-            }
-        };
+//    @Override
+//    protected void initData() {
+//        initList();
+//        adapter = new RecyclerAdapter<String>() {
+//            //传入item布局id
+//            @Override
+//            protected int getItemViewType(int position, String s) {
+//                return R.layout.share_recycler_item;
+//            }
+//
+//            /**
+//             * @param root     根布局View
+//             * @param viewType 布局类型，这里就是约定的xml布局文件id
+//             * @return
+//             */
+//            @Override
+//            protected ViewHolder onCreateViewHolder(View root, int viewType) {
+//                return new LocationPageFragment.ViewHolder(root);
+//            }
+//        };
 
         /**adapter.setListener(new RecyclerAdapter.AdapterListener<String>() {
             @Override
@@ -54,12 +58,12 @@ public class LocationPageFragment extends BaseFragment {
 
             }
         });*/
-        adapter.add("just an item");
-        adapter.add(list);
-    }
-
-    @Override
-    protected void initWidget(View view) {
-        super.initWidget(view);
-    }
+//        adapter.add("just an item");
+//        adapter.add(list);
+//    }
+//
+//    @Override
+//    protected void initWidget(View view) {
+//        super.initWidget(view);
+//    }
 }
