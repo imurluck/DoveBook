@@ -2,6 +2,7 @@ package com.example.dovebook.home;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,8 @@ import com.example.dovebook.Information.InfoManager;
 import com.example.dovebook.R;
 import com.example.dovebook.base.BaseFragment;
 import com.example.dovebook.contact.contactManager;
+import com.example.dovebook.login.LoginActivity;
+import com.example.dovebook.login.TimeManager;
 
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -28,12 +31,15 @@ public class HomePageFragment extends BaseFragment {
 
     @BindView(R.id.userName)
     TextView userName;
-    @BindView(R.id.home_information_textId)
-    Button home_information_textId;
+    @BindView(R.id.home_information)
+    RelativeLayout home_information;
     @BindView(R.id.imageView)
     CircleImageView imageView;
     @BindView(R.id.home_friend)
     RelativeLayout home_friend;
+    @BindView(R.id.home_logoff)
+    RelativeLayout home_logoff;
+
 
     private com.example.dovebook.login.UserManager mUserManager;
 
@@ -46,7 +52,7 @@ public class HomePageFragment extends BaseFragment {
     protected void initWidget(View view) {
         super.initWidget(view);
         mUserManager=new com.example.dovebook.login.UserManager(getActivity());
-        home_information_textId.setOnClickListener(new View.OnClickListener() {
+        home_information.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(),InfoManager.class));
@@ -60,6 +66,16 @@ public class HomePageFragment extends BaseFragment {
             }
         });
 
+        home_logoff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences.Editor editor = new TimeManager(getContext()).pref.edit();
+                editor.clear();
+                editor.commit();
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+                getActivity().finish();
+            }
+        });
     }
     
 

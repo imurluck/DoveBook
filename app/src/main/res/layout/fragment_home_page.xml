@@ -135,7 +135,7 @@
             android:padding="6dp"
             android:src="@mipmap/icon_information" />
 
-        <Button
+        <TextView
             android:background="#00000000"
             android:id="@+id/home_information_textId"
             android:layout_width="wrap_content"
@@ -221,6 +221,41 @@
             android:layout_width="match_parent"
             android:layout_height="1.5dp"
             android:layout_alignLeft="@+id/home_other_textId"
+            android:layout_alignParentBottom="true"
+            android:background="#D9D9D9" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/home_logoff"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp">
+
+        <ImageView
+            android:id="@+id/home_logoff_iconId"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
+            android:padding="9dp"
+            android:src="@mipmap/icon_other" />
+
+        <TextView
+            android:id="@+id/home_logoff_textId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/home_logoff_iconId"
+            android:text="退出登陆"
+            android:textColor="@color/lightGray"
+            android:textSize="18dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:layout_alignLeft="@+id/home_logoff_textId"
             android:layout_alignParentBottom="true"
             android:background="#D9D9D9" />
 

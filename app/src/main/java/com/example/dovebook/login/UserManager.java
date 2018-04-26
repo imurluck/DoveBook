@@ -24,15 +24,16 @@ public class UserManager {
 
 
     public User getUser() {
-        if(mUser==null){
-            mUser=new User();
+        if (mUser == null) {
             mUser = new User();
-            mUser.setUserName(pref.getString("userName", ""));
-            mUser.setUserId(pref.getString("userId", ""));
-            mUser.setUserPhone(pref.getLong("userPhone", -1));
+            mUser = new User();
+            mUser.setUserName(pref.getString("userName", null));
+            mUser.setUserId(pref.getString("userId", null));
+            mUser.setUserPhone(pref.getLong("userPhone", 0));
+            Log.d(TAG, "getUser: " + pref.getInt("userAge", -10));
             mUser.setUserAge(pref.getInt("userAge", -1));
-            mUser.setUserEmail(pref.getString("userEmail", ""));
-            mUser.setUserAvatarPath(pref.getString("userAvatarpath", ""));
+            mUser.setUserEmail(pref.getString("userEmail", null));
+            mUser.setUserAvatarPath(pref.getString("userAvatarpath", null));
         }
         return mUser;
     }
@@ -42,19 +43,18 @@ public class UserManager {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString("userId", user.getUserId());
         editor.putString("userName", user.getUserName());
-        if(user.getUserPhone()!=null) {
-            editor.putLong("userPhone", user.getUserPhone());
-        }else{
-            editor.putLong("userPhone", -1);
-        }
+        editor.putLong("userPhone", user.getUserPhone());
 //        editor.putString("Bgpath",user.getUserBgPath().toString());
         editor.putString("userAvatarpath", user.getUserAvatarPath());
 //        editor.putString("userSex",user.getUserSex().toString());
-        if(user.getUserAge()!=null) {
+        Log.d(TAG, "setUser: " + "userage:" + user.getUserAge());
+        if (user.getUserAge() != null) {
             editor.putInt("userAge", user.getUserAge());
-        }else{
-            editor.putInt("userAge",-1);
+        } else {
+            mUser.setUserAge(-1);
+            editor.putInt("userAge", -1);
         }
+
         editor.putString("userEmail", user.getUserEmail());
 //        editor.putString("userProfile",user.getUserProfile().toString());
 //        editor.putString("userTaskcapacity",user.getUserTaskCapacity().toString());

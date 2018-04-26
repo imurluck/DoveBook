@@ -8,8 +8,9 @@
     android:focusableInTouchMode="true">
 
     <RelativeLayout
+        android:id="@+id/contact_root"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content" >
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -26,7 +27,7 @@
             android:gravity="center"
             android:textColor="#ffffffff"
             android:textSize="30dp"
-            android:visibility="invisible" />
+            android:visibility="gone" />
 
         <com.example.dovebook.contact.SideBar
             android:id="@+id/sideBar"

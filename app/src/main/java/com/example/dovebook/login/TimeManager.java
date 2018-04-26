@@ -19,7 +19,7 @@ public class TimeManager {
     private Context mContext;
     private java.util.Date mDate;
     private SimpleDateFormat sf;
-    private SharedPreferences pref;
+    public SharedPreferences pref;
 
 
     public TimeManager(Context context){
