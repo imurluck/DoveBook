@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
->>>>>>> feature_user_manager
 
 
 /**
@@ -26,21 +25,21 @@ public class LocationPageFragment extends BaseFragment {
         return R.layout.fragment_location_page;
     }
 
-    @Override
-    protected void initData() {
-        initList();
-        adapter = new RecyclerAdapter<String>() {
-            //传入item布局id
-            @Override
-            protected int getItemViewType(int position, String s) {
-                return R.layout.share_recycler_item;
-            }
-
-            @Override
-            protected ViewHolder onCreateViewHolder(View root, int viewType) {
-                return new LocationPageFragment.ViewHolder(root);
-            }
-        };
+//    @Override
+//    protected void initData() {
+//        initList();
+//        adapter = new RecyclerAdapter<String>() {
+//            //传入item布局id
+//            @Override
+//            protected int getItemViewType(int position, String s) {
+//                return R.layout.share_recycler_item;
+//            }
+//
+//            @Override
+//            protected ViewHolder onCreateViewHolder(View root, int viewType) {
+//                return new LocationPageFragment.ViewHolder(root);
+//            }
+//        };
 
         /**adapter.setListener(new RecyclerAdapter.AdapterListener<String>() {
             @Override
@@ -54,12 +53,12 @@ public class LocationPageFragment extends BaseFragment {
 
             }
         });*/
-        adapter.add("just an item");
-        adapter.add(list);
-    }
+//        adapter.add("just an item");
+//        adapter.add(list);
+//    }
 
-    @Override
-    protected void initWidget(View view) {
-        super.initWidget(view);
-    }
+//    @Override
+//    protected void initWidget(View view) {
+//        super.initWidget(view);
+//    }
 }

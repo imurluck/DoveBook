@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -18,12 +19,12 @@ import android.widget.TextView;
 
 public class SideBar extends View {
 
-
+    static String TAG="SideBar";
     // 触摸事件
     private OnTouchingLetterChangedListener onTouchingLetterChangedListener;
-    public static String[] b = { "A", "B", "C", "D", "E", "F", "G", "H", "I",
+    public static String[] b = { "#","A", "B", "C", "D", "E", "F", "G", "H", "I",
             "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
-            "W", "X", "Y", "Z", "#" };
+            "W", "X", "Y", "Z" };
     private int choose = -1;
     private Paint paint = new Paint();
 
@@ -50,6 +51,7 @@ public class SideBar extends View {
     }
 
     protected void onDraw(Canvas canvas) {
+        Log.d(TAG, "dispatchTouchEvent: "+choose);
         super.onDraw(canvas);
         int height = getHeight()-10;
         int width = getWidth();
@@ -81,7 +83,7 @@ public class SideBar extends View {
         final int oldChoose = choose;
         final OnTouchingLetterChangedListener listener = onTouchingLetterChangedListener;
         final int c = (int) (y / getHeight() * b.length);// 点击y坐标所占总高度的比例*b数组的长度就等于点击b中的个数
-
+        Log.d(TAG, "dispatchTouchEvent: "+c);
         switch (action) {
             case MotionEvent.ACTION_UP:
                 setBackground(new ColorDrawable(0x00000000));
@@ -95,7 +97,7 @@ public class SideBar extends View {
             default:
                 setBackground(new ColorDrawable(0x00000000));
                 if (oldChoose != c) {
-                    if (c >= 0 && c < b.length) {
+                    if (c >= 0 && c <b.length) {
                         if (listener != null) {
                             listener.onTouchingLetterChanged(b[c]);
                         }
@@ -104,6 +106,7 @@ public class SideBar extends View {
                             mTextDialog.setVisibility(View.VISIBLE);
                         }
                         choose = c;
+                        Log.d(TAG, "dispatchTouchEvent: "+choose);
                         invalidate();
                     }
                 }

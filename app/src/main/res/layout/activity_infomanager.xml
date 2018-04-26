@@ -11,7 +11,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1.5dp"
+        android:layout_height="1dp"
         android:background="#D9D9D9" />
 
     <RelativeLayout
@@ -45,7 +45,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1.5dp"
+        android:layout_height="1dp"
         android:background="#D9D9D9" />
 
     <RelativeLayout
@@ -83,7 +83,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1.5dp"
+        android:layout_height="1dp"
         android:background="#D9D9D9" />
 
     <RelativeLayout
@@ -122,7 +122,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1.5dp"
+        android:layout_height="1dp"
         android:background="#D9D9D9" />
 
     <RelativeLayout
@@ -161,7 +161,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1.5dp"
+        android:layout_height="1dp"
         android:background="#D9D9D9" />
     <RelativeLayout
         android:id="@+id/relative4"
@@ -199,7 +199,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1.5dp"
+        android:layout_height="1dp"
         android:background="#D9D9D9" />
 
 </LinearLayout>
