@@ -18,4 +18,5 @@
     <color name="black">#212121</color>
 
     <color name="background_light_gray">#f9f7f7</color>
+    <color name="textBlue">#79c0fe</color>
 </resources>

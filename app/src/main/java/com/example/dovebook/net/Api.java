@@ -6,6 +6,7 @@ import com.example.dovebook.book.model.Copy;
 import com.example.dovebook.share.model.Moment;
 
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -14,6 +15,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -146,4 +148,12 @@ public interface Api {
     Observable<List<User>> getFriends(@Path("userId") String userId,
                                       @Path("startPosition") int startPosition,
                                       @Path("endPosition") int endPosition);
+
+    @Multipart
+    @POST(".")
+    Observable<Book> insertABook(@Part("bookPages") int bookPages,
+                                 @Part("bookPrice") double bookPrice,
+                                 @Part MultipartBody.Part bookImagepath,
+                                 @PartMap Map<String, RequestBody> map);
+
 }

@@ -47,80 +47,98 @@ public class Book implements Parcelable {
         return bookTitle;
     }
 
-    public void setBookTitle(String bookTitle) {
+    public Book setBookTitle(String bookTitle) {
         this.bookTitle = bookTitle;
+        return this;
     }
 
     public String getBookAuthor() {
         return bookAuthor;
     }
 
-    public void setBookAuthor(String bookAuthor) {
+    public Book setBookAuthor(String bookAuthor) {
         this.bookAuthor = bookAuthor;
+        return this;
     }
 
     public String getBookImagepath() {
         return bookImagepath;
     }
 
-    public void setBookImagepath(String bookImagepath) {
+    public Book setBookImagepath(String bookImagepath) {
         this.bookImagepath = bookImagepath;
+        return this;
     }
 
     public String getBookSummary() {
         return bookSummary;
     }
 
-    public void setBookSummary(String bookSummary) {
+    public Book setBookSummary(String bookSummary) {
         this.bookSummary = bookSummary;
+        return this;
     }
 
     public String getBookPublisher() {
         return bookPublisher;
     }
 
-    public void setBookPublisher(String bookPublisher) {
+    public Book setBookPublisher(String bookPublisher) {
         this.bookPublisher = bookPublisher;
+        return this;
     }
 
     public String getBookIsbn() {
         return bookIsbn;
     }
 
-    public void setBookIsbn(String bookIsbn) {
+    public Book setBookIsbn(String bookIsbn) {
         this.bookIsbn = bookIsbn;
+        return this;
     }
 
     public Integer getBookPages() {
         return bookPages;
     }
 
-    public void setBookPages(Integer bookPages) {
-        this.bookPages = bookPages;
+    public Book setBookPages(String bookPages) {
+        if (bookPages == null || bookPages.equals("")) {
+            this.bookPages = 0;
+        } else {
+            this.bookPages = Integer.parseInt(bookPages);
+        }
+        return this;
     }
 
     public Float getBookPrice() {
         return bookPrice;
     }
 
-    public void setBookPrice(Float bookPrice) {
-        this.bookPrice = bookPrice;
+    public Book setBookPrice(String bookPrice) {
+        if (bookPrice == null || bookPrice.equals("")) {
+            this.bookPrice = 0f;
+        } else {
+            this.bookPrice = Float.parseFloat(bookPrice);
+        }
+        return this;
     }
 
     public String getBookPubdate() {
         return bookPubdate;
     }
 
-    public void setBookPubdate(String bookPubdate) {
+    public Book setBookPubdate(String bookPubdate) {
         this.bookPubdate = bookPubdate;
+        return this;
     }
 
     public String getBookAnthorintro() {
         return bookAnthorintro;
     }
 
-    public void setBookAnthorintro(String bookAnthorintro) {
+    public Book setBookAnthorintro(String bookAnthorintro) {
         this.bookAnthorintro = bookAnthorintro;
+        return this;
     }
 
     public Long getCreatedat() {
@@ -190,12 +208,12 @@ public class Book implements Parcelable {
         updatedat = in.readLong();
     }
 
-    public Book(){
-
+    public Book() {
+        bookImagepath = "";
     }
 
     @Override
     public String toString() {
-        return "title:"+ bookTitle +" author:"+ bookAuthor +" id:"+ bookId;
+        return "title:" + bookTitle + " author:" + bookAuthor + " id:" + bookId;
     }
 }
