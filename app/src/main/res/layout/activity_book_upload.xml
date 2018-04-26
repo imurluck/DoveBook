@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
+        android:fitsSystemWindows="true"
         android:padding="5dp">
 
 
@@ -18,7 +19,7 @@
             android:layout_marginTop="50dp"
             android:background="@drawable/bookdemo"
             android:elevation="2dp"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitXY" />
 
         <EditText
             android:id="@+id/et_book_title_upload"
@@ -113,6 +114,7 @@
             android:layout_marginLeft="25dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
+            android:inputType="number"
             android:hint="书页"
             android:maxLines="1" />
 
@@ -124,6 +126,7 @@
             android:layout_marginLeft="25dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
+            android:inputType="numberDecimal"
             android:hint="价格"
             android:maxLines="1" />
 
@@ -135,7 +138,7 @@
             android:layout_marginLeft="25dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
-            android:hint="出版日期"
+            android:hint="出版日期 : xxxx年xx月"
             android:maxLines="1" />
 
         <EditText
@@ -156,6 +159,7 @@
         <Button
             android:id="@+id/bt_book_upload"
             android:layout_width="match_parent"
+            android:background="@drawable/shape"
             android:layout_height="wrap_content"
             android:layout_below="@+id/et_book_abstract_upload"
             android:layout_margin="10dp"
@@ -164,5 +168,6 @@
 
 
     </RelativeLayout>
+
 </ScrollView>
 

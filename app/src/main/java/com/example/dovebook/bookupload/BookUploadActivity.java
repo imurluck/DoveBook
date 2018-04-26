@@ -1,20 +1,61 @@
 package com.example.dovebook.bookupload;
 
+import android.Manifest;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.dovebook.Information.InfoManager;
 import com.example.dovebook.R;
 import com.example.dovebook.base.BaseActivity;
+import com.example.dovebook.base.model.User;
 import com.example.dovebook.book.model.Book;
+import com.example.dovebook.main.MainActivity;
+import com.example.dovebook.utils.ToastUtil;
 
+import java.io.File;
+import java.util.zip.Inflater;
+
+import butterknife.BindInt;
 import butterknife.BindView;
 
 /**
  * Created by 28748 on 2018/4/15.
  */
 
-public class BookUploadActivity extends BaseActivity implements BookUploadContract.UploadView{
+public class BookUploadActivity extends BaseActivity implements BookUploadContract.UploadView {
 
+    private static final String TAG = "BookUploadActivity";
+
+    public static final int CHOOSE_PHOTO = 2;
+
+    @BindView(R.id.iv_book_image_upload)
+    ImageView bookImage;
     @BindView(R.id.et_book_title_upload)
     EditText bookTitle;
     @BindView(R.id.et_book_author_upload)
@@ -31,17 +72,141 @@ public class BookUploadActivity extends BaseActivity implements BookUploadContra
     EditText publishDate;
     @BindView(R.id.et_book_abstract_upload)
     EditText bookAbstract;
+    @BindView(R.id.bt_book_upload)
+    Button uploadButton;
 
-    private Book mBook;
+    private View.OnClickListener mListener;
+
+    private ProgressDialog mUploadProgressDialog;
+
+    File file;
+
+    //test
+    private String path;
+
+    //进度对话框
+    BookUploadPresenter mPresenter;
 
     @Override
     protected View initContentView() {
-        View view = getLayoutInflater().inflate(R.layout.activity_book_upload, null);
-        return view;
+        View viewThis = getLayoutInflater().inflate(R.layout.activity_book_upload, null);
+        return viewThis;
     }
 
     @Override
     protected void initOptions() {
-        mBook = new Book();
+        mPresenter = new BookUploadPresenter(this);
+        mListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.iv_book_image_upload:
+                        choosePhotoFromAlbum();
+                        break;
+                    case R.id.bt_book_upload:
+                        getBookInfo();
+                        break;
+                }
+            }
+        };
+        bookImage.setOnClickListener(mListener);
+        uploadButton.setOnClickListener(mListener);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case CHOOSE_PHOTO:
+                if (requestCode == CHOOSE_PHOTO) {
+                    if (data != null) {
+                        file = new File(mPresenter.handleImage(data));
+                        Log.d(TAG, "onActivityResult: " + mPresenter.handleImage(data));
+                        //加载图书图片
+                        Glide.with(this).load(file)
+                                .into(bookImage);
+                        path = "" + data.getData();
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    public void openAlbum() {
+        Log.d(TAG, "openAlbum: ");
+        Intent intent = new Intent("android.intent.action.GET_CONTENT");
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                "image/*");
+        startActivityForResult(intent, CHOOSE_PHOTO);
+    }
+
+    private void getBookInfo() {
+        Book book = new Book();
+        book.setBookImagepath(path)
+                .setBookPages(bookPage.getText().toString())
+                .setBookPrice(bookPrice.getText().toString())
+                .setBookIsbn(bookIsbn.getText().toString())
+                .setBookPublisher(bookPublisher.getText().toString())
+                .setBookAuthor(bookAuthor.getText().toString())
+                .setBookTitle(bookTitle.getText().toString())
+                .setBookSummary(bookAbstract.getText().toString())
+                .setBookPubdate(publishDate.getText().toString());
+        Log.d(TAG, "getBookInfo: " + book.toString());
+        mPresenter.uploadBook(book);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openAlbum();
+                }
+                break;
+            default:
+        }
+    }
+
+    public void choosePhotoFromAlbum() {
+        if (ContextCompat.checkSelfPermission(BookUploadActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(BookUploadActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        } else {
+            openAlbum();
+        }
+    }
+
+    @Override
+    public void showUploadProcess() {
+        mUploadProgressDialog = ProgressDialog.show(this, "提示", "图书抛出中...", false, true);
+    }
+
+    @Override
+    public void hideUploadPrecess() {
+            mUploadProgressDialog.dismiss();
+    }
+
+    @Override
+    public void showUploadSuccess() {
+        ToastUtil.shortToast("上传成功！");
+    }
+
+    @Override
+    public void showUploadFailed() {
+        ToastUtil.shortToast("请检查你的网络...");
+    }
+
+    @Override
+    public void showInfoErrors(String message) {
+        ToastUtil.shortToast(message);
+    }
+
+    //错误的EditText获取焦点
+    @Override
+    public void getEditFocus(int editCode) {
+
     }
 }
+
