@@ -12,8 +12,10 @@
         android:background="#e7e7e7"/>
 
     <RelativeLayout
+        android:id="@+id/mainContent"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:background="@drawable/recyclerview_item_color">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/circle_image"

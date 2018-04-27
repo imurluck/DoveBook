@@ -1,11 +1,13 @@
 package com.example.dovebook.contact;
 
+import android.content.Context;
 import android.os.Binder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -81,7 +83,13 @@ public class contactManager extends BaseToolbarActivity {
             }
         });
         mContactPresenter = new contactPresenter(this);
-        adapter = new contactAdapter(this);
+        adapter = new contactAdapter(this){
+
+            @Override
+            public Context getContext() {
+                return contactManager.this;
+            }
+        };
         LinearLayoutManager linearLayout = new LinearLayoutManager(this);
         linearLayout.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayout);

@@ -35,14 +35,11 @@ public class LocationPageFragment extends BaseFragment {
 //                return R.layout.share_recycler_item;
 //            }
 //
-<<<<<<< HEAD
 //            /**
 //             * @param root     根布局View
 //             * @param viewType 布局类型，这里就是约定的xml布局文件id
 //             * @return
 //             */
-=======
->>>>>>> 5eeae71fe8d4123f643d6222d448d8ae5a96c3f5
 //            @Override
 //            protected ViewHolder onCreateViewHolder(View root, int viewType) {
 //                return new LocationPageFragment.ViewHolder(root);
@@ -64,11 +61,6 @@ public class LocationPageFragment extends BaseFragment {
 //        adapter.add("just an item");
 //        adapter.add(list);
 //    }
-<<<<<<< HEAD
-//
-=======
-
->>>>>>> 5eeae71fe8d4123f643d6222d448d8ae5a96c3f5
 //    @Override
 //    protected void initWidget(View view) {
 //        super.initWidget(view);
