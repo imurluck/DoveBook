@@ -24,6 +24,9 @@ public interface BookUploadContract {
 
         void getEditFocus(int editCode);
 
+        void showBookInfo(Book book);
+
+
     }
 
     interface UploadPresenter {
@@ -41,5 +44,7 @@ public interface BookUploadContract {
 
     interface DataModel{
         void uploadBook(Book book, MultipartBody.Part bookImage);
+
+        void getBookInfoByIsbn(String isbn);
     }
 }

@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.example.dovebook.book.model.Book;
 import com.example.dovebook.bookupload.model.BookModel;
+import com.example.dovebook.bookupload.model.DoubanBook;
 import com.example.dovebook.common.Constant;
 import com.example.dovebook.net.Api;
 import com.example.dovebook.net.HttpManager;
@@ -20,6 +21,10 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -27,7 +32,7 @@ import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
 /**
- * Created by 28748 on 2018/4/15.
+ * Created by zjs on 2018/4/15.
  */
 
 public class BookUploadPresenter implements BookUploadContract.UploadPresenter {
@@ -101,7 +106,7 @@ public class BookUploadPresenter implements BookUploadContract.UploadPresenter {
                     .putGear(Luban.THIRD_GEAR)
                     .setCompressListener(new OnCompressListener() {
                         @Override
-                        public void onStart(){
+                        public void onStart() {
 
                         }
 
@@ -121,20 +126,31 @@ public class BookUploadPresenter implements BookUploadContract.UploadPresenter {
 
                         @Override
                         public void onError(Throwable e) {
-                                mView.hideUploadPrecess();
-                                mView.showInfoErrors("图片过大，压缩失败");
+                            mView.hideUploadPrecess();
+                            mView.showInfoErrors("图片过大，压缩失败");
                         }
                     }).launch();
         }
     }
 
-    public void onSuccessCompleteUpload(){
+    public void onSuccessCompleteUpload() {
         mView.hideUploadPrecess();
         mView.showUploadSuccess();
     }
 
+    public void querytBookInfo(String isbn) {
+        mBookModel.getBookInfoByIsbn(isbn);
 
-    public void onErrorCompletedUpload(){
+    }
+
+    public void queryBookInfoCallBack(Book book){
+        if(book != null){
+            mView.showBookInfo(book);
+        }
+        Log.d(TAG, "queryBookInfoCallBack: "+book.toString());
+    }
+
+    public void onErrorCompletedUpload() {
         mView.hideUploadPrecess();
         mView.showInfoErrors("上传失败..");
     }

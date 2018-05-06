@@ -1,7 +1,7 @@
 package com.example.dovebook.book;
 
 /**
- * Created by 28748 on 2018/3/13.
+ * Created by zjs on 2018/3/13.
  */
 
 public interface BookContract {

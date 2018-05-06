@@ -1,7 +1,7 @@
 package com.example.dovebook.book.model;
 
 /**
- * Created by 28748 on 2018/3/14.
+ * Created by zjs on 2018/3/14.
  */
 
 public class Copy{

@@ -37,6 +37,9 @@ import com.example.dovebook.base.model.User;
 import com.example.dovebook.book.model.Book;
 import com.example.dovebook.main.MainActivity;
 import com.example.dovebook.utils.ToastUtil;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+import com.journeyapps.barcodescanner.CaptureActivity;
 
 import java.io.File;
 import java.util.zip.Inflater;
@@ -53,6 +56,10 @@ public class BookUploadActivity extends BaseActivity implements BookUploadContra
     private static final String TAG = "BookUploadActivity";
 
     public static final int CHOOSE_PHOTO = 2;
+
+    private static final int REQUEST_CAMERA = 3;
+
+    private static final int RESULT_SCAN = 0x0000c0de;
 
     @BindView(R.id.iv_book_image_upload)
     ImageView bookImage;
@@ -77,6 +84,8 @@ public class BookUploadActivity extends BaseActivity implements BookUploadContra
 
     private View.OnClickListener mListener;
 
+
+    //上传进度窗口
     private ProgressDialog mUploadProgressDialog;
 
     File file;
@@ -109,16 +118,27 @@ public class BookUploadActivity extends BaseActivity implements BookUploadContra
                 }
             }
         };
+
         bookImage.setOnClickListener(mListener);
+        //长按来扫描条形码获取图书信息
+        bookImage.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                scanBarCodeCheck();
+                return false;
+            }
+        });
+
         uploadButton.setOnClickListener(mListener);
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case CHOOSE_PHOTO:
-                if (requestCode == CHOOSE_PHOTO) {
+                if (resultCode == RESULT_OK) {
                     if (data != null) {
                         file = new File(mPresenter.handleImage(data));
                         Log.d(TAG, "onActivityResult: " + mPresenter.handleImage(data));
@@ -126,6 +146,17 @@ public class BookUploadActivity extends BaseActivity implements BookUploadContra
                         Glide.with(this).load(file)
                                 .into(bookImage);
                         path = "" + data.getData();
+                    }
+                }
+                break;
+            case RESULT_SCAN:
+                if (resultCode == RESULT_OK) {
+                    IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+                    if (scanResult != null) {
+                        //获取到图书的ISBN
+                        String result = scanResult.getContents();
+                        bookIsbn.setText(result);
+                        mPresenter.querytBookInfo(result);
                     }
                 }
                 break;
@@ -166,7 +197,15 @@ public class BookUploadActivity extends BaseActivity implements BookUploadContra
                     openAlbum();
                 }
                 break;
+            case REQUEST_CAMERA:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    scanBarCode();
+                } else {
+                    ToastUtil.shortToast("拒绝");
+                }
+                break;
             default:
+                break;
         }
     }
 
@@ -178,6 +217,31 @@ public class BookUploadActivity extends BaseActivity implements BookUploadContra
         }
     }
 
+    /**
+     * 扫描条形码
+     */
+    public void scanBarCodeCheck() {
+        if (ContextCompat.checkSelfPermission(BookUploadActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(BookUploadActivity.this, new String[]{Manifest.permission.CAMERA}, 1);
+        } else {
+            scanBarCode();
+        }
+    }
+
+    /**
+     * 扫描条形码
+     */
+    public void scanBarCode() {
+        IntentIntegrator integrator = new IntentIntegrator(BookUploadActivity.this);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
+        integrator.setCaptureActivity(ScanActivity.class);
+        integrator.setPrompt("请扫描ISBN条形码");
+        integrator.setCameraId(0);
+        integrator.setBeepEnabled(true);
+        integrator.setBarcodeImageEnabled(true);
+        integrator.initiateScan();
+    }
+
     @Override
     public void showUploadProcess() {
         mUploadProgressDialog = ProgressDialog.show(this, "提示", "图书抛出中...", false, true);
@@ -185,7 +249,7 @@ public class BookUploadActivity extends BaseActivity implements BookUploadContra
 
     @Override
     public void hideUploadPrecess() {
-            mUploadProgressDialog.dismiss();
+        mUploadProgressDialog.dismiss();
     }
 
     @Override
@@ -203,10 +267,22 @@ public class BookUploadActivity extends BaseActivity implements BookUploadContra
         ToastUtil.shortToast(message);
     }
 
+
     //错误的EditText获取焦点
     @Override
     public void getEditFocus(int editCode) {
 
+    }
+
+    @Override
+    public void showBookInfo(Book book) {
+        bookTitle.setText(book.getBookTitle());
+        bookAuthor.setText(book.getBookAuthor());
+        bookPublisher.setText(book.getBookPublisher());
+        bookPage.setText(""+book.getBookPages());
+        bookPrice.setText("" + book.getBookPrice());
+        bookAbstract.setText(book.getBookSummary());
+        publishDate.setText(book.getBookPubdate());
     }
 }
 

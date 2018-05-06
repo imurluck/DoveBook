@@ -16,5 +16,8 @@ public class Constant {
     public static final String BASE_UPDATE_URL=BASE_URL+"user/";
 
     public static final String BASE_BOOK_INSERT_URL = BASE_URL + "book/";
+
+    public static final String DOUBAN_ISBN_URL = "https://api.douban.com/v2/book/isbn/";
+
 }
 

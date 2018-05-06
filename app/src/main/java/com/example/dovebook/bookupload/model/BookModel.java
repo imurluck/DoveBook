@@ -75,8 +75,60 @@ public class BookModel implements BookUploadContract.DataModel {
                 });
     }
 
+    @Override
+    public void getBookInfoByIsbn(String isbn) {
+        Book book;
+
+        Api api = HttpManager.getInstance().getApiService(Constant.DOUBAN_ISBN_URL);
+        api.getBookInfoByIsbn(isbn)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<DoubanBook>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(DoubanBook doubanBook) {
+                        Log.d(TAG, "onNext: 请求成功！");
+                        mPresenter.queryBookInfoCallBack( handleBook(doubanBook));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "onError: " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private Book handleBook(DoubanBook doubanBook) {
+        Book book = new Book();
+
+        book.setBookTitle(doubanBook.title);
+        String authors = "";
+        for (String a : doubanBook.author
+                ) {
+            authors += a;
+        }
+        book.setBookAuthor(authors);
+        book.setBookPublisher(doubanBook.publisher);
+        book.setBookPubdate(doubanBook.pubdate);
+        book.setBookPages("" + doubanBook.pages);
+        book.setBookPrice(doubanBook.price.replace("元",""));
+        book.setBookSummary(doubanBook.summary);
+        Log.d(TAG, "handleBook: " + book.toString());
+        return book;
+    }
+
     public static RequestBody parseRequestBody(String value) {
         return RequestBody.create(MediaType.parse("text/plain"), value);
     }
+
 
 }

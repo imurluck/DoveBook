@@ -104,7 +104,6 @@ public class BookSent_fragment extends BaseFragment implements BookContract.View
 
         @Override
         protected void onBind(final Book book) {
-            Log.d(TAG, "onBind: running"+book.getBookTitle()+ book.getBookAuthor());
             title.setText(book.getBookTitle());
             author.setText(book.getBookAuthor());
             ImageManager.getInstance().loadImage(mContext,

@@ -3,6 +3,7 @@ package com.example.dovebook.net;
 import com.example.dovebook.base.model.User;
 import com.example.dovebook.book.model.Book;
 import com.example.dovebook.book.model.Copy;
+import com.example.dovebook.bookupload.model.DoubanBook;
 import com.example.dovebook.share.model.Moment;
 
 import java.util.List;
@@ -149,11 +150,29 @@ public interface Api {
                                       @Path("startPosition") int startPosition,
                                       @Path("endPosition") int endPosition);
 
+    /**
+     *
+     * 上传图书
+     * @param bookPages
+     * @param bookPrice
+     * @param bookImagepath
+     * @param map
+     * @return
+     */
     @Multipart
     @POST(".")
     Observable<Book> insertABook(@Part("bookPages") int bookPages,
                                  @Part("bookPrice") double bookPrice,
                                  @Part MultipartBody.Part bookImagepath,
                                  @PartMap Map<String, RequestBody> map);
+
+
+    /**
+     * 调用豆瓣API  根据isbn获取图书信息
+     * @param isbn
+     * @return
+     */
+    @GET(":{isbn}")
+    Observable<DoubanBook> getBookInfoByIsbn(@Path("isbn") String isbn);
 
 }
