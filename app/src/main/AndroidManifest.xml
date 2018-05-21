@@ -54,6 +54,7 @@
         <activity android:name=".register.register"/>
         <activity android:name=".contact.contactManager"/>
         <activity android:name=".bookupload.ScanActivity" />
+        <activity android:name=".bookdetail.BookDetailsActivity" />
     </application>
 
 </manifest>

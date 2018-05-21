@@ -1,7 +1,6 @@
 package com.example.dovebook.bookupload;
 
-import com.example.dovebook.book.model.Book;
-import com.example.dovebook.utils.StringUtil;
+import com.example.dovebook.bean.Book;
 
 import okhttp3.MultipartBody;
 

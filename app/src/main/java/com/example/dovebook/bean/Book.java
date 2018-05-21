@@ -1,4 +1,4 @@
-package com.example.dovebook.book.model;
+package com.example.dovebook.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -56,7 +56,10 @@ public class Book implements Parcelable {
     }
 
     public String getBookAuthor() {
-        return bookAuthor;
+        if (bookAuthor != null)
+            return bookAuthor;
+        else
+            return "unknown";
     }
 
     public Book setBookAuthor(String bookAuthor) {
@@ -86,7 +89,7 @@ public class Book implements Parcelable {
         if (bookPublisher != null)
             return bookPublisher;
         else
-            return "";
+            return "unknown";
     }
 
     public Book setBookPublisher(String bookPublisher) {
@@ -98,7 +101,7 @@ public class Book implements Parcelable {
         if (bookIsbn != null)
             return bookIsbn;
         else
-            return "";
+            return "unknown";
     }
 
     public Book setBookIsbn(String bookIsbn) {

@@ -6,25 +6,14 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.util.Log;
 
-import com.example.dovebook.book.model.Book;
+import com.example.dovebook.bean.Book;
 import com.example.dovebook.bookupload.model.BookModel;
-import com.example.dovebook.bookupload.model.DoubanBook;
-import com.example.dovebook.common.Constant;
-import com.example.dovebook.net.Api;
-import com.example.dovebook.net.HttpManager;
 import com.example.dovebook.utils.StringUtil;
-import com.example.dovebook.utils.ToastUtil;
+import com.google.zxing.integration.android.IntentIntegrator;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -130,7 +119,22 @@ public class BookUploadPresenter implements BookUploadContract.UploadPresenter {
                             mView.showInfoErrors("图片过大，压缩失败");
                         }
                     }).launch();
+
         }
+    }
+
+    /**
+     * 扫描条形码
+     */
+    public void scanBarCode() {
+        IntentIntegrator integrator = new IntentIntegrator(mView);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
+        integrator.setCaptureActivity(ScanActivity.class);
+        integrator.setPrompt("请扫描ISBN条形码");
+        integrator.setCameraId(0);
+        integrator.setBeepEnabled(true);
+        integrator.setBarcodeImageEnabled(true);
+        integrator.initiateScan();
     }
 
     public void onSuccessCompleteUpload() {
@@ -143,17 +147,17 @@ public class BookUploadPresenter implements BookUploadContract.UploadPresenter {
 
     }
 
-    public void queryBookInfoCallBack(Book book){
-        if(book != null){
+    public void queryBookInfoCallBack(Book book) {
+        if (book != null) {
             mView.showBookInfo(book);
         }
-        Log.d(TAG, "queryBookInfoCallBack: "+book.toString());
     }
 
     public void onErrorCompletedUpload() {
         mView.hideUploadPrecess();
         mView.showInfoErrors("上传失败..");
     }
+
 
 
 }

@@ -6,19 +6,17 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.dovebook.R;
 import com.example.dovebook.base.BaseFragment;
-import com.example.dovebook.book.model.Book;
+import com.example.dovebook.bean.Book;
+import com.example.dovebook.bookdetail.BookDetailsActivity;
 import com.example.dovebook.bookupload.BookUploadActivity;
-import com.example.dovebook.contact.contactAdapter;
 import com.example.dovebook.images.ImageManager;
-import com.example.dovebook.main.MainActivity;
-import com.example.dovebook.utils.ToastUtil;
 import com.example.dovebook.widget.recycler.RecyclerAdapter;
 
 import butterknife.BindView;
@@ -31,7 +29,7 @@ public class BookSent_fragment extends BaseFragment implements BookContract.View
 
     private static final String TAG = "BookSent_fragment";
 
-    private BookPresenter mPresenter;
+    private BookSentPresenter mPresenter;
 
     @BindView(R.id.book_sent_recycler)
     RecyclerView mRecycler;
@@ -40,13 +38,13 @@ public class BookSent_fragment extends BaseFragment implements BookContract.View
     FloatingActionButton mBookAddButton;
 
 
-    RecyclerAdapter<Book> mAdapter;
+    RecyclerAdapter<Book> mSentAdapter;
 
     public BookSent_fragment() {
 
-        mPresenter = new BookPresenter(this);
+        mPresenter = new BookSentPresenter(this);
 
-        mAdapter = new RecyclerAdapter<Book>() {
+        mSentAdapter = new RecyclerAdapter<Book>() {
             @Override
             protected int getItemViewType(int position, Book book) {
                 return R.layout.book_sent_recyler_item;
@@ -73,7 +71,7 @@ public class BookSent_fragment extends BaseFragment implements BookContract.View
     @Override
     protected void initWidget(View view) {
         mRecycler.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-        mRecycler.setAdapter(mAdapter);
+        mRecycler.setAdapter(mSentAdapter);
 
         mBookAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +82,6 @@ public class BookSent_fragment extends BaseFragment implements BookContract.View
         });
     }
 
-    @Override
     public void showEmptyView() {
 
     }
@@ -97,6 +94,8 @@ public class BookSent_fragment extends BaseFragment implements BookContract.View
         ImageView image;
         @BindView(R.id.book_sent_author)
         TextView author;
+        @BindView(R.id.book_sent_root)
+        RelativeLayout mRoot;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -109,6 +108,15 @@ public class BookSent_fragment extends BaseFragment implements BookContract.View
             ImageManager.getInstance().loadImage(mContext,
                     book.getBookImagepath(),
                     image);
+            mRoot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), BookDetailsActivity.class);
+                    intent.putExtra("book",book);
+                    startActivity(intent);
+                }
+
+            });
         }
     }
 

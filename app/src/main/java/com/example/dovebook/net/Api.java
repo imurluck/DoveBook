@@ -1,8 +1,9 @@
 package com.example.dovebook.net;
 
 import com.example.dovebook.base.model.User;
-import com.example.dovebook.book.model.Book;
-import com.example.dovebook.book.model.Copy;
+import com.example.dovebook.bean.Book;
+import com.example.dovebook.bean.Copy;
+import com.example.dovebook.bean.OrderBean;
 import com.example.dovebook.bookupload.model.DoubanBook;
 import com.example.dovebook.share.model.Moment;
 
@@ -12,6 +13,7 @@ import java.util.Map;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -63,14 +65,9 @@ public interface Api {
                                                         @Path("endPosition") int endPosition);
 
 
-    /**
-     * 获取一个人的所有图书copy
-     *
-     * @param userId 用户id
-     * @return Rxjava的observable对象
-     */
-    @GET("usercopy/{userId}/?offset=0&limit=10")
-    Observable<List<Copy>> selectAllBookCopy(@Path("userId") String userId);
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    //图书操作
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * 通过bookId获取对应的Book
@@ -78,8 +75,52 @@ public interface Api {
      * @param bookId 图书Id
      * @return Rxjava的observable对象
      */
-    @GET("book/{bookId}")
-    Observable<Book> selectBook(@Path("bookId") String bookId);
+    @GET("{bookId}")
+    Observable<Book> selectBookById(@Path("bookId") String bookId);
+
+
+    /**
+     * 根据图书Id删除相应图书
+     *
+     * @param bookId
+     * @return
+     */
+    @DELETE("{bookId}")
+    Observable<Book> deleteBook(@Path("bookId") String bookId);
+
+    /**
+     * 上传图书
+     *
+     * @param bookPages
+     * @param bookPrice
+     * @param bookImagepath
+     * @param map
+     * @return
+     */
+    @Multipart
+    @POST(".")
+    Observable<Book> insertBook(@Part("bookPages") int bookPages,
+                                @Part("bookPrice") double bookPrice,
+                                @Part MultipartBody.Part bookImagepath,
+                                @PartMap Map<String, RequestBody> map);
+
+    /**
+     * 更新图书
+     *
+     * @param bookId
+     * @param bookPages
+     * @param bookPrice
+     * @param bookImagepath
+     * @param map
+     * @return
+     */
+    @Multipart
+    @POST("{bookId}")
+    Observable<Book> updateBook(@Path("bookId") String bookId,
+                                @Part("bookPages") int bookPages,
+                                @Part("bookPrice") double bookPrice,
+                                @Part MultipartBody.Part bookImagepath,
+                                @PartMap Map<String, RequestBody> map);
 
 
     /**
@@ -90,6 +131,70 @@ public interface Api {
     @GET("book/{startPosition}/{endPosition}")
     Observable<List<Book>> selectAllBooks(@Path("startPosition") int startPosition,
                                           @Path("endPosition") int endPosition);
+
+    /**
+     * 调用豆瓣API  根据isbn获取图书信息
+     *
+     * @param isbn
+     * @return
+     */
+    @GET(":{isbn}")
+    Observable<DoubanBook> getBookInfoByIsbn(@Path("isbn") String isbn);
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    //副本操作
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    /**
+     * 获取一个人所有的Copy
+     *
+     * @param userId
+     * @param startPosition
+     * @param requestNum
+     * @return 返回Copy列表
+     */
+    @GET("{userId}/")
+    Observable<List<Copy>> selectCopiesByUserId(@Path("userId") String userId,
+                                                @Query("offset") int startPosition,
+                                                @Query("limit") int requestNum);
+
+    /**
+     * 创建副本
+     *
+     * @param map
+     * @param copyStatus
+     * @param createdat
+     * @param updatedat
+     * @return
+     */
+    @POST("copy/")
+    Observable<Copy> insertCopy(@PartMap Map<String, RequestBody> map,
+                                @Part boolean copyStatus,
+                                @Part long createdat,
+                                @Part long updatedat);
+
+    /**
+     * 根据copyId 删除 副本
+     *
+     * @param copyId
+     * @return
+     */
+    @DELETE("{copyId}")
+    Observable<Copy> deleteCopy(@Path("copyId") String copyId);
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    //漂流表操作
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @POST(".")
+    Observable<OrderBean> insertOrder(@PartMap Map<String, RequestBody> map,
+                                      @Part boolean ordersStates,
+                                      @Part int ordersCredit,
+                                      @Part long ordersStart,
+                                      @Part long ordersEnd,
+                                      @Part long createdat,
+                                      @Part long updatedat);
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
     //用户数据操作
@@ -150,29 +255,5 @@ public interface Api {
                                       @Path("startPosition") int startPosition,
                                       @Path("endPosition") int endPosition);
 
-    /**
-     *
-     * 上传图书
-     * @param bookPages
-     * @param bookPrice
-     * @param bookImagepath
-     * @param map
-     * @return
-     */
-    @Multipart
-    @POST(".")
-    Observable<Book> insertABook(@Part("bookPages") int bookPages,
-                                 @Part("bookPrice") double bookPrice,
-                                 @Part MultipartBody.Part bookImagepath,
-                                 @PartMap Map<String, RequestBody> map);
-
-
-    /**
-     * 调用豆瓣API  根据isbn获取图书信息
-     * @param isbn
-     * @return
-     */
-    @GET(":{isbn}")
-    Observable<DoubanBook> getBookInfoByIsbn(@Path("isbn") String isbn);
 
 }

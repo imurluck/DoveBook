@@ -19,4 +19,6 @@
 
     <color name="background_light_gray">#f9f7f7</color>
     <color name="textBlue">#79c0fe</color>
+
+    <color name="theme_bg_color">#f0f2f5</color>
 </resources>

@@ -2,12 +2,15 @@ package com.example.dovebook.bookupload.model;
 
 import android.util.Log;
 
-import com.example.dovebook.book.model.Book;
+import com.example.dovebook.bean.Book;
+import com.example.dovebook.bean.Copy;
+import com.example.dovebook.bean.OrderBean;
 import com.example.dovebook.bookupload.BookUploadContract;
 import com.example.dovebook.bookupload.BookUploadPresenter;
 import com.example.dovebook.common.Constant;
 import com.example.dovebook.net.Api;
 import com.example.dovebook.net.HttpManager;
+import com.example.dovebook.utils.StringUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,8 +48,8 @@ public class BookModel implements BookUploadContract.DataModel {
         map.put("bookSummary", parseRequestBody(book.getBookSummary()));
         map.put("bookPubdate", parseRequestBody(book.getBookPubdate()));
 
-        Api api = HttpManager.getInstance().getApiService(Constant.BASE_BOOK_INSERT_URL);
-        api.insertABook(book.getBookPages(), book.getBookPrice(), bookImage, map)
+        Api api = HttpManager.getInstance().getApiService(Constant.BASE_BOOK_URL);
+        api.insertBook(book.getBookPages(), book.getBookPrice(), bookImage, map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Book>() {
@@ -92,7 +95,81 @@ public class BookModel implements BookUploadContract.DataModel {
                     @Override
                     public void onNext(DoubanBook doubanBook) {
                         Log.d(TAG, "onNext: 请求成功！");
-                        mPresenter.queryBookInfoCallBack( handleBook(doubanBook));
+                        mPresenter.queryBookInfoCallBack(handleBook(doubanBook));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "onError: " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private void insertAnOrder(String copyId, String preordersId, String userId, boolean ordersStates, int ordersCredit, long ordersStart, long ordersEnd, long createDate, long updateDate) {
+        Api api = HttpManager.getInstance().getApiService(Constant.BASE_ORDER_URL);
+
+        Map<String, RequestBody> requestBodyMap = new HashMap<>();
+
+        requestBodyMap.put("copyId", parseRequestBody(copyId));
+        requestBodyMap.put("preordersId", parseRequestBody(preordersId));
+        requestBodyMap.put("userId", parseRequestBody(userId));
+
+
+        api.insertOrder(requestBodyMap, ordersStates, ordersCredit, ordersStart, ordersEnd, createDate, updateDate)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<OrderBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(OrderBean orderBean) {
+                        Log.d(TAG, "onNext: order 生成成功！");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "onError: " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private void insertACopy(String bookId, String userId, String copyLatitude, String copyLongitude, String copyDetailloc, boolean copyStatus, long createdat, long updatedat) {
+
+        Api api = HttpManager.getInstance().getApiService(Constant.BASE_COPY_URL);
+
+        Map<String, RequestBody> requestBodyMap = new HashMap<>();
+
+        requestBodyMap.put("bookId", parseRequestBody(bookId));
+        requestBodyMap.put("userId", parseRequestBody(userId));
+        requestBodyMap.put("copyLatitude", parseRequestBody(copyLatitude));
+        requestBodyMap.put("copyLongitude", parseRequestBody(copyLongitude));
+        requestBodyMap.put("copyDetailloc", parseRequestBody(copyDetailloc));
+
+        api.insertCopy(requestBodyMap, copyStatus, createdat, updatedat)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Copy>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Copy copy) {
+                        Log.d(TAG, "onNext: copy上传成功！");
                     }
 
                     @Override
@@ -120,8 +197,16 @@ public class BookModel implements BookUploadContract.DataModel {
         book.setBookPublisher(doubanBook.publisher);
         book.setBookPubdate(doubanBook.pubdate);
         book.setBookPages("" + doubanBook.pages);
-        book.setBookPrice(doubanBook.price.replace("元",""));
+        book.setBookPrice(doubanBook.price.replace("元", ""));
         book.setBookSummary(doubanBook.summary);
+
+        if (!StringUtil.isNull(doubanBook.image)) {
+            //判断图片路径非空
+            book.setBookImagepath(doubanBook.image);
+        } else {
+            book.setBookImagepath(null);
+        }
+
         Log.d(TAG, "handleBook: " + book.toString());
         return book;
     }
