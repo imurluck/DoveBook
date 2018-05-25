@@ -60,4 +60,7 @@ dependencies {
     //底部弹窗
 //    compile 'com.guoqi.widget:actionsheet:1.0'
 
+    //扫码
+    compile 'com.journeyapps:zxing-android-embedded:3.5.0'
+
 }

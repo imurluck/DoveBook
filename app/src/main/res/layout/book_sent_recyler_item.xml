@@ -5,12 +5,13 @@
     android:layout_height="100dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    app:cardBackgroundColor="@color/white"
     android:layout_marginTop="5dp"
+    app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="8dp"
     app:cardElevation="5dp">
 
     <RelativeLayout
+        android:id="@+id/book_sent_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="3dp"
@@ -57,6 +58,17 @@
             android:layout_marginEnd="11dp"
             android:text="转借次数：15"
             android:textColor="@color/textGray" />
+
+        <TextView
+            android:id="@+id/book_sent_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:text="未投放"
+            android:textColor="@color/colorForgive"
+            android:textSize="10dp" />
 
     </RelativeLayout>
 

@@ -1,5 +1,4 @@
-<android.support.design.widget.CoordinatorLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/book_sent_fragment"
@@ -7,15 +6,41 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     tools:context="com.example.dovebook.book.BookSent_fragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/book_sent_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/book_sent_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
 
     <include
         layout="@layout/recycler_empty"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/share_load_more"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="正在加载更多数据..."
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/forth_text_size"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/share_no_more"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="木有更多数据了..."
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/forth_text_size"
         android:visibility="gone" />
 
     <android.support.design.widget.FloatingActionButton
@@ -25,18 +50,18 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_gravity="bottom|right"
         android:layout_marginBottom="40dp"
         android:layout_marginEnd="35dp"
-        android:padding="4dp"
         android:backgroundTint="@color/white"
+        android:padding="4dp"
+        android:src="@drawable/plus"
         app:backgroundTintMode="src_in"
         app:borderWidth="0dp"
         app:elevation="5dp"
         app:fabSize="auto"
-        app:pressedTranslationZ="20dp"
-        app:rippleColor="#f00"
-        app:useCompatPadding="true"
         app:layout_anchorGravity="bottom|right|end"
         app:layout_behavior="com.example.dovebook.widget.behavior.ScrollAwareFABBehavior"
-        android:src="@drawable/plus"/>
+        app:pressedTranslationZ="20dp"
+        app:rippleColor="#f00"
+        app:useCompatPadding="true" />
 
 
 </android.support.design.widget.CoordinatorLayout>

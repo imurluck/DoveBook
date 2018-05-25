@@ -1,10 +1,13 @@
-package com.example.dovebook.book.model;
+package com.example.dovebook.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
+
+import com.example.dovebook.utils.StringUtil;
 
 /**
- * Created by xulw on 2018/3/10.
+ * Created by zjs on 2018/3/10.
  */
 
 public class Book implements Parcelable {
@@ -23,7 +26,7 @@ public class Book implements Parcelable {
     //ISBN号
     private String bookIsbn;
     //书页
-    private Integer bookPages;
+    private int bookPages;
     //书价
     private Float bookPrice;
     //出版时间
@@ -53,7 +56,10 @@ public class Book implements Parcelable {
     }
 
     public String getBookAuthor() {
-        return bookAuthor;
+        if (bookAuthor != null)
+            return bookAuthor;
+        else
+            return "unknown";
     }
 
     public Book setBookAuthor(String bookAuthor) {
@@ -80,7 +86,10 @@ public class Book implements Parcelable {
     }
 
     public String getBookPublisher() {
-        return bookPublisher;
+        if (bookPublisher != null)
+            return bookPublisher;
+        else
+            return "unknown";
     }
 
     public Book setBookPublisher(String bookPublisher) {
@@ -89,7 +98,10 @@ public class Book implements Parcelable {
     }
 
     public String getBookIsbn() {
-        return bookIsbn;
+        if (bookIsbn != null)
+            return bookIsbn;
+        else
+            return "unknown";
     }
 
     public Book setBookIsbn(String bookIsbn) {
@@ -111,12 +123,16 @@ public class Book implements Parcelable {
     }
 
     public Float getBookPrice() {
-        return bookPrice;
+        if (bookPrice != null)
+            return bookPrice;
+        else
+            return 0f;
     }
 
     public Book setBookPrice(String bookPrice) {
-        if (bookPrice == null || bookPrice.equals("")) {
+        if (bookPrice == null || bookPrice.equals("") || !StringUtil.isFloatString(bookPrice)) {
             this.bookPrice = 0f;
+            Log.d("test", "setBookPrice: "+bookPrice);
         } else {
             this.bookPrice = Float.parseFloat(bookPrice);
         }
@@ -124,7 +140,10 @@ public class Book implements Parcelable {
     }
 
     public String getBookPubdate() {
-        return bookPubdate;
+        if (bookPubdate != null)
+            return bookPubdate;
+        else
+            return "";
     }
 
     public Book setBookPubdate(String bookPubdate) {
@@ -133,7 +152,10 @@ public class Book implements Parcelable {
     }
 
     public String getBookAnthorintro() {
-        return bookAnthorintro;
+        if (bookAnthorintro != null)
+            return bookAnthorintro;
+        else
+            return "";
     }
 
     public Book setBookAnthorintro(String bookAnthorintro) {
@@ -142,7 +164,9 @@ public class Book implements Parcelable {
     }
 
     public Long getCreatedat() {
-        return createdat;
+        if (createdat != null)
+            return createdat;
+        return 0L;
     }
 
     public void setCreatedat(Long createdat) {
@@ -150,7 +174,9 @@ public class Book implements Parcelable {
     }
 
     public Long getUpdatedat() {
-        return updatedat;
+        if (updatedat != null)
+            return updatedat;
+        return 0L;
     }
 
     public void setUpdatedat(Long updatedat) {
@@ -214,6 +240,20 @@ public class Book implements Parcelable {
 
     @Override
     public String toString() {
-        return "title:" + bookTitle + " author:" + bookAuthor + " id:" + bookId;
+        return "Book{" +
+                "bookId='" + bookId + '\'' +
+                ", bookTitle='" + bookTitle + '\'' +
+                ", bookAuthor='" + bookAuthor + '\'' +
+                ", bookImagepath='" + bookImagepath + '\'' +
+                ", bookSummary='" + bookSummary + '\'' +
+                ", bookPublisher='" + bookPublisher + '\'' +
+                ", bookIsbn='" + bookIsbn + '\'' +
+                ", bookPages=" + bookPages +
+                ", bookPrice=" + bookPrice +
+                ", bookPubdate='" + bookPubdate + '\'' +
+                ", bookAnthorintro='" + bookAnthorintro + '\'' +
+                ", createdat=" + createdat +
+                ", updatedat=" + updatedat +
+                '}';
     }
 }

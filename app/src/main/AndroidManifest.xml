@@ -20,6 +20,10 @@
     <!-- 鉴权所需该权限获取进程列表 -->
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <!-- 使用步行AR导航，配置Camera权限 -->
     <application
         android:name=".base.BaseApp"
@@ -49,6 +53,8 @@
         <activity android:name=".Information.InfoManager" />
         <activity android:name=".register.register"/>
         <activity android:name=".contact.contactActivity"/>
+        <activity android:name=".bookupload.ScanActivity" />
+        <activity android:name=".bookdetail.BookDetailsActivity" />
     </application>
 
 </manifest>

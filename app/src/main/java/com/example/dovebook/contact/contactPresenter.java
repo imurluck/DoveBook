@@ -9,10 +9,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.example.dovebook.R;
 import com.example.dovebook.base.model.Friend;
 import com.example.dovebook.common.Constant;
+import com.example.dovebook.common.ResposeStatus;
 import com.example.dovebook.contact.model.contactManager;
 import com.example.dovebook.contact.model.dbManager;
 import com.example.dovebook.login.UserManager;
@@ -34,7 +36,7 @@ import retrofit2.Response;
 
 public class contactPresenter {
 
-//    public List<Friend> mFriendList;
+    //    public List<Friend> mFriendList;
     private static String TAG = "contactPresenter";
     //管理数据库
     public dbManager mDbManager;
@@ -155,7 +157,7 @@ public class contactPresenter {
 //        if (mFriendList == null) {
 //            mFriendList = new ArrayList<>();
 //        }
-        if(mContactManager.ismFriendListNull()){
+        if (mContactManager.ismFriendListNull()) {
             mContactManager.initmFriendList();
         }
 //        mFriendList.clear();
@@ -166,7 +168,7 @@ public class contactPresenter {
         mContactActivity.adapter.clearThenAddAll(mContactManager.getFriendList());
     }
 
-    public void searchSomething(String s){
+    public void searchSomething(String s) {
         mContactActivity.adapter.clearThenAddAll(mContactManager.searchFromFriendList(s));
     }
 
@@ -190,39 +192,52 @@ public class contactPresenter {
 //        }
 //    }
 
-    public void onSendNetworkRequestAndDeleteContact(final Friend friend){
+    public void onSendNetworkRequestAndDeleteContact(final Friend friend) {
 //        mContactManager.sendNetworkRequestAndDeleteContact(friend);
-        Log.d(TAG, "onSendNetworkRequestAndDeleteContact: "+friend.getFriendId());
-            Api api = HttpManager.getInstance().getApiService(Constant.BASE_DELETE_FRIEND_URL);
-            api.deleteFriend(friend.getFriendId())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<Response<String>> {
-                        @Override
-                        public void onSubscribe(Disposable d) {
+        Log.d(TAG, "onSendNetworkRequestAndDeleteContact: " + friend.getFriendId());
+        Api api = HttpManager.getInstance().getApiService(Constant.BASE_DELETE_FRIEND_URL);
+        api.deleteFriend(friend.getFriendId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<String>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-            }
+                    }
 
-                        @Override
-                        public void onNext(Object o) {
-                            mContactManager.deleteFriendFromFriendList(friend);
-                            mContactManager.deleteContactFromDB(friend);
-                            mContactActivity.adapter.clearThenAddAll(mContactManager.getFriendList());
+                    @Override
+                    public void onNext(Response<String> sResponse) {
+                        Log.d(TAG, "onNext: 123456");
+//                            mContactManager.deleteFriendFromFriendList(friend);
+//                            mContactManager.deleteContactFromDB(friend);
+//                            mContactActivity.adapter.clearThenAddAll(mContactManager.getFriendList());
+                        switch (sResponse.code()) {
+
+                            case ResposeStatus.OK:
+                                Toast.makeText(mContactActivity,"删除成功",Toast.LENGTH_SHORT).show();
+                                mContactManager.deleteFriendFromFriendList(friend);
+                                mContactManager.deleteContactFromDB(friend);
+                                mContactActivity.adapter.clearThenAddAll(mContactManager.getFriendList());
+                                break;
+                            case ResposeStatus.NOCONTENT:
+                            default:
+                                Toast.makeText(mContactActivity, "删除异常", Toast.LENGTH_SHORT).show();
                         }
+                    }
 
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.d(TAG, "onError: "+e.getMessage());
-                        }
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError: " + e.getMessage());
+                    }
 
-                        @Override
-                        public void onComplete() {
+                    @Override
+                    public void onComplete() {
 
-                        }
-                    });
+                    }
+                });
     }
 
-    public Context getView(){
+    public Context getView() {
         return mContactActivity;
     }
 

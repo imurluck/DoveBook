@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.dovebook.base.BaseApp;
 import com.example.dovebook.base.model.User;
 
 /**
@@ -13,17 +14,26 @@ import com.example.dovebook.base.model.User;
 
 public class UserManager {
     private static String TAG = "UserManager";
+    private static volatile UserManager sUserManager;
     public static volatile User mUser;
-    private Context mContext;
-    private SharedPreferences pref;
+    private static SharedPreferences pref;
 
-    public UserManager(Context context) {
-        mContext = context;
-        pref = mContext.getSharedPreferences("User", Context.MODE_PRIVATE);
+    public UserManager() {
+        pref = BaseApp.getContext().getSharedPreferences("User", Context.MODE_PRIVATE);
+    }
+    public static UserManager getInstance(){
+        if(sUserManager==null){
+            synchronized (UserManager.class){
+                if(sUserManager==null){
+                    sUserManager=new UserManager();
+                }
+            }
+        }
+        return sUserManager;
     }
 
 
-    public User getUser() {
+    public static User getUser() {
         if (mUser == null) {
             mUser = new User();
             mUser.setUserName(pref.getString("userName", null));

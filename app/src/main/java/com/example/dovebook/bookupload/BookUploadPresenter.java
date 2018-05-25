@@ -6,19 +6,14 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.util.Log;
 
-import com.example.dovebook.book.model.Book;
+import com.example.dovebook.bean.Book;
 import com.example.dovebook.bookupload.model.BookModel;
-import com.example.dovebook.common.Constant;
-import com.example.dovebook.net.Api;
-import com.example.dovebook.net.HttpManager;
 import com.example.dovebook.utils.StringUtil;
 import com.example.dovebook.utils.ToastUtil;
+import com.google.zxing.integration.android.IntentIntegrator;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -27,7 +22,7 @@ import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
 /**
- * Created by 28748 on 2018/4/15.
+ * Created by zjs on 2018/4/15.
  */
 
 public class BookUploadPresenter implements BookUploadContract.UploadPresenter {
@@ -101,7 +96,7 @@ public class BookUploadPresenter implements BookUploadContract.UploadPresenter {
                     .putGear(Luban.THIRD_GEAR)
                     .setCompressListener(new OnCompressListener() {
                         @Override
-                        public void onStart(){
+                        public void onStart() {
 
                         }
 
@@ -112,29 +107,58 @@ public class BookUploadPresenter implements BookUploadContract.UploadPresenter {
                                 RequestBody requestBookImagePath = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                                 MultipartBody.Part body = MultipartBody.Part.createFormData("bookimage", file.getName(), requestBookImagePath);
                                 mBookModel.uploadBook(book, body);
-
                             } else {
-                                mBookModel.uploadBook(book, null);
+                                mView.hideUploadPrecess();
+                                mView.showInfoErrors("图片错误");
+//                                mBookModel.uploadBook(book, null);
                             }
 
                         }
 
                         @Override
                         public void onError(Throwable e) {
-                                mView.hideUploadPrecess();
-                                mView.showInfoErrors("图片过大，压缩失败");
+                            mView.hideUploadPrecess();
+                            mView.showInfoErrors("图片过大，压缩失败");
                         }
                     }).launch();
+
         }
     }
 
-    public void onSuccessCompleteUpload(){
-        mView.hideUploadPrecess();
-        mView.showUploadSuccess();
+    /**
+     * 扫描条形码
+     */
+    public void scanBarCode() {
+        IntentIntegrator integrator = new IntentIntegrator(mView);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
+        integrator.setCaptureActivity(ScanActivity.class);
+        integrator.setPrompt("请扫描ISBN条形码");
+        integrator.setCameraId(0);
+        integrator.setBeepEnabled(true);
+        integrator.setBarcodeImageEnabled(true);
+        integrator.initiateScan();
     }
 
+    public void onSuccessCompleteUpload() {
+        mView.hideUploadPrecess();
+        mView.showUploadSuccess();
+        //删除本地图片
+        mView.file.delete();
 
-    public void onErrorCompletedUpload(){
+    }
+
+    public void querytBookInfo(String isbn) {
+        mBookModel.getBookInfoByIsbn(isbn);
+
+    }
+
+    public void queryBookInfoCallBack(Book book) {
+        if (book != null) {
+            mView.showBookInfo(book);
+        }
+    }
+
+    public void onErrorCompletedUpload() {
         mView.hideUploadPrecess();
         mView.showInfoErrors("上传失败..");
     }

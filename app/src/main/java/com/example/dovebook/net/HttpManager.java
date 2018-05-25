@@ -1,11 +1,16 @@
 package com.example.dovebook.net;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
+
+import com.example.dovebook.base.BaseApp;
 
 import java.io.IOException;
 import java.net.HttpCookie;
 import java.nio.charset.Charset;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
@@ -29,15 +34,14 @@ public class HttpManager {
 
     private static final String TAG = "HttpManager";
 
+    public static final String COOKIE_PREF = "cookies_prefs";
+
+    public static final String PREF_KEY = "httpManagerCookieKey";
+
     private static volatile HttpManager mHttpManager;
 
     private HttpLoggingInterceptor httpLoggingInterceptor;
 
-    //保存用户的cookies
-    private static HashSet<String> cookies;
-
-    //cookies
-    private static HttpCookie cookie;
 
     private HttpManager() {
         httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
@@ -47,16 +51,18 @@ public class HttpManager {
             }
         });
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        cookies = new HashSet<>();
-    };
+    }
+
+    ;
 
     /**
      * 单例模式得到HttpManager实例
+     *
      * @return
      */
     public static HttpManager getInstance() {
         if (mHttpManager == null) {
-            synchronized(HttpManager.class) {
+            synchronized (HttpManager.class) {
                 if (mHttpManager == null) {
                     mHttpManager = new HttpManager();
                 }
@@ -67,6 +73,7 @@ public class HttpManager {
 
     /**
      * 传入一个baseUrl得到Api的一个实例，另外设置网络链接超时时间和读取超时时间等
+     *
      * @param baseUrl
      * @return
      */
@@ -141,13 +148,17 @@ public class HttpManager {
 
     static class ReceivedCookies implements Interceptor {
 
+
         @Override
         public Response intercept(Chain chain) throws IOException {
             Response originResponse = chain.proceed(chain.request());
+            HashSet<String> cookies = new HashSet<>();
             if (!originResponse.headers("Set-Cookie").isEmpty()) {
                 for (String header : originResponse.headers("Set-Cookie")) {
-                    cookies.add(header);
+                        cookies.add(header);
                 }
+                //将cookie保存到本地中
+                saveCookies(cookies);
             }
             return originResponse;
         }
@@ -159,6 +170,7 @@ public class HttpManager {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request.Builder builder = chain.request().newBuilder();
+            HashSet<String> cookies = getCookies();
             if (cookies != null) {
                 for (String cookie : cookies) {
                     builder.addHeader("Cookie", cookie);
@@ -167,5 +179,19 @@ public class HttpManager {
             }
             return chain.proceed(builder.build());
         }
+    }
+
+    private static void saveCookies(HashSet<String> cookie) {
+        SharedPreferences sp = BaseApp.getContext().getSharedPreferences(COOKIE_PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putStringSet(PREF_KEY, cookie);
+        editor.commit();
+        Log.d(TAG, "saveCookies: ");
+    }
+
+    private static HashSet<String> getCookies(){
+        SharedPreferences sp = BaseApp.getContext().getSharedPreferences(COOKIE_PREF,Context.MODE_PRIVATE);
+        Log.d(TAG, "getCookies: ");
+        return  (HashSet)sp.getStringSet(PREF_KEY, null);
     }
 }

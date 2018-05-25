@@ -1,7 +1,7 @@
-package com.example.dovebook.book.model;
+package com.example.dovebook.bean;
 
 /**
- * Created by 28748 on 2018/3/14.
+ * Created by zjs on 2018/3/14.
  */
 
 public class Copy{
@@ -96,5 +96,18 @@ public class Copy{
         this.updatedat = updatedat;
     }
 
-
+    @Override
+    public String toString() {
+        return "Copy{" +
+                "copyId='" + copyId + '\'' +
+                ", copyStatus=" + copyStatus +
+                ", bookId='" + bookId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", copyLatitude='" + copyLatitude + '\'' +
+                ", copyLongitude='" + copyLongitude + '\'' +
+                ", copyDetailloc='" + copyDetailloc + '\'' +
+                ", createdat=" + createdat +
+                ", updatedat=" + updatedat +
+                '}';
+    }
 }

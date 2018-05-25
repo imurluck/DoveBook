@@ -114,8 +114,8 @@
             android:layout_marginLeft="25dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
-            android:inputType="number"
             android:hint="书页"
+            android:inputType="number"
             android:maxLines="1" />
 
         <EditText
@@ -126,8 +126,8 @@
             android:layout_marginLeft="25dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
-            android:inputType="numberDecimal"
             android:hint="价格"
+            android:inputType="numberDecimal"
             android:maxLines="1" />
 
         <EditText
@@ -159,13 +159,12 @@
         <Button
             android:id="@+id/bt_book_upload"
             android:layout_width="match_parent"
-            android:background="@drawable/shape"
             android:layout_height="wrap_content"
             android:layout_below="@+id/et_book_abstract_upload"
             android:layout_margin="10dp"
             android:layout_marginTop="20dp"
+            android:background="@drawable/shape"
             android:text="保存" />
-
 
     </RelativeLayout>
 
