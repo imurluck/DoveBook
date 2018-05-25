@@ -35,7 +35,7 @@ public class LoginPresenter {
         pref=mContext.getSharedPreferences("loginMessage",Context.MODE_PRIVATE);
     }
 
-    public void login(String userName , String userPassword, final Context context,final TimeManager timeManager,final UserManager userManager) {
+    public void login(String userName , String userPassword,final TimeManager timeManager,final UserManager userManager) {
         logining= ProgressDialog.show(mContext, "提示", "正在登陆", false,true);
         Api api = HttpManager.getInstance().getApiService(Constant.BASE_LOGIN_URL);
         api.login(userName, userPassword)

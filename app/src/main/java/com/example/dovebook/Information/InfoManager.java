@@ -65,7 +65,7 @@ public class InfoManager extends BaseToolbarActivity {
 
     @Override
     protected void initOptions() {
-        mUserManager = new UserManager(this);
+        mUserManager = UserManager.getInstance();
         mInformationPresenter = new InformationPresenter(this);
         Glide.with(this).load(mUserManager.getUser().getUserAvatarPath()).into(circle_image);
 

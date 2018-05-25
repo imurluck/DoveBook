@@ -63,9 +63,7 @@ public class contactActivity extends BaseToolbarActivity {
     @Override
     protected void initOptions() {
         super.initOptions();
-        if (mUserManager == null) {
-            mUserManager = new UserManager(this);
-        }
+        mUserManager = UserManager.getInstance();
         //初始化各种监听事件
         initListener();
         mSideBar.setTextView(mTextView);
@@ -91,7 +89,8 @@ public class contactActivity extends BaseToolbarActivity {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
-                            case R.id.delete:mContactPresenter.onSendNetworkRequestAndDeleteContact(friend);
+                            case R.id.delete:
+                                mContactPresenter.onSendNetworkRequestAndDeleteContact(friend);
                                 break;
                             case R.id.check:
                                 break;

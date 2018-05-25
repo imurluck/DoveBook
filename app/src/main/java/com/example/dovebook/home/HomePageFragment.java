@@ -16,6 +16,7 @@ import com.example.dovebook.base.BaseFragment;
 import com.example.dovebook.contact.contactActivity;
 import com.example.dovebook.login.LoginActivity;
 import com.example.dovebook.login.TimeManager;
+import com.example.dovebook.login.UserManager;
 
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -50,7 +51,7 @@ public class HomePageFragment extends BaseFragment {
     @Override
     protected void initWidget(View view) {
         super.initWidget(view);
-        mUserManager=new com.example.dovebook.login.UserManager(getActivity());
+        mUserManager= UserManager.getInstance();
         home_information.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
