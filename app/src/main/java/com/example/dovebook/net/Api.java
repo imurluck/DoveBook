@@ -252,7 +252,7 @@ public interface Api {
      *
      */
     @DELETE("{friendId}")
-    Observable<retrofit2.Response<String>> deleteFriend(@Path("friendId") String friendId);
+    Observable<retrofit2.Response<Void>> deleteFriend(@Path("friendId") String friendId);
 
 
 

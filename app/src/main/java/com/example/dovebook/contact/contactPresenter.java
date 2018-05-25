@@ -20,6 +20,7 @@ import com.example.dovebook.contact.model.dbManager;
 import com.example.dovebook.login.UserManager;
 import com.example.dovebook.net.Api;
 import com.example.dovebook.net.HttpManager;
+import com.example.dovebook.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -199,14 +200,14 @@ public class contactPresenter {
         api.deleteFriend(friend.getFriendId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<String>>() {
+                .subscribe(new Observer<Response<Void>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(Response<String> sResponse) {
+                    public void onNext(Response<Void> sResponse) {
                         Log.d(TAG, "onNext: 123456");
 //                            mContactManager.deleteFriendFromFriendList(friend);
 //                            mContactManager.deleteContactFromDB(friend);
@@ -214,14 +215,16 @@ public class contactPresenter {
                         switch (sResponse.code()) {
 
                             case ResposeStatus.OK:
-                                Toast.makeText(mContactActivity,"删除成功",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContactActivity, "删除成功", Toast.LENGTH_SHORT).show();
                                 mContactManager.deleteFriendFromFriendList(friend);
                                 mContactManager.deleteContactFromDB(friend);
                                 mContactActivity.adapter.clearThenAddAll(mContactManager.getFriendList());
                                 break;
                             case ResposeStatus.NOCONTENT:
+                                ToastUtil.shortToast(sResponse.code()+"no content");
+                                break;
                             default:
-                                Toast.makeText(mContactActivity, "删除异常", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContactActivity, "未知删除异常", Toast.LENGTH_SHORT).show();
                         }
                     }
 

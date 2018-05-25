@@ -127,6 +127,9 @@ public abstract class contactAdapter extends RecyclerView.Adapter<contactAdapter
     }
 
     public void clearThenAddAll(List<Friend> friendList){
+        for(int i=0;i<friendList.size();i++){
+            Log.d(TAG, "clearThenAddAll: "+friendList.get(i).getUserName());
+        }
         if(mUserList!=null) {
             mUserList.clear();
             notifyDataSetChanged();

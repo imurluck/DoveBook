@@ -185,12 +185,19 @@ public class contactManager {
     }
 
     public void deleteFriendFromFriendList(Friend friend){
-        Log.d(TAG, "deleteFriendFromFriendList: ");
+        Log.d(TAG, "deleteFriendFromFriendList: friend.name="+friend.getUserName());
         for(int i=0;i<mFriendList.size();i++){
-            if(mFriendList.get(i).equals(friend.getUserName())){
+            Log.d(TAG, "beforeDeleteFriendFromFriendList: "+mFriendList.get(i).getUserName());
+        }
+        for(int i=0;i<mFriendList.size();i++){
+            Log.d(TAG, "deleteFriendFromFriendList: "+mFriendList.get(i).getUserName());
+            if(mFriendList.get(i).getUserName().equals(friend.getUserName())){
                 mFriendList.remove(i);
                 break;
             }
+        }
+        for(int i=0;i<mFriendList.size();i++){
+            Log.d(TAG, "afterDeleteFriendFromFriendList: "+mFriendList.get(i).getUserName());
         }
     }
 
