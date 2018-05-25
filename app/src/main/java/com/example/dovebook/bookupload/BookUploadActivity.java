@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -19,6 +20,7 @@ import com.example.dovebook.R;
 import com.example.dovebook.base.BaseActivity;
 import com.example.dovebook.bean.Book;
 import com.example.dovebook.images.ImageManager;
+import com.example.dovebook.utils.PhotoUtil;
 import com.example.dovebook.utils.StringUtil;
 import com.example.dovebook.utils.ToastUtil;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -217,7 +219,7 @@ public class BookUploadActivity extends BaseActivity implements BookUploadContra
 
     @Override
     public void showUploadProcess() {
-        mProgressDialog = ProgressDialog.show(this, "提示", "图书抛出中...", false, true);
+        mProgressDialog = ProgressDialog.show(this, "提示", "图书抛出中...", false, false);
     }
 
     @Override
@@ -261,18 +263,18 @@ public class BookUploadActivity extends BaseActivity implements BookUploadContra
 
             final String imgUrl = book.getBookImagepath();
 
-            ImageManager.getInstance().loadImage(this, imgUrl);
+            ImageManager.getInstance().loadImage(BookUploadActivity.this, imgUrl, bookImage);
 
-//            Thread t = new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    Bitmap image = ImageManager.getInstance().loadImage(BookUploadActivity.this, imgUrl);
-//                    file = PhotoUtil.getFileFromBitmap(image);
-//                    Log.d(TAG, "showBookInfo: 正确显示图片" + file.getAbsolutePath());
-//                }
-//            });
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Bitmap image = ImageManager.getInstance().loadImage(BookUploadActivity.this, "http://39.106.5.67/pic/book/cc751e5a-4705-11e8-bd05-00163e0ac98c/d231794f-b768-4ad7-9734-c2f9a2f3d0d4.jpg");
+                    file = PhotoUtil.getFileFromBitmap(image);
+                    Log.d(TAG, "showBookInfo: 正确显示图片" + file.getAbsolutePath());
+                }
+            }).start();
 
-//            t.start();
+            Log.d(TAG, "3333: 11111");
 
         }
     }

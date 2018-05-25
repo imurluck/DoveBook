@@ -75,8 +75,6 @@ public class BookPageFragment extends BaseFragment {
 
     private void initViews(View view) {
 
-
-
         /*getChildFragmentManager   和 getFragmentManager 的区别*/
         bookPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
             @Override

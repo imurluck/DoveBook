@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import com.example.dovebook.bean.Book;
 import com.example.dovebook.bookupload.model.BookModel;
 import com.example.dovebook.utils.StringUtil;
+import com.example.dovebook.utils.ToastUtil;
 import com.google.zxing.integration.android.IntentIntegrator;
 
 import java.io.File;
@@ -106,9 +107,10 @@ public class BookUploadPresenter implements BookUploadContract.UploadPresenter {
                                 RequestBody requestBookImagePath = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                                 MultipartBody.Part body = MultipartBody.Part.createFormData("bookimage", file.getName(), requestBookImagePath);
                                 mBookModel.uploadBook(book, body);
-
                             } else {
-                                mBookModel.uploadBook(book, null);
+                                mView.hideUploadPrecess();
+                                mView.showInfoErrors("图片错误");
+//                                mBookModel.uploadBook(book, null);
                             }
 
                         }
@@ -140,6 +142,9 @@ public class BookUploadPresenter implements BookUploadContract.UploadPresenter {
     public void onSuccessCompleteUpload() {
         mView.hideUploadPrecess();
         mView.showUploadSuccess();
+        //删除本地图片
+        mView.file.delete();
+
     }
 
     public void querytBookInfo(String isbn) {
@@ -157,7 +162,6 @@ public class BookUploadPresenter implements BookUploadContract.UploadPresenter {
         mView.hideUploadPrecess();
         mView.showInfoErrors("上传失败..");
     }
-
 
 
 }

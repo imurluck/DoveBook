@@ -4,8 +4,10 @@ import android.util.Log;
 
 import com.example.dovebook.bean.Book;
 import com.example.dovebook.bean.Copy;
+import com.example.dovebook.book.BookReceivedPresenter;
 import com.example.dovebook.book.BookSentPresenter;
 import com.example.dovebook.common.Constant;
+import com.example.dovebook.common.ResposeStatus;
 import com.example.dovebook.net.Api;
 import com.example.dovebook.net.HttpManager;
 
@@ -17,6 +19,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 /**
  * 处理数据操作
@@ -37,44 +40,55 @@ public class DataManager {
 
     private BookSentPresenter mSentPresenter;
 
+    private BookReceivedPresenter mReceivedPresenter;
+
     public DataManager(BookSentPresenter presenter) {
         this.mSentPresenter = presenter;
     }
 
+    public DataManager(BookReceivedPresenter presenter) {
+        this.mReceivedPresenter = presenter;
+    }
+
     public void getAllBooks() {
 
+        Log.d(TAG, "getAllBooks: onNext:");
         if (hasMoreBook) {
+            Log.d(TAG, "getAllBooks: onNext");
             Api api = HttpManager.getInstance().getApiService(Constant.BASE_URL);
             api.selectAllBooks(bookStartPosition, bookEndPosition)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<List<Book>>() {
+                    .subscribe(new Observer<Response<List<Book>>>() {
                         @Override
                         public void onSubscribe(Disposable d) {
+
                         }
 
                         @Override
-                        public void onNext(List<Book> books) {
-                            Log.d(TAG, "onNext: 图书单次请求");
-                            if (books == null || books.size() == 0) {
-                                //no more books
-                                hasMoreBook = false;
-//                                mSentPresenter.getAllBooksCallback(new ArrayList<Book>(allBooksSet.values()));
-                                Log.d(TAG, "onNext:222 "+books.size());
-                                getAllCopies();
-                            } else if (books.size() < 10) {
-                                //no more books
-                                Log.d(TAG, "onNext:111 "+books.size());
-                                hasMoreBook = false;
-                                addBookListToMap(books);
-//                                mSentPresenter.getAllBooksCallback(new ArrayList<Book>(allBooksSet.values()));
-                                getAllCopies();
-                            } else {
-                                //has more book
-                                bookStartPosition += 10;
-                                bookEndPosition += 10;
-                                addBookListToMap(books);
-                                getAllBooks();
+                        public void onNext(Response<List<Book>> listResponse) {
+                            switch (listResponse.code()) {
+                                case ResposeStatus.OK:
+                                    List<Book> books = listResponse.body();
+                                    if (books.size() < 10) {
+                                        //no more books
+                                        hasMoreBook = false;
+                                        addBookListToMap(books);
+                                        mSentPresenter.getAllBooksCallback(new ArrayList<Book>(allBooksSet.values()));
+                                    } else if (books.size() == 10) {
+                                        //has more book
+                                        bookStartPosition += 10;
+                                        bookEndPosition += 10;
+                                        addBookListToMap(books);
+                                        getAllBooks();
+                                    }
+                                    break;
+                                case ResposeStatus.NOCONTENT:
+                                    hasMoreBook = false;
+                                    mSentPresenter.getAllBooksCallback(new ArrayList<Book>(allBooksSet.values()));
+                                    break;
+                                default:
+                                    break;
                             }
                         }
 
@@ -85,10 +99,11 @@ public class DataManager {
 
                         @Override
                         public void onComplete() {
+
                         }
                     });
-        }
 
+        }
     }
 
     public void getAllCopies() {

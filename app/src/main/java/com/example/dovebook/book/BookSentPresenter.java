@@ -1,5 +1,7 @@
 package com.example.dovebook.book;
 
+import android.util.Log;
+
 import com.example.dovebook.bean.Book;
 import com.example.dovebook.bean.Copy;
 import com.example.dovebook.book.model.DataManager;
@@ -51,6 +53,7 @@ public class BookSentPresenter implements BookContract.BookSendPresenter {
     }
 
     public void getAllBooksCallback(List<Book> books) {
+        Log.d(TAG, "getAllBooksCallback: ");
         this.mBooks = books;
         mBookSentView.mSentAdapter.add(books);
     }

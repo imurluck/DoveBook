@@ -13,6 +13,7 @@ import java.util.Map;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Response;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
@@ -99,10 +100,10 @@ public interface Api {
      */
     @Multipart
     @POST(".")
-    Observable<Book> insertBook(@Part("bookPages") int bookPages,
-                                @Part("bookPrice") double bookPrice,
-                                @Part MultipartBody.Part bookImagepath,
-                                @PartMap Map<String, RequestBody> map);
+    Observable<Response<Book>> insertBook(@Part("bookPages") int bookPages,
+                                          @Part("bookPrice") double bookPrice,
+                                          @Part MultipartBody.Part bookImagepath,
+                                          @PartMap Map<String, RequestBody> map);
 
     /**
      * 更新图书
@@ -129,8 +130,8 @@ public interface Api {
      * @return Rxjava的observable对象
      */
     @GET("book/{startPosition}/{endPosition}")
-    Observable<List<Book>> selectAllBooks(@Path("startPosition") int startPosition,
-                                          @Path("endPosition") int endPosition);
+    Observable<Response<List<Book>>> selectAllBooks(@Path("startPosition") int startPosition,
+                                                    @Path("endPosition") int endPosition);
 
     /**
      * 调用豆瓣API  根据isbn获取图书信息
@@ -164,15 +165,11 @@ public interface Api {
      *
      * @param map
      * @param copyStatus
-     * @param createdat
-     * @param updatedat
      * @return
      */
     @POST("copy/")
     Observable<Copy> insertCopy(@PartMap Map<String, RequestBody> map,
-                                @Part boolean copyStatus,
-                                @Part long createdat,
-                                @Part long updatedat);
+                                @Part boolean copyStatus);
 
     /**
      * 根据copyId 删除 副本

@@ -8,6 +8,7 @@ import com.example.dovebook.bean.OrderBean;
 import com.example.dovebook.bookupload.BookUploadContract;
 import com.example.dovebook.bookupload.BookUploadPresenter;
 import com.example.dovebook.common.Constant;
+import com.example.dovebook.common.ResposeStatus;
 import com.example.dovebook.net.Api;
 import com.example.dovebook.net.HttpManager;
 import com.example.dovebook.utils.StringUtil;
@@ -22,10 +23,13 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class BookModel implements BookUploadContract.DataModel {
 
     private static final String TAG = "BookModel";
+
 
     private BookUploadPresenter mPresenter;
 
@@ -52,17 +56,28 @@ public class BookModel implements BookUploadContract.DataModel {
         api.insertBook(book.getBookPages(), book.getBookPrice(), bookImage, map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Book>() {
+                .subscribe(new Observer<Response<Book>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(Book book) {
-                        Log.d(TAG, "onNext: " + book);
-                        map.clear();
-                        mPresenter.onSuccessCompleteUpload();
+                    public void onNext(Response<Book> bookResponse) {
+                        switch (bookResponse.code()) {
+                            case ResposeStatus.CONFLICT:
+
+                            case ResposeStatus.CREATED:
+                                //成功上传图书
+                                Log.d(TAG, "onNext: " + bookResponse);
+                                map.clear();
+                                mPresenter.onSuccessCompleteUpload();
+
+                                break;
+                            default:
+                                break;
+                        }
+
                     }
 
                     @Override
@@ -110,6 +125,46 @@ public class BookModel implements BookUploadContract.DataModel {
                 });
     }
 
+
+    public void insertACopy(String bookId, String userId, String copyLatitude, String copyLongitude, String copyDetailloc, boolean copyStatus, long createdat, long updatedat) {
+
+        Api api = HttpManager.getInstance().getApiService(Constant.BASE_COPY_URL);
+
+        Map<String, RequestBody> requestBodyMap = new HashMap<>();
+
+        requestBodyMap.put("bookId", parseRequestBody(bookId));
+        requestBodyMap.put("userId", parseRequestBody(userId));
+        requestBodyMap.put("copyLatitude", parseRequestBody(copyLatitude));
+        requestBodyMap.put("copyLongitude", parseRequestBody(copyLongitude));
+        requestBodyMap.put("copyDetailloc", parseRequestBody(copyDetailloc));
+
+        api.insertCopy(requestBodyMap, copyStatus)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Copy>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Copy copy) {
+                        Log.d(TAG, "onNext: copy上传成功！");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "onError: " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
     private void insertAnOrder(String copyId, String preordersId, String userId, boolean ordersStates, int ordersCredit, long ordersStart, long ordersEnd, long createDate, long updateDate) {
         Api api = HttpManager.getInstance().getApiService(Constant.BASE_ORDER_URL);
 
@@ -132,44 +187,6 @@ public class BookModel implements BookUploadContract.DataModel {
                     @Override
                     public void onNext(OrderBean orderBean) {
                         Log.d(TAG, "onNext: order 生成成功！");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(TAG, "onError: " + e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
-    private void insertACopy(String bookId, String userId, String copyLatitude, String copyLongitude, String copyDetailloc, boolean copyStatus, long createdat, long updatedat) {
-
-        Api api = HttpManager.getInstance().getApiService(Constant.BASE_COPY_URL);
-
-        Map<String, RequestBody> requestBodyMap = new HashMap<>();
-
-        requestBodyMap.put("bookId", parseRequestBody(bookId));
-        requestBodyMap.put("userId", parseRequestBody(userId));
-        requestBodyMap.put("copyLatitude", parseRequestBody(copyLatitude));
-        requestBodyMap.put("copyLongitude", parseRequestBody(copyLongitude));
-        requestBodyMap.put("copyDetailloc", parseRequestBody(copyDetailloc));
-
-        api.insertCopy(requestBodyMap, copyStatus, createdat, updatedat)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Copy>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Copy copy) {
-                        Log.d(TAG, "onNext: copy上传成功！");
                     }
 
                     @Override

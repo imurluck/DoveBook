@@ -3,6 +3,9 @@ package com.example.dovebook.book;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,16 +23,20 @@ import butterknife.BindView;
 
 public class BookReceived_fragment extends BaseFragment {
 
+
+    @BindView(R.id.book_received_recycler)
+    RecyclerView mReceivedRecycler;
+
     RecyclerAdapter<Book> mReceivedAdapter;
+
 
     private BookReceivedPresenter mReceivedPresenter;
 
+
     public BookReceived_fragment() {
         // Required empty public constructor
-    }
+        mReceivedPresenter = new BookReceivedPresenter(this);
 
-    @Override
-    protected void initWidget(View view) {
         mReceivedAdapter = new RecyclerAdapter<Book>() {
             @Override
             protected int getItemViewType(int position, Book book) {
@@ -44,8 +51,16 @@ public class BookReceived_fragment extends BaseFragment {
     }
 
     @Override
-    protected void initData() {
+    protected void initWidget(View view) {
 
+        mReceivedRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        mReceivedRecycler.setAdapter(mReceivedAdapter);
+
+    }
+
+    @Override
+    protected void initData() {
+        mReceivedPresenter.initData();
     }
 
     @Override

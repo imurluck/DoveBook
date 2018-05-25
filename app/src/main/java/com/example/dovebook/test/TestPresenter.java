@@ -20,36 +20,9 @@ public class TestPresenter {
     private static final int BOOKENDPOSITION = 10;
 
 
-    public void getAllBooks() {
-        Api api = HttpManager.getInstance().getApiService(Constant.BASE_URL);
-        api.selectAllBooks(BOOKSTARTPOSITION, BOOKENDPOSITION)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<Book>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
-
-                    @Override
-                    public void onNext(List<Book> books) {
-                        if (books != null) {
-                            //获得图书数据
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-                    }
-                });
-    }
-
     /**
      * 删除图书
+     *
      * @param bookId
      */
     public void deleteABook(String bookId) {

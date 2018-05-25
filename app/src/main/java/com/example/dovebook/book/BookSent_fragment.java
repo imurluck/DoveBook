@@ -32,7 +32,7 @@ public class BookSent_fragment extends BaseFragment implements BookContract.View
     private BookSentPresenter mPresenter;
 
     @BindView(R.id.book_sent_recycler)
-    RecyclerView mRecycler;
+    RecyclerView mSentRecycler;
 
     @BindView(R.id.bt_book_add)
     FloatingActionButton mBookAddButton;
@@ -70,8 +70,8 @@ public class BookSent_fragment extends BaseFragment implements BookContract.View
 
     @Override
     protected void initWidget(View view) {
-        mRecycler.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-        mRecycler.setAdapter(mSentAdapter);
+        mSentRecycler.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+        mSentRecycler.setAdapter(mSentAdapter);
 
         mBookAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
