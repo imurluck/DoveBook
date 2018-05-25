@@ -3,6 +3,7 @@ package com.example.dovebook.base;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -12,6 +13,8 @@ import com.example.dovebook.R;
 import butterknife.ButterKnife;
 
 public abstract class BaseToolbarActivity extends AppCompatActivity {
+
+    private static final String TAG = "BaseToolbarActivity";
 
     //toolbar
     //@BindView(R.id.toolbar_base)

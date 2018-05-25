@@ -26,7 +26,6 @@ public class UserManager {
     public User getUser() {
         if (mUser == null) {
             mUser = new User();
-            mUser = new User();
             mUser.setUserName(pref.getString("userName", null));
             mUser.setUserId(pref.getString("userId", null));
             mUser.setUserPhone(pref.getLong("userPhone", 0));
@@ -59,6 +58,10 @@ public class UserManager {
 //        editor.putString("userProfile",user.getUserProfile().toString());
 //        editor.putString("userTaskcapacity",user.getUserTaskCapacity().toString());
         editor.apply();
+    }
+
+    public static String getUserId(){
+            return mUser.getUserId();
     }
 
 }

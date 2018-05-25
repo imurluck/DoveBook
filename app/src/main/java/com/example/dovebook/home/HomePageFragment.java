@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -14,7 +13,7 @@ import com.bumptech.glide.Glide;
 import com.example.dovebook.Information.InfoManager;
 import com.example.dovebook.R;
 import com.example.dovebook.base.BaseFragment;
-import com.example.dovebook.contact.contactManager;
+import com.example.dovebook.contact.contactActivity;
 import com.example.dovebook.login.LoginActivity;
 import com.example.dovebook.login.TimeManager;
 
@@ -62,7 +61,7 @@ public class HomePageFragment extends BaseFragment {
         home_friend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(),contactManager.class));
+                startActivity(new Intent(getActivity(),contactActivity.class));
             }
         });
 

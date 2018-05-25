@@ -48,7 +48,7 @@
         <activity android:name=".login.LoginActivity" android:launchMode="singleTask"/>
         <activity android:name=".Information.InfoManager" />
         <activity android:name=".register.register"/>
-        <activity android:name=".contact.contactManager"/>
+        <activity android:name=".contact.contactActivity"/>
     </application>
 
 </manifest>

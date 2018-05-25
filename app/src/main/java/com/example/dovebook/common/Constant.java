@@ -15,6 +15,10 @@ public class Constant {
 
     public static final String BASE_UPDATE_URL=BASE_URL+"user/";
 
+    public static final String BASE_GET_CONTACT_LIST_URL=BASE_UPDATE_URL+"friend/";
+
     public static final String BASE_BOOK_INSERT_URL = BASE_URL + "book/";
+
+    public static final String BASE_DELETE_FRIEND_URL=BASE_URL+"friend/";
 }
 

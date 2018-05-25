@@ -1,4 +1,4 @@
-package com.example.dovebook.contact;
+package com.example.dovebook.Information.infoUtil;
 
 /**
  * Created by zyd on 2018/4/12.

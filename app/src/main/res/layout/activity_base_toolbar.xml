@@ -22,7 +22,8 @@
                 android:layout_height="match_parent"
                 app:titleTextColor="@color/white"
                 android:background="@color/colorPrimary"
-                android:elevation="20dp">
+                android:elevation="20dp"
+                android:theme="@style/ToolbarTitleStyle">
 
             </android.support.v7.widget.Toolbar>
 

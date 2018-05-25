@@ -1,5 +1,6 @@
 package com.example.dovebook.net;
 
+import com.example.dovebook.base.model.Friend;
 import com.example.dovebook.base.model.User;
 import com.example.dovebook.book.model.Book;
 import com.example.dovebook.book.model.Copy;
@@ -11,6 +12,8 @@ import java.util.Map;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.Response;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -141,13 +144,17 @@ public interface Api {
      * 获取好友列表
      *
      * @param userId        用户ID
-     * @param startPosition 起始位置
-     * @param endPosition   结束位置
      */
-    @GET("friend/{userId}/{startPosition}/{endPosition}")
-    Observable<List<User>> getFriends(@Path("userId") String userId,
-                                      @Path("startPosition") int startPosition,
-                                      @Path("endPosition") int endPosition);
+    @GET("{userId}/0/20") Observable<List<Friend>> getFriends(@Path("userId") String userId);
+
+    /**
+     *删除好友
+     *
+     */
+    @DELETE("{friendId}")
+    Observable<retrofit2.Response<String>> deleteFriend(@Path("friendId") String friendId);
+
+
 
     @Multipart
     @POST(".")

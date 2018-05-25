@@ -6,12 +6,16 @@
         <item name="colorPrimary">@color/colorForgive</item>
         <item name="colorPrimaryDark">@color/colorForgive</item>
         <item name="colorAccent">@color/secondary_text</item>
-        <item name="android:actionMenuTextAppearance">@style/MenuTextStyle</item>
+        <!--<item name="actionMenuTextAppearance">@style/MenuTextStyle</item>-->
     </style>
     <style name="MenuTextStyle">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:actionMenuTextColor">@android:color/white</item>
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="ToolbarTitleStyle">
+        <item name="actionMenuTextColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 
 </resources>

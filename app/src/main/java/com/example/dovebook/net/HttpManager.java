@@ -88,6 +88,28 @@ public class HttpManager {
         Api api = retrofit.create(Api.class);
         return api;
     }
+    /***
+     *
+     *
+     * */
+    public Api getApiServiceWithoutGson(final String baseUrl) {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.connectTimeout(15, TimeUnit.SECONDS)
+                .readTimeout(15, TimeUnit.SECONDS)
+                //.addInterceptor(new ResponseInterceptor());
+                .addInterceptor(httpLoggingInterceptor)
+                .addInterceptor(new ReceivedCookies())
+                .addInterceptor(new AddCookiesInterceptor());
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .client(builder.build())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+        Api api = retrofit.create(Api.class);
+        return api;
+    }
+
 
     /**
      * 拦截器，用户查询网络请求返回的原始数据

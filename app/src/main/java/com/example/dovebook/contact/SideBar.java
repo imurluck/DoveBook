@@ -81,7 +81,7 @@ public class SideBar extends View {
         final int action = event.getAction();
         final float y = event.getY();
         final int oldChoose = choose;
-        final OnTouchingLetterChangedListener listener = onTouchingLetterChangedListener;
+//        final OnTouchingLetterChangedListener listener = onTouchingLetterChangedListener;
         final int c = (int) (y / getHeight() * b.length);// 点击y坐标所占总高度的比例*b数组的长度就等于点击b中的个数
         Log.d(TAG, "dispatchTouchEvent: "+c);
         switch (action) {
@@ -98,8 +98,8 @@ public class SideBar extends View {
                 setBackground(new ColorDrawable(0x00000000));
                 if (oldChoose != c) {
                     if (c >= 0 && c <b.length) {
-                        if (listener != null) {
-                            listener.onTouchingLetterChanged(b[c]);
+                        if (onTouchingLetterChangedListener != null) {
+                            onTouchingLetterChangedListener.onTouchingLetterChanged(b[c]);
                         }
                         if (mTextDialog != null) {
                             mTextDialog.setText(b[c]);

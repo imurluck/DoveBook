@@ -1,7 +1,6 @@
 package com.example.dovebook.contact;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,15 +8,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.dovebook.R;
-import com.example.dovebook.base.model.User;
+import com.example.dovebook.base.model.Friend;
 import com.example.dovebook.images.ImageManager;
-import com.example.dovebook.widget.recycler.RecyclerAdapter;
 
 
 import java.util.ArrayList;
@@ -32,13 +29,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public abstract class contactAdapter extends RecyclerView.Adapter<contactAdapter.ViewHolder> {
 
     private static String TAG = "contactAdapter";
-
-    List<User> mUserList;
-    private Context mContext;
+    OnMenuClickListener onMenuClickListener;
+    public List<Friend> mUserList;
 
     public contactAdapter(Context context) {
-        mUserList = new ArrayList<User>();
-        mContext = context;
+        mUserList = new ArrayList<Friend>();
     }
 
     @Override
@@ -49,7 +44,7 @@ public abstract class contactAdapter extends RecyclerView.Adapter<contactAdapter
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: " + position);
         holder.firstChar.setText(getFirstChar(position));
         if (position == 0) {
@@ -64,8 +59,16 @@ public abstract class contactAdapter extends RecyclerView.Adapter<contactAdapter
         } else {
             holder.Line_view.setVisibility(View.VISIBLE);
         }
-        ImageManager.getInstance().loadImage(mContext, mUserList.get(position).getUserAvatarPath(), holder.image);
+        ImageManager.getInstance().loadImage(getContext(), mUserList.get(position).getUserAvatarPath(), holder.image);
         holder.name.setText(mUserList.get(position).getUserName());
+        holder.view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                onMenuClickListener.onClick(mUserList.get(position),view);
+                return false;
+            }
+        });
+
     }
 
     @Override
@@ -89,32 +92,6 @@ public abstract class contactAdapter extends RecyclerView.Adapter<contactAdapter
             name = (TextView) view.findViewById(R.id.text_name);
             Line_view = (View) view.findViewById(R.id.line_view);
             mainContent=(RelativeLayout)view.findViewById(R.id.mainContent);
-            view.setLongClickable(true);
-            view.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    PopupMenu popupMenu = new PopupMenu(getContext(), view);
-                    MenuInflater inflater = popupMenu.getMenuInflater();
-                    inflater.inflate(R.menu.select_menu, popupMenu.getMenu());
-                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem menuItem) {
-                            switch (menuItem.getItemId()) {
-                                case R.id.delete:
-                                    break;
-                                case R.id.check:
-                                    break;
-                                default:
-                                    break;
-                            }
-                            return false;
-                        }
-                    });
-                    popupMenu.show();
-                    return false;
-                }
-            });
-
         }
     }
 
@@ -141,13 +118,31 @@ public abstract class contactAdapter extends RecyclerView.Adapter<contactAdapter
     }
 
 
-    public void add(List<User> list) {
+    public void add(List<Friend> list) {
         if (list != null && list.size() > 0) {
+            int start=mUserList.size();
             mUserList.addAll(list);
-            notifyItemRangeInserted(0, mUserList.size() - 1);
+            notifyItemRangeInserted(start, list.size());
+        }
+    }
+
+    public void clearThenAddAll(List<Friend> friendList){
+        if(mUserList!=null) {
+            mUserList.clear();
+            notifyDataSetChanged();
+            mUserList.addAll(friendList);
+            notifyItemRangeInserted(0, friendList.size());
         }
     }
 
     abstract public Context getContext();
+
+    public void setOnMenuClickListener(OnMenuClickListener onMenuClickListener){
+        this.onMenuClickListener=onMenuClickListener;
+    }
+
+    public interface OnMenuClickListener{
+        void onClick(Friend friend,View view);
+    }
 
 }

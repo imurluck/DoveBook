@@ -16,10 +16,10 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.dovebook.Information.infoUtil.isNumericUtil;
 import com.example.dovebook.R;
 import com.example.dovebook.base.BaseToolbarActivity;
 import com.example.dovebook.base.model.User;
-import com.example.dovebook.contact.isNumericUtil;
 import com.example.dovebook.login.UserManager;
 
 import java.io.File;
@@ -60,7 +60,6 @@ public class InfoManager extends BaseToolbarActivity {
 
     @Override
     protected String initToolbarTitle() {
-//        toolbar_textView.setVisibility(View.VISIBLE);
         return "我的资料";
     }
 
@@ -98,6 +97,7 @@ public class InfoManager extends BaseToolbarActivity {
             }
         });
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
