@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/pop_window_add_share_title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorForgive">
+
+        <ImageView
+            android:id="@+id/pop_window_add_share_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/ic_close_white_24dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="编辑我的分享"
+            android:textSize="@dimen/secondary_text_size"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/pop_window_add_share_publish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发表"
+            android:textSize="@dimen/secondary_text_size"
+            android:textColor="@color/divider_line"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"/>
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/pop_window_add_share_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_no_edge"
+        android:hint="尽情分享吧..."
+
+        android:layout_below="@id/pop_window_add_share_title_layout"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/pop_window_add_share_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pop_window_add_share_edit"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="25dp"
+        app:layoutManager="android.support.v7.widget.GridLayoutManager"
+        app:spanCount="4"></android.support.v7.widget.RecyclerView>
+
+
+    <!--<ImageView-->
+        <!--android:id="@+id/pop_window_add_share_camera"-->
+        <!--android:layout_width="70dp"-->
+        <!--android:layout_height="70dp"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_alignStart="@+id/pop_window_add_share_edit"-->
+        <!--android:layout_marginTop="194dp"-->
+        <!--android:background="@drawable/ic_add_a_camera_grey_70dp" />-->
+
+    <!--<ImageView-->
+        <!--android:layout_width="70dp"-->
+        <!--android:layout_height="70dp"-->
+
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_alignTop="@+id/pop_window_add_share_camera"-->
+        <!--android:layout_marginStart="103dp"-->
+        <!--android:background="@drawable/ic_photo_size_select_actual_grey_70dp" />-->
+
+</RelativeLayout>

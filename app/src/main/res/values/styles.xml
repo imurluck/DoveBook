@@ -1,11 +1,21 @@
 <resources>
-
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorForgive</item>
         <item name="colorPrimaryDark">@color/colorForgive</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="MyTablayoutTextAppearence" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">@dimen/secondary_text_size</item>
+    </style>
+
+
+    <style name="PopupWindowUpAndDownAnimation" >
+        <item name="android:windowEnterAnimation">@anim/pop_window_up_enter</item>
+        <item name="android:windowExitAnimation">@anim/pop_window_down_exit</item>
+    </style>
+
 
 </resources>

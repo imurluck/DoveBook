@@ -15,7 +15,10 @@
     <color name="divider_line">#e1e1e1</color>
 
     <color name="white">#ffffff</color>
+    <color name="light_white">#eeeeee</color>
     <color name="black">#212121</color>
 
     <color name="background_light_grey">#f9f7f7</color>
+    <color name="background_light_transpant_grey">#88f9f7f7</color>
+
 </resources>

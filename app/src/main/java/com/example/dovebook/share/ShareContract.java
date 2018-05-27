@@ -38,7 +38,7 @@ public interface ShareContract {
          * 从服务器中得到所有用户的分享,每次10条
          * @return 返回Moment序列
          */
-        void getAllUserListFromServer();
+        void getAllUserListFromServer(int type);
 
         /**
          * 从服务器中得到所有好友的分享,每次10条

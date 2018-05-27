@@ -1,52 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/share_nest_scroll"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    <LinearLayout
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        >
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/share_fragment_tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:tabMode="fixed"
+            app:tabIndicatorHeight="0dp"
+            app:tabSelectedTextColor="@color/white"
+            app:tabGravity="center"
+            app:tabTextColor="@color/divider_line"
+            app:tabTextAppearance="@style/MyTablayoutTextAppearence"
+            >
+
+        </android.support.design.widget.TabLayout>
+
+    <!--<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--android:id="@+id/share_fragment_toolbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="?attr/actionBarSize"-->
+        <!--android:background="@color/colorPrimary"-->
+        <!--app:layout_scrollFlags="scroll|snap|enterAlways">-->
+
+
+    <!--</android.support.v7.widget.Toolbar>-->
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/share_fragment_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/share_fragment_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
 
-        </android.support.v7.widget.RecyclerView>
-
-        <include
-            android:id="@+id/share_empty"
-            layout="@layout/recycler_empty"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/share_load_more"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="正在加载更多数据..."
-            android:textColor="@color/secondary_text"
-            android:textSize="@dimen/forth_text_size"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/share_no_more"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="木有更多数据了..."
-            android:textColor="@color/secondary_text"
-            android:textSize="@dimen/forth_text_size"
-            android:visibility="gone" />
-
-    </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

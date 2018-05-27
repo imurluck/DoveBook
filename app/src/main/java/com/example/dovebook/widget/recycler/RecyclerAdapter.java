@@ -94,6 +94,7 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
     @Override
     public void onBindViewHolder(ViewHolder<Data> holder, int position) {
         Data data = mDataList.get(position);
+        holder.totleCount = getItemCount();
         holder.bind(data);
     }
 
@@ -119,6 +120,11 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
         notifyItemInserted(mDataList.size() - 1);
     }
 
+    public void add(int index, Data data) {
+        this.mDataList.add(index, data);
+        notifyItemInserted(index);
+    }
+
     /**
      * 插入一组数据并通知更新
      * @param dataList 数据集合
@@ -128,7 +134,6 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
             int startPosition = mDataList.size();
             Collections.addAll(mDataList, dataList);
             notifyItemRangeInserted(startPosition, dataList.length);
-
         }
     }
 
@@ -141,6 +146,26 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
             int startPosition = mDataList.size();
             mDataList.addAll(dataList);
             notifyItemRangeInserted(startPosition, dataList.size());
+        }
+    }
+
+    /**
+     * 删除数据并更新
+     * @param position 删除数据所在位置
+     */
+    public void remove(int position) {
+        mDataList.remove(position);
+        notifyItemRemoved(position);
+    }
+    /**
+     * 在某个位置插入一组数据
+     * @param index
+     * @param dataList
+     */
+    public void add(int index, Collection<Data> dataList) {
+        if (dataList != null && dataList.size() > 0) {
+            mDataList.addAll(index, dataList);
+            notifyItemRangeInserted(index, dataList.size());
         }
     }
 
@@ -230,6 +255,7 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
         private Unbinder mUnbinder;
         private Data mData;
         private AdapterCallback<Data> mCallback;
+        protected int totleCount;
 
         public ViewHolder(View itemView) {
             super(itemView);

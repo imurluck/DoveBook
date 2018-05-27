@@ -1,10 +1,14 @@
 package com.example.dovebook.sharedetail;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,9 +22,22 @@ import com.example.dovebook.widget.recycler.RecyclerAdapter;
 
 import butterknife.BindView;
 
-public class ShareDetailActivity extends BaseToolbarActivity {
+public class ShareDetailActivity extends BaseToolbarActivity
+        implements ShareDetailContract.View {
 
     private static final String TAG = "ShareDetailActivity";
+
+    private Animation showAnimation;
+    private Animation hideAnimation;
+
+    private ShareDetailContract.Presenter mPresenter;
+
+    @BindView(R.id.share_detail_nest_scroll)
+    NestedScrollView mScrollView;
+
+    //vote_button
+    @BindView(R.id.action_button_vote)
+    FloatingActionButton mActionButton;
     //moment值
     private Moment mMoment;
     //用户名称
@@ -42,8 +59,8 @@ public class ShareDetailActivity extends BaseToolbarActivity {
     @BindView(R.id.share_detail_moment_picture_recycler)
     RecyclerView mPictureRecycler;
     //点赞图标
-    @BindView(R.id.share_detail_vote)
-    ImageView mMomentVote;
+    //@BindView(R.id.share_detail_vote)
+    //ImageView mMomentVote;
     //点赞数量显示
     @BindView(R.id.share_detail_vote_count)
     TextView mMomentVoteCount;
@@ -86,6 +103,7 @@ public class ShareDetailActivity extends BaseToolbarActivity {
      */
     @Override
     protected void initOptions() {
+        mPresenter = new ShareDetailPresenter(this);
         initViews();
     }
 
@@ -93,6 +111,10 @@ public class ShareDetailActivity extends BaseToolbarActivity {
      * 初始化View
      */
     private void initViews() {
+        showAnimation = AnimationUtils.loadAnimation(this, R.anim.action_button_show);
+        hideAnimation = AnimationUtils.loadAnimation(this, R.anim.action_button_hide);
+        mScrollView.setOnScrollChangeListener(new VerticalOnScrollListener());
+        mMomentVoteCount.setText(mMoment.getMomentVoteCount() + "赞");
         //设置根布局背景色
         mRootLayout.setBackgroundColor(getResources().getColor(R.color.background_light_grey));
         //显示moment的信息
@@ -128,6 +150,12 @@ public class ShareDetailActivity extends BaseToolbarActivity {
         mPictureRecycler.setNestedScrollingEnabled(false);
         mPictureRecycler.setFocusable(false);
         mPictureRecycler.setAdapter(mAdapter);
+        mActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.vote();
+            }
+        });
     }
 
     /**
@@ -148,10 +176,31 @@ public class ShareDetailActivity extends BaseToolbarActivity {
         }
     }
 
+    class VerticalOnScrollListener implements NestedScrollView.OnScrollChangeListener {
+        private boolean isShow = true;
+        @Override
+        public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            Log.e(TAG, "onScrollChange: scrollY = " + scrollY);
+            Log.e(TAG, "onScrollChange: oldScrollY = " + oldScrollY);
+            if ((scrollY - oldScrollY) > 0 && isShow) {
+                showAnimation.cancel();
+                mActionButton.startAnimation(hideAnimation);
+                isShow = false;
+            } else if ((scrollY - oldScrollY) < 0 && !isShow) {
+                hideAnimation.cancel();
+                mActionButton.startAnimation(showAnimation);
+                Log.e(TAG, "onScrollChange: ");
+                isShow = true;
+            }
+        }
+    }
+
     @Override
     protected void initHomeButton() {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
+
+
 }

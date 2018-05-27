@@ -19,24 +19,27 @@ public abstract class BaseFragment extends Fragment {
 
     private  final String TAG = this.toString();
 
-    protected static Context mContext;
+    protected Context mContext;
     //根部据view
     protected View mRoot;
 
+    private boolean mIsFirstLoad = true;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mRoot == null) {
             //初始化当前的根布局，但是不在创建时就添加到container中，所以传入false
             mRoot = inflater.inflate(getContentLayoutId(), container, false);
-            initWidget(mRoot);
+            ButterKnife.bind(this, mRoot);
+            if (mIsFirstLoad) {
+                initWidget(mRoot);
+            }
         } else {
             if (mRoot.getParent() != null) {
                 //如果mRoot回收不及时，父布局不为空时，就将其从父布局中移除，从而绑定到当前的父布局中
                 ((ViewGroup) mRoot.getParent()).removeView(mRoot);
             }
         }
-        ButterKnife.bind(this, mRoot);
         Log.e(TAG, "onCreateView: ");
         return mRoot;
     }
@@ -48,7 +51,9 @@ public abstract class BaseFragment extends Fragment {
         //防止replace后重复创建对象，以造成内存吃紧，大的对象最好是直接在构造函数中创建，或者是在业务逻辑中确认不会
         // 重复创建可以在里面创建
         Log.e(TAG, "onViewCreated: ");
-        initData();
+        if (mIsFirstLoad) {
+            initData();
+        }
     }
 
     /**
@@ -58,11 +63,20 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        initArgs(getArguments());
+        if (mIsFirstLoad) {
+            initArgs(getArguments());
+        }
         if (getActivity() != null) {
             mContext = getActivity();
         }
         Log.e(TAG, "onAttach: ");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e(TAG, "onResume: ");
+        mIsFirstLoad = false;
     }
 
     /**
@@ -76,7 +90,7 @@ public abstract class BaseFragment extends Fragment {
      * @param view
      */
     protected void initWidget(View view) {
-        ButterKnife.bind(this, view);
+
     }
 
     /**

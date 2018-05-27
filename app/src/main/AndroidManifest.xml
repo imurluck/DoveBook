@@ -42,7 +42,18 @@
             android:value="X6xZ5tLWckx7Ob9TgK363664HOa7xFTp" />
 
         <activity android:name=".sharedetail.ShareDetailActivity" />
-        <activity android:name=".base.BaseToolbarActivity"></activity>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.exmaple.dovebook.file.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/img_file_provider_path"/>
+
+        </provider>
     </application>
 
 </manifest>

@@ -46,6 +46,8 @@ dependencies {
     //glide 图片加载框架
     compile 'com.github.bumptech.glide:glide:3.8.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    //知乎图片选择框架
+    compile 'com.zhihu.android:matisse:0.4.3'
     testCompile 'junit:junit:4.12'
     compile files('libs/BaiduLBS_Android.jar')
 }

@@ -1,123 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_light_grey">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/share_detail_nest_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.dovebook.sharedetail.ShareDetailActivity">
+        android:background="@color/background_light_grey"
+        android:orientation="vertical">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/share_detail_user_portrait_layout"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/white"
-            app:cardCornerRadius="25dp">
+        <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="com.example.dovebook.sharedetail.ShareDetailActivity">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/share_detail_user_portrait_layout"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/white"
+                app:cardCornerRadius="25dp">
+
+                <ImageView
+                    android:id="@+id/share_detail_user_portrait"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_portrait_test" />
+
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/share_detail_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/share_detail_user_portrait_layout"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/share_detail_user_portrait_layout"
+                android:text="name"
+                android:textAllCaps="false"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/third_text_size" />
 
             <ImageView
-                android:id="@+id/share_detail_user_portrait"
+                android:id="@+id/share_detail_user_sex"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignLeft="@id/share_detail_user_name"
+                android:layout_below="@id/share_detail_user_name"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/share_detail_moment_publish_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/share_detail_user_name"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="4dp"
+                android:layout_toRightOf="@id/share_detail_user_sex"
+                android:text="远古"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/third_text_size" />
+
+            <TextView
+                android:id="@+id/share_detail_follow"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:layout_alignTop="@id/share_detail_user_portrait_layout"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/edge_text"
+                android:gravity="center"
+                android:text="关注"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/third_text_size" />
+
+            <TextView
+                android:id="@+id/share_detail_moment_content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/ic_portrait_test" />
+                android:layout_height="wrap_content"
+                android:layout_below="@id/share_detail_user_sex"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/background_light_grey"
+                android:text="it is test content"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/secondary_text_size" />
 
-        </android.support.v7.widget.CardView>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/share_detail_moment_picture_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/share_detail_moment_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp">
 
-        <TextView
-            android:id="@+id/share_detail_user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/share_detail_user_portrait_layout"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/share_detail_user_portrait_layout"
-            android:text="name"
-            android:textAllCaps="false"
-            android:textColor="@color/primary_text"
-            android:textSize="@dimen/third_text_size" />
+            </android.support.v7.widget.RecyclerView>
 
-        <ImageView
-            android:id="@+id/share_detail_user_sex"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_alignLeft="@id/share_detail_user_name"
-            android:layout_below="@id/share_detail_user_name"
-            android:layout_marginTop="8dp" />
+            <!--<ImageView-->
+                <!--android:id="@+id/share_detail_vote"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@id/share_detail_moment_picture_recycler"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:background="@drawable/ic_vote_grey" />-->
 
-        <TextView
-            android:id="@+id/share_detail_moment_publish_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/share_detail_user_name"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="4dp"
-            android:layout_toRightOf="@id/share_detail_user_sex"
-            android:text="远古"
-            android:textColor="@color/secondary_text"
-            android:textSize="@dimen/third_text_size" />
+            <TextView
+                android:id="@+id/share_detail_vote_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/share_detail_moment_picture_recycler"
+                android:layout_centerHorizontal="true"
+                android:text="0赞"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/third_text_size" />
 
-        <TextView
-            android:id="@+id/share_detail_follow"
-            android:layout_width="90dp"
-            android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@id/share_detail_user_portrait_layout"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/edge_text"
-            android:gravity="center"
-            android:text="关注"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/secondary_text_size" />
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/share_detail_moment_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/share_detail_user_sex"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/background_light_grey"
-            android:text="it is test content"
-            android:textColor="@color/primary_text"
-            android:textSize="@dimen/secondary_text_size" />
+    </android.support.v4.widget.NestedScrollView>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/share_detail_moment_picture_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/share_detail_moment_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp">
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/action_button_vote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_above="@id/empty_view"
+        android:src="@drawable/ic_vote_grey"
+        android:clickable="true"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabSize="mini" />
 
-        </android.support.v7.widget.RecyclerView>
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="true"/>
 
-        <ImageView
-            android:id="@+id/share_detail_vote"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/share_detail_moment_picture_recycler"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/ic_vote_grey" />
-
-        <TextView
-            android:id="@+id/share_detail_vote_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/share_detail_vote"
-            android:layout_centerHorizontal="true"
-            android:text="0赞"
-            android:textColor="@color/secondary_text"
-            android:textSize="@dimen/third_text_size" />
-
-
-    </RelativeLayout>
-
-</android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

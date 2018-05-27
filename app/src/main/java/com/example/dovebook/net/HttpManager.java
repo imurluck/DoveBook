@@ -1,6 +1,10 @@
 package com.example.dovebook.net;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
+
+import com.example.dovebook.net.process.ProcessInterceptor;
+import com.example.dovebook.net.process.ProcessListener;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -85,6 +89,28 @@ public class HttpManager {
         return api;
     }
 
+    /**
+     * 带进度监听的
+     * @param baseUrl
+     * @param listener {@link ProcessListener} 进度监听器， 用于监听上传下载进度
+     * @return
+     */
+    public Api getApiService(final String baseUrl, @Nullable ProcessListener listener) {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.connectTimeout(15, TimeUnit.SECONDS)
+                .addInterceptor(httpLoggingInterceptor)
+                .addInterceptor(new ReceivedCookies())
+                .addInterceptor(new AddCookiesInterceptor())
+                .addNetworkInterceptor(new ProcessInterceptor(listener));
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .client(builder.build())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        return retrofit.create(Api.class);
+    }
     /**
      * 拦截器，用户查询网络请求返回的原始数据
      */

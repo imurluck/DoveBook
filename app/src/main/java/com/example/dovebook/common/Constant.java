@@ -11,5 +11,7 @@ public class Constant {
     //分享网络基址
     public static final String BASE_MOMENT_URL = BASE_URL + "listmoment/";
 
+    public static final String BASE_MOMENT_PIC_URL = BASE_URL + "momentpic/";
+
     public static final String BASE_LOGIN_URL = BASE_URL + "login/";
 }

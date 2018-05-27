@@ -5,6 +5,7 @@
     android:id="@+id/root_layout_base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.example.dovebook.base.BaseActivity">
 
 
