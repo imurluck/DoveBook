@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#e7e3e3"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D9D9D9" />
+
+    <RelativeLayout
+        android:id="@+id/relative0"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ffffff"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp">
+
+        <TextView
+            android:id="@+id/head_portrait"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="6dp"
+            android:text="头像"
+            android:textColor="#000000"
+            android:textSize="20dp" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circle_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignBottom="@+id/head_portrait"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="23dp"
+            android:background="@null" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D9D9D9" />
+
+    <RelativeLayout
+        android:id="@+id/relative1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:background="#ffffff">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:padding="6dp"
+            android:text="姓名"
+            android:layout_centerVertical="true"
+            android:textSize="20dp"
+            android:textColor="#000000"/>
+
+        <EditText
+            android:id="@+id/name_ediText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/name"
+            android:background="@null"
+            android:hint="姓名"
+            android:textColorHint="#cccccc"
+            android:textSize="20dp"
+            android:textColor="#000000" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D9D9D9" />
+
+    <RelativeLayout
+        android:id="@+id/relative2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:background="#ffffff">
+
+        <TextView
+            android:id="@+id/tel"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:padding="6dp"
+            android:text="电话"
+            android:layout_centerVertical="true"
+            android:textSize="20dp"
+            android:textColor="#000000"/>
+
+        <EditText
+            android:id="@+id/tel_ediText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/tel"
+            android:background="@null"
+            android:hint="电话"
+            android:textColorHint="#cccccc"
+            android:textSize="20dp"
+            android:textColor="#000000"/>
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D9D9D9" />
+
+    <RelativeLayout
+        android:id="@+id/relative3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:background="#ffffff">
+
+        <TextView
+            android:id="@+id/mail"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:padding="6dp"
+            android:text="邮箱"
+            android:layout_centerVertical="true"
+            android:textSize="20dp"
+            android:textColor="#000000"/>
+
+        <EditText
+            android:id="@+id/mail_ediText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/mail"
+            android:background="@null"
+            android:hint="邮箱"
+            android:textColorHint="#cccccc"
+            android:textSize="20dp"
+            android:textColor="#000000"/>
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D9D9D9" />
+    <RelativeLayout
+        android:id="@+id/relative4"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:background="#ffffff">
+
+        <TextView
+            android:id="@+id/age"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:padding="6dp"
+            android:text="年龄"
+            android:layout_centerVertical="true"
+            android:textSize="20dp"
+            android:textColor="#000000"/>
+
+        <EditText
+            android:id="@+id/age_ediText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/age"
+            android:background="@null"
+            android:hint="年龄"
+            android:textColorHint="#cccccc"
+            android:textSize="20dp"
+            android:textColor="#000000"/>
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D9D9D9" />
+
+</LinearLayout>

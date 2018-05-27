@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.dovebook.R;
+import com.example.dovebook.contact.contactAdapter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -288,4 +289,5 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
             }
         }
     }
+
 }

@@ -3,14 +3,18 @@ package com.example.dovebook.base;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.example.dovebook.R;
 
 import butterknife.ButterKnife;
 
 public abstract class BaseToolbarActivity extends AppCompatActivity {
+
+    private static final String TAG = "BaseToolbarActivity";
 
     //toolbar
     //@BindView(R.id.toolbar_base)
@@ -25,7 +29,7 @@ public abstract class BaseToolbarActivity extends AppCompatActivity {
         mRootLayout = (LinearLayout) findViewById(R.id.root_layout_base);
         mToolbar = (Toolbar) findViewById(R.id.toolbar_base);
         if (initArgs(savedInstanceState)) {
-            mRootLayout.addView(initContentView());
+            mRootLayout.addView(initContentView(),new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
             ButterKnife.bind(this);
             initToolbar();
             initOptions();

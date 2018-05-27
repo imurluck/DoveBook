@@ -140,7 +140,7 @@ public class ShareDetailActivity extends BaseToolbarActivity
             }
 
             @Override
-            protected ViewHolder<MomentPicture> onCreateViewHolder(View root, int viewType) {
+            protected ViewHolder onCreateViewHolder(View root, int viewType) {
                 return new ShareDetailActivity.ViewHolder(root);
             }
         };

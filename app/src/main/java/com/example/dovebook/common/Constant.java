@@ -14,4 +14,26 @@ public class Constant {
     public static final String BASE_MOMENT_PIC_URL = BASE_URL + "momentpic/";
 
     public static final String BASE_LOGIN_URL = BASE_URL + "login/";
+
+    public static final String BASE_UPDATE_URL = BASE_URL + "user/";
+
+    //图书基址
+    public static final String BASE_BOOK_URL = BASE_URL + "book/";
+    //豆瓣条形码查询地址
+    public static final String DOUBAN_ISBN_URL = "https://api.douban.com/v2/book/isbn/";
+    //副本基址
+    public static final String BASE_COPY_URL = BASE_URL + "copy/";
+    //用户Copy基址
+    public static final String BASE_USERCOPY_URL = BASE_URL + "usercopy/";
+    //orders基址
+    public static final String BASE_ORDER_URL = BASE_URL + "orders/";
+
+
+
+    public static final String BASE_GET_CONTACT_LIST_URL=BASE_UPDATE_URL+"friend/";
+
+    public static final String BASE_BOOK_INSERT_URL = BASE_URL + "book/";
+
+    public static final String BASE_DELETE_FRIEND_URL=BASE_URL+"friend/";
 }
+

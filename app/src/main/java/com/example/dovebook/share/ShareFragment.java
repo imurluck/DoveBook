@@ -35,6 +35,7 @@ public class ShareFragment extends BaseFragment {
     private ArrayList<BaseFragment> mFragments;
     private String[] mTabTitles;
 
+
     private ShareViewPagerAdapter mAdapter;
     @Override
     protected int getContentLayoutId() {

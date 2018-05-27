@@ -5,13 +5,5 @@
     <include android:id="@+id/location_fragment_search"
         layout="@layout/search_layout" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/location_fragment_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/location_fragment_search"
-        >
-
-    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

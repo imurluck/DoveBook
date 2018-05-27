@@ -10,16 +10,17 @@ import com.example.dovebook.base.BaseActivity;
 import com.example.dovebook.book.BookPageFragment;
 import com.example.dovebook.home.HomePageFragment;
 import com.example.dovebook.location.LocationPageFragment;
+import com.example.dovebook.login.TimeManager;
 import com.example.dovebook.share.ShareFragment;
 
 public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
     BottomNavigationBar bottomNavigationBar;
-
     BookPageFragment bookFragment;
     HomePageFragment homeFragment;
     LocationPageFragment locationFragment;
     ShareFragment shareFragment;
+    TimeManager mTimeManager;
 
     /**
      * 初始化内容布局
@@ -27,6 +28,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
      */
     @Override
     protected View initContentView() {
+        mTimeManager= new TimeManager(MainActivity.this);
+        /**if (!mTimeManager.isLoginTime()) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }*/
         View view = getLayoutInflater().inflate(R.layout.activity_main, null);
         return view;
     }
@@ -91,7 +97,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 .setBarBackgroundColor(R.color.white)
                 .setActiveColor(R.color.colorPrimary)
                 .setInActiveColor(R.color.secondary_text)
-                .setFirstSelectedPosition(1)
+                .setFirstSelectedPosition(0)
                 .initialise();
 
         bottomNavigationBar.setTabSelectedListener(this);
@@ -149,11 +155,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     private void setDefaultFragment() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        if (locationFragment == null) {
-            locationFragment = new LocationPageFragment();
+        if (bookFragment == null) {
+            bookFragment = new BookPageFragment();
         }
-        fragmentTransaction.replace(R.id.tb, locationFragment);
+        fragmentTransaction.replace(R.id.tb, bookFragment);
         fragmentTransaction.commit();
     }
+
+
 
 }

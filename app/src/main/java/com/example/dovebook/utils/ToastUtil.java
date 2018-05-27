@@ -12,5 +12,5 @@ public class ToastUtil {
 
     public static void shortToast(String content) {
         Toast.makeText(BaseApp.getContext(), content, Toast.LENGTH_SHORT).show();
-    }
+}
 }

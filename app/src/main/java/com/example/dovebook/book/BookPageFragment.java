@@ -16,9 +16,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.dovebook.R;
+import com.example.dovebook.base.BaseFragment;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import permission.util.PermissionFail;
 import permission.util.PermissionGen;
 import permission.util.PermissionSuccess;
@@ -27,37 +29,54 @@ import permission.util.PermissionSuccess;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BookPageFragment extends Fragment {
+public class BookPageFragment extends BaseFragment {
 
     private static final String TAG = "BookPageFragment";
 
     private ArrayList<Fragment> mFragment;
 
+    @BindView(R.id.book_pager)
+    ViewPager bookPager;
+
     public BookPageFragment() {
         // Required empty public constructor
     }
 
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
+//        // Inflate the layout for this fragment
+//        super.onCreateView(inflater, container, savedInstanceState);
+//
+//       View view = inflater.inflate(R.layout.fragment_book_page, container, false);
+//
+//        Log.d(TAG, "onCreateView: 111");
+//        mFragment = new ArrayList<>();
+//        mFragment.add(new BookReceived_fragment());
+//        mFragment.add(new BookSent_fragment());
+//        initViews(view);
+//
+//        return view;
+//    }
+
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-
-       View view = inflater.inflate(R.layout.fragment_book_page, container, false);
-
+    protected void initWidget(View view) {
         mFragment = new ArrayList<>();
         mFragment.add(new BookReceived_fragment());
         mFragment.add(new BookSent_fragment());
         initViews(view);
-        requestPermissions();
-        return view;
+    }
+
+    @Override
+    protected int getContentLayoutId() {
+        return R.layout.fragment_book_page;
     }
 
     private void initViews(View view) {
-        ViewPager bookPager = (ViewPager) view.findViewById (R.id.book_pager);
 
         /*getChildFragmentManager   和 getFragmentManager 的区别*/
-        bookPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
+        bookPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
                 return mFragment.get(position);
@@ -80,36 +99,5 @@ public class BookPageFragment extends Fragment {
                 }
             }
         });
-    }
-
-    private void requestPermissions() {
-        PermissionGen
-                .with(this)
-                .permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.CAMERA)
-                .addRequestCode(100)
-                .request();
-    }
-
-    @PermissionSuccess(requestCode = 100)
-    private void requestPermissionSuccess() {
-        Toast.makeText(this.getContext(), "permission rquest success",
-                Toast.LENGTH_SHORT).show();
-    }
-
-    @PermissionFail(requestCode = 100)
-    public void requestPermissionFail() {
-        Toast.makeText(this.getContext(), "permission request failed",
-                Toast.LENGTH_SHORT).show();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        Log.e(TAG, "onRequestPermissionsResult: ");
-        Toast.makeText(this.getContext(), "has result in fragment",
-                Toast.LENGTH_SHORT).show();
-        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
     }
 }

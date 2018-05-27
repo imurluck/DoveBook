@@ -24,14 +24,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         Log.e(TAG, "onCreate: ");
         mRootLayout = (RelativeLayout) findViewById(R.id.root_layout_base);
         if (initArgs(savedInstanceState)) {
-            mRootLayout.addView(initContentView());
+            mRootLayout.addView(initContentView(),new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
             ButterKnife.bind(this);
             initOptions();
         } else {
             finish();
         }
     }
-
 
     @Override
     protected void onResume() {
