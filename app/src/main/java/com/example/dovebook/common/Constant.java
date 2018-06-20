@@ -35,5 +35,9 @@ public class Constant {
     public static final String BASE_BOOK_INSERT_URL = BASE_URL + "book/";
 
     public static final String BASE_DELETE_FRIEND_URL=BASE_URL+"friend/";
+
+    public static final String BASE_GET_REQUESTS_URL=BASE_URL+"user/fromfriend/";
+
+    public static final String BASE_UPDATE_FRIEND_RECORD_URL=BASE_URL+"friend/";
 }
 

@@ -1,5 +1,8 @@
 package com.example.dovebook.base.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -8,7 +11,7 @@ import java.util.Date;
  * Created by zzx on 18-1-28.
  */
 
-public class User {
+public class User implements Parcelable{
 
     private String userId;
 
@@ -51,6 +54,106 @@ public class User {
     private long createAt;
     @SerializedName("updatedat")
     private long updateAt;
+
+    protected User(Parcel in) {
+        userId = in.readString();
+        userName = in.readString();
+        userPassword = in.readString();
+        userPhone = in.readLong();
+        userEmail = in.readString();
+        userBgPath = in.readString();
+        userAvatarPath = in.readString();
+        userSex = in.readString();
+        if (in.readByte() == 0) {
+            userAge = null;
+        } else {
+            userAge = in.readInt();
+        }
+        userProfile = in.readString();
+        if (in.readByte() == 0) {
+            userTaskCapacity = null;
+        } else {
+            userTaskCapacity = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            userAccuracy = null;
+        } else {
+            userAccuracy = in.readFloat();
+        }
+        byte tmpUserPhoneVerified = in.readByte();
+        userPhoneVerified = tmpUserPhoneVerified == 0 ? null : tmpUserPhoneVerified == 1;
+        byte tmpUserEmailVerified = in.readByte();
+        userEmailVerified = tmpUserEmailVerified == 0 ? null : tmpUserEmailVerified == 1;
+        byte tmpUserIsRequester = in.readByte();
+        userIsRequester = tmpUserIsRequester == 0 ? null : tmpUserIsRequester == 1;
+        userArrive = in.readLong();
+        userDepart = in.readLong();
+        userLatitude = in.readString();
+        userLongitude = in.readString();
+        createAt = in.readLong();
+        updateAt = in.readLong();
+    }
+
+    public User() {
+
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(userId);
+        dest.writeString(userName);
+        dest.writeString(userPassword);
+        dest.writeLong(userPhone);
+        dest.writeString(userEmail);
+        dest.writeString(userBgPath);
+        dest.writeString(userAvatarPath);
+        dest.writeString(userSex);
+        if (userAge == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(userAge);
+        }
+        dest.writeString(userProfile);
+        if (userTaskCapacity == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(userTaskCapacity);
+        }
+        if (userAccuracy == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeFloat(userAccuracy);
+        }
+        dest.writeByte((byte) (userPhoneVerified == null ? 0 : userPhoneVerified ? 1 : 2));
+        dest.writeByte((byte) (userEmailVerified == null ? 0 : userEmailVerified ? 1 : 2));
+        dest.writeByte((byte) (userIsRequester == null ? 0 : userIsRequester ? 1 : 2));
+        dest.writeLong(userArrive);
+        dest.writeLong(userDepart);
+        dest.writeString(userLatitude);
+        dest.writeString(userLongitude);
+        dest.writeLong(createAt);
+        dest.writeLong(updateAt);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public String getUserId() {
         return userId;

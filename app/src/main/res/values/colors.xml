@@ -23,5 +23,8 @@
 
     <color name="textBlue">#79c0fe</color>
 
+    <color name="agree">#009925</color>
+    <color name="disagree">#d50f25</color>
+
     <color name="theme_bg_color">#f0f2f5</color>
 </resources>

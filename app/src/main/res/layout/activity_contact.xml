@@ -4,44 +4,77 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <LinearLayout
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:layout_marginTop="5dp"
+    <RelativeLayout
+        android:id="@+id/head"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="@drawable/shape_search"
-        android:orientation="horizontal">
+        android:layout_height="50dp">
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/shape_search"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="3dp"
+                android:scaleType="centerInside"
+                android:src="@mipmap/icon_search" />
+
+            <EditText
+                android:id="@+id/edt_search"
+                android:layout_width="287dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@null"
+                android:imeOptions="actionSearch"
+                android:lines="1"
+                android:singleLine="true" />
+
+            <ImageView
+                android:id="@+id/img_delete"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="3dp"
+                android:scaleType="centerInside"
+                android:src="@mipmap/close"
+                android:visibility="gone" />
+        </LinearLayout>
+
         <ImageView
-            android:layout_marginLeft="3dp"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="center"
-            android:scaleType="centerInside"
-            android:src="@mipmap/icon_search" />
-        <EditText
-            android:id="@+id/edt_search"
-            android:layout_width="0dp"
-            android:layout_height="28dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@null"
-            android:imeOptions="actionSearch"
-            android:lines="1"
-            android:singleLine="true" />
+            android:id="@+id/newRequestTip"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="30dp"
+            android:src="@drawable/contact_hasnewrequest"
+            android:visibility="gone"/>
+
         <ImageView
-            android:layout_marginRight="3dp"
-            android:id="@+id/img_delete"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="center"
-            android:scaleType="centerInside"
-            android:src="@mipmap/close"
-            android:visibility="gone" />
-    </LinearLayout>
+            android:id="@+id/toHandleRequestActivity"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/contact_request" />
+    </RelativeLayout>
+
+    <View
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:background="#bebbbb"/>
+
     <RelativeLayout
         android:id="@+id/contact_root"
         android:layout_width="match_parent"
@@ -64,7 +97,7 @@
             android:background="#9DDE76"
             android:gravity="center"
             android:textColor="#ffffffff"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:visibility="gone" />
 
         <com.example.dovebook.contact.SideBar

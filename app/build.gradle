@@ -64,6 +64,8 @@ dependencies {
 //    compile 'com.guoqi.widget:actionsheet:1.0'
 
     //扫码
-    compile 'com.journeyapps:zxing-android-embedded:3.5.0'
+    implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
+//    //小红点提示控件
+//    implementation files('libs/badgeview.jar')
 
 }

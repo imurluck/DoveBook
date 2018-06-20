@@ -70,9 +70,8 @@ public class UserManager {
         editor.apply();
     }
 
-    public static String getUserId(){
-            return mUser.getUserId();
-    }
+//    public static String getUserId(){
+//            return mUser.getUserId();
+//    }
 
-    //hhhhh
 }
