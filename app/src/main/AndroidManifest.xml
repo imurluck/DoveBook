@@ -57,11 +57,12 @@
 
         </provider>
         <activity android:name=".bookupload.BookUploadActivity" />
-
+        
         <activity android:name=".base.BaseToolbarActivity" />
         <activity
             android:name=".login.LoginActivity"
             android:launchMode="singleTask" />
+
         <activity android:name=".Information.InfoManager" />
         <activity android:name=".register.register" />
         <activity
