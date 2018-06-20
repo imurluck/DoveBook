@@ -2,8 +2,11 @@ package com.example.dovebook.contact;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Parcelable;
+import android.support.annotation.MainThread;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,16 +14,19 @@ import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.example.dovebook.HandleRequest.ContactRequestActivity;
 import com.example.dovebook.R;
 import com.example.dovebook.base.model.Friend;
 import com.example.dovebook.common.Constant;
 import com.example.dovebook.common.ResposeStatus;
 import com.example.dovebook.contact.model.contactManager;
 import com.example.dovebook.contact.model.dbManager;
+import com.example.dovebook.contact.utils.JudgeUtil;
 import com.example.dovebook.login.UserManager;
 import com.example.dovebook.net.Api;
 import com.example.dovebook.net.HttpManager;
 import com.example.dovebook.utils.ToastUtil;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +36,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
+import retrofit2.http.GET;
 
 /**
  * Created by zyd on 2018/4/13.
@@ -41,12 +48,7 @@ public class contactPresenter {
     private static String TAG = "contactPresenter";
     //管理数据库
     public dbManager mDbManager;
-    //MYyFriend数据库
-    public SQLiteDatabase db;
     private contactActivity mContactActivity;
-    private ContentValues mValues;
-    //    private int startPosition = 0;
-    //    private int endPosition = 20;
     private contactManager mContactManager;
 
 
@@ -57,6 +59,9 @@ public class contactPresenter {
     }
 
     public void initData() {
+        Log.d(TAG, "initData: ");
+        //获取好友请求列表
+        getRequest();
         //如果是第一次进入应用，发送网络请求或读本地数据库获得好友列表
         if (mContactManager.ismFriendListNull()) {
 //            Log.d(TAG, "initData: friendlistnull");
@@ -66,8 +71,8 @@ public class contactPresenter {
             //如果数据库为空则发送网络请求，获取好友列表
             if (mContactManager.isDBNull()) {
                 Log.d(TAG, "initData: dbnull");
-                Api api = HttpManager.getInstance().getApiService(Constant.BASE_GET_CONTACT_LIST_URL);
-                api.getFriends(UserManager.getUserId())
+                Api api2 = HttpManager.getInstance().getApiService(Constant.BASE_GET_CONTACT_LIST_URL);
+                api2.getFriends(UserManager.getUser().getUserId())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<List<Friend>>() {
@@ -112,56 +117,25 @@ public class contactPresenter {
 
                             }
                         });
-//                mContactManager.sendNetworkRequestAndGetContactList();
 
             } else {//数据库不为空，则读本地数据库获取好友列表
-//                Cursor cursor=db.query("Friend",null,null,null,null,null,null);
-//                if(cursor.moveToFirst()){
-//                    do{
-//                        Friend friend=new Friend();
-//                        friend.setUserId(cursor.getString(cursor.getColumnIndex("userId")));
-//                        friend.setUserName(cursor.getString(cursor.getColumnIndex("userName")));
-//                        friend.setUserAvatarPath(cursor.getString(cursor.getColumnIndex("userAvatarPath")));
-//                        friend.setFriendId(cursor.getString(cursor.getColumnIndex("friendId")));
-//                        mFriendList.add(friend);
-//                    }while (cursor.moveToNext());
-//                }
                 mContactManager.getContactListFromDB();
-//                if (mFriendList != null) {
-//                    mContactActivity.adapter.add(mFriendList);
-//                }
                 mContactActivity.adapter.add(mContactManager.getFriendList());
-//                mContactActivity.showWhenSearchNothing();
                 return;
             }
         } else {
             Log.d(TAG, "initData: friendlistnotnull");
             mContactActivity.adapter.add(mContactManager.getFriendList());
         }
+
     }
 
-//    /**
-//     * 查找好友列表中含关键字的好友
-//     */
-//
-//    public List<Friend> searchFromFriendList(String key) {
-//        List<Friend> temp = new ArrayList<>();
-//        for (int i = 0; i < mFriendList.size(); i++) {
-//            if (mFriendList.get(i).getUserName().contains(key)) {
-//                temp.add(mFriendList.get(i));
-//            }
-//        }
-//        return temp;
-//    }
 
     public void searchNothing() {
-//        if (mFriendList == null) {
-//            mFriendList = new ArrayList<>();
-//        }
+
         if (mContactManager.ismFriendListNull()) {
             mContactManager.initmFriendList();
         }
-//        mFriendList.clear();
         mContactManager.clearFriendList();
         mContactActivity.adapter.notifyDataSetChanged();
 //        mFriendList = mContactManager.getFriendListFromDB();
@@ -173,25 +147,6 @@ public class contactPresenter {
         mContactActivity.adapter.clearThenAddAll(mContactManager.searchFromFriendList(s));
     }
 
-//    public void handleFriendList(){
-//        if (mFriendList == null) {
-//            mContactActivity.showEmptyView();
-//        } else {
-//            mContactManager.sortContactListFromFirstChar(mFriendList);
-//            if (mValues == null) {
-//                mValues = new ContentValues();
-//            }
-//            for (int i = 0; i < mFriendList.size(); i++) {
-//                mValues.put("userId", mFriendList.get(i).getUserId());
-//                mValues.put("userName", mFriendList.get(i).getUserName());
-//                mValues.put("userAvatarpath", mFriendList.get(i).getUserAvatarPath());
-//                mValues.put("friendId", mFriendList.get(i).getFriendId());
-//                db.insert("Friend", null, mValues);
-//                mValues.clear();
-//            }
-//            mContactActivity.adapter.add(mFriendList);
-//        }
-//    }
 
     public void onSendNetworkRequestAndDeleteContact(final Friend friend) {
 //        mContactManager.sendNetworkRequestAndDeleteContact(friend);
@@ -208,20 +163,17 @@ public class contactPresenter {
 
                     @Override
                     public void onNext(Response<Void> sResponse) {
-                        Log.d(TAG, "onNext: 123456");
-//                            mContactManager.deleteFriendFromFriendList(friend);
-//                            mContactManager.deleteContactFromDB(friend);
-//                            mContactActivity.adapter.clearThenAddAll(mContactManager.getFriendList());
+
                         switch (sResponse.code()) {
 
                             case ResposeStatus.OK:
                                 Toast.makeText(mContactActivity, "删除成功", Toast.LENGTH_SHORT).show();
                                 mContactManager.deleteFriendFromFriendList(friend);
                                 mContactManager.deleteContactFromDB(friend);
-                                mContactActivity.adapter.clearThenAddAll(mContactManager.getFriendList());
+                                mContactActivity.adapter.deleteAFriend(friend);
                                 break;
                             case ResposeStatus.NOCONTENT:
-                                ToastUtil.shortToast(sResponse.code()+"no content");
+                                ToastUtil.shortToast(sResponse.code() + "no content");
                                 break;
                             default:
                                 Toast.makeText(mContactActivity, "未知删除异常", Toast.LENGTH_SHORT).show();
@@ -240,8 +192,61 @@ public class contactPresenter {
                 });
     }
 
-    public Context getView() {
-        return mContactActivity;
+    public void onToHandleRequestActivityClickListener() {
+        JudgeUtil.setChangeSign(false);
+        Intent intent = new Intent(mContactActivity, ContactRequestActivity.class);
+        Log.d(TAG, String.format(String.format("onToHandleRequestActivityClickListener: " + new Gson().toJson(mContactManager.getFriendRequestList()))));
+        intent.putParcelableArrayListExtra("contactRequestList", (ArrayList<? extends Parcelable>) mContactManager.getFriendRequestList());
+        mContactActivity.startActivity(intent);
+    }
+
+    public void ContactListChange() {
+        getRequest();
+        mContactManager.getContactListFromDB();
+        mContactActivity.adapter.clearThenAddAll(mContactManager.getFriendList());
+    }
+
+    public void getRequest(){
+        Api api1 = HttpManager.getInstance().getApiService(Constant.BASE_GET_REQUESTS_URL);
+        api1.getRequests(UserManager.getUser().getUserId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<List<Friend>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Response<List<Friend>> sResponse) {
+                        Log.d(TAG, "onNext: ");
+
+                        switch (sResponse.code()){
+                            case ResposeStatus.OK:
+                                if (sResponse.body() != null && sResponse.body().size() != 0) {
+                                    mContactActivity.showNewRequestTip();
+                                    mContactManager.refreshFriendRequestList(sResponse.body());
+                                }
+                                break;
+                            case ResposeStatus.NOCONTENT:
+                                mContactActivity.hideNewRequestTip();
+                                mContactManager.refreshFriendRequestList(null);
+                                break;
+                            default:
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError: ");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
 }

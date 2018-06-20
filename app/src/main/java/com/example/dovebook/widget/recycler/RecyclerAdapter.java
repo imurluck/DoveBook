@@ -2,6 +2,7 @@ package com.example.dovebook.widget.recycler;
 
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
         implements View.OnClickListener, View.OnLongClickListener,
                     AdapterCallback<Data> {
 
+    private static final String TAG = "RecyclerAdapter";
     private final List<Data> mDataList;
     private AdapterListener<Data> mListener;
 
@@ -133,14 +135,18 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
         }
     }
 
+
     /**
      * 插入一组数据并更新
      * @param dataList 数据集合
      */
     public void add(Collection<Data> dataList) {
+        Log.d(TAG, "add: ");
         if (dataList != null && dataList.size() > 0) {
             int startPosition = mDataList.size();
+            Log.d(TAG, "add: before");
             mDataList.addAll(dataList);
+            Log.d(TAG, "add: after");
             notifyItemRangeInserted(startPosition, dataList.size());
         }
     }
@@ -260,6 +266,23 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
         public void updateData(Data data) {
             if (this.mCallback != null) {
                 this.mCallback.update(data, this);
+            }
+        }
+    }
+
+    /**
+     *删除某一数据后更新
+     *
+     */
+
+    public void deleteAData(Data data){
+        if(mDataList!=null){
+            for (int i=0;i<mDataList.size();i++){
+                if (mDataList.get(i).equals(data)){
+                    mDataList.remove(i);
+                    notifyItemChanged(i);
+                    break;
+                }
             }
         }
     }

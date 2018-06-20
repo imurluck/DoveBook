@@ -1,11 +1,12 @@
 package com.example.dovebook.contact.model;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Parcelable;
 import android.util.Log;
 
+import com.example.dovebook.base.BaseApp;
 import com.example.dovebook.base.model.Friend;
 import com.example.dovebook.contact.contactPresenter;
 
@@ -22,47 +23,33 @@ public class contactManager {
     public dbManager mDbManager;
     //MYyFriend数据库
     public SQLiteDatabase db;
-//    public Context mContext;
     private contactPresenter mContactPresenter;
     public List<Friend> mFriendList;
     private ContentValues mValues;
 
+    public List<Friend> mFriendRequestList;
+
     public contactManager(contactPresenter contactPresenter) {
-//        mContext = context;
         mContactPresenter = contactPresenter;
-        mDbManager = new dbManager(mContactPresenter.getView(), "MyFriend.db", null, 1);
+        mDbManager = new dbManager(BaseApp.getContext(), "MyFriend.db", null, 1);
+        db = mDbManager.getWritableDatabase();
+    }
+
+    public contactManager(){
+        mDbManager = new dbManager(BaseApp.getContext(), "MyFriend.db", null, 1);
         db = mDbManager.getWritableDatabase();
     }
 
     public void refreshContactList(List<Friend> list) {
-//        Api api = HttpManager.getInstance().getApiService(Constant.BASE_GET_CONTACT_LIST_URL);
-//        api.getFriends(UserManager.getUserId())
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<List<Friend>>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(List<Friend> users) {
-//                        Log.d(TAG, "onNext: ");
-//                        mContactPresenter.mFriendList=users;
-//                        mContactPresenter.handleFriendList();
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.d(TAG, "onError: ");
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
+        mFriendList.clear();
         mFriendList = list;
+    }
+
+    public void refreshFriendRequestList(List<Friend> list){
+        if(mFriendRequestList!=null) {
+            mFriendRequestList.clear();
+        }
+        mFriendRequestList=list;
     }
 
     public void getContactListFromDB() {
@@ -78,6 +65,7 @@ public class contactManager {
                 mFriendList.add(friend);
             } while (cursor.moveToNext());
         }
+        sortContactListFromFirstChar(mFriendList);
     }
 
     /**
@@ -93,38 +81,7 @@ public class contactManager {
         });
     }
 
-//    public void sendNetworkRequestAndDeleteContact(final Friend friend) {
-//        Api api = HttpManager.getInstance().getApiService(Constant.BASE_DELETE_FRIEND_URL);
-//        api.deleteFriend(friend.getFriendId())
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(Object o) {
-//                        mContactPresenter.deleteFriendFromFriendList(friend);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-//    }
     public void putContactListToDB(){
-//        if (mFriendList == null) {
-//            mContactActivity.showEmptyView();
-//        } else {
-//            mContactManager.sortContactListFromFirstChar(mFriendList);
         if (mValues == null) {
             mValues = new ContentValues();
         }
@@ -136,11 +93,14 @@ public class contactManager {
             db.insert("Friend", null, mValues);
             mValues.clear();
         }
-//            mContactActivity.adapter.add(mFriendList);
     }
 
     public List<Friend> getFriendList(){
         return mFriendList;
+    }
+
+    public List<Friend> getFriendRequestList(){
+        return  mFriendRequestList;
     }
 
     public boolean isDBNull(){
@@ -203,6 +163,19 @@ public class contactManager {
 
     public void deleteContactFromDB(Friend friend){
         db.delete("Friend","userName=?",new String[]{friend.getUserName()});
+    }
+
+    public void putContactToDB(Friend friend){
+        Log.d(TAG, "putContactToDB: ");
+        if (mValues == null) {
+            mValues = new ContentValues();
+        }
+        mValues.put("userId", friend.getUserId());
+        mValues.put("userName", friend.getUserName());
+        mValues.put("userAvatarpath", friend.getUserAvatarPath());
+        mValues.put("friendId", friend.getFriendId());
+        db.insert("Friend", null, mValues);
+        mValues.clear();
     }
 
 }

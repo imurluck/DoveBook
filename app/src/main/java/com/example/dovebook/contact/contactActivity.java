@@ -1,6 +1,7 @@
 package com.example.dovebook.contact;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -16,15 +17,18 @@ import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.dovebook.HandleRequest.ContactRequestActivity;
 import com.example.dovebook.R;
+import com.example.dovebook.base.BaseActivity;
 import com.example.dovebook.base.BaseToolbarActivity;
 import com.example.dovebook.base.model.Friend;
+import com.example.dovebook.contact.utils.JudgeUtil;
 import com.example.dovebook.login.UserManager;
 
 
 import butterknife.BindView;
 
-public class contactActivity extends BaseToolbarActivity {
+public class contactActivity extends BaseActivity{
 
     private static final String TAG = "contactActivity";
     @BindView(R.id.recyclerView)
@@ -40,24 +44,28 @@ public class contactActivity extends BaseToolbarActivity {
     @BindView(R.id.edt_search)
     EditText mEditText;
     @BindView(R.id.img_delete)
-    ImageView mImageView;
+    ImageView img_delete;
+    @BindView(R.id.newRequestTip)
+    ImageView newRequestTip;
+    @BindView(R.id.toHandleRequestActivity)
+    ImageView toHandleRequestActivity;
 
     public contactAdapter adapter;
     private contactPresenter mContactPresenter;
     public UserManager mUserManager;
     private boolean hasFocus;
 
-    @Override
-    protected View initContentView() {
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        View view = getLayoutInflater().inflate(R.layout.activity_contact, null);
-        return view;
-    }
+//    @Override
+//    protected View initContentView() {
+//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+//        View view = getLayoutInflater().inflate(R.layout.activity_contact, null);
+//        return view;
+//    }
 
-    @Override
-    protected String initToolbarTitle() {
-        return "通讯录";
-    }
+//    @Override
+//    protected String initToolbarTitle() {
+//        return "通讯录";
+//    }
 
 
     @Override
@@ -105,7 +113,13 @@ public class contactActivity extends BaseToolbarActivity {
         });
         mRecyclerView.setLayoutManager(linearLayout);
         mRecyclerView.setAdapter(adapter);
+        Log.d(TAG, "initOptions: ");
         initData();
+    }
+
+    @Override
+    protected View initContentView() {
+        return getLayoutInflater().inflate(R.layout.activity_contact,null);
     }
 
     void initData() {
@@ -123,6 +137,25 @@ public class contactActivity extends BaseToolbarActivity {
             mRecyclerView.setVisibility(View.GONE);
             mRelativeLayout.setVisibility(View.GONE);
             mEmptyView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     *显示新好友请求提示
+     */
+
+    public void showNewRequestTip(){
+        if(newRequestTip.getVisibility()==View.GONE){
+            newRequestTip.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * 隐藏新好友请求提示
+     */
+    public void hideNewRequestTip(){
+        if(newRequestTip.getVisibility()==View.VISIBLE){
+            newRequestTip.setVisibility(View.GONE);
         }
     }
 
@@ -184,9 +217,9 @@ public class contactActivity extends BaseToolbarActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (hasFocus && mEditText.getText().length() > 0) {
                     onSearchSomething(mEditText.getText().toString());
-                    mImageView.setVisibility(View.VISIBLE);
+                    img_delete.setVisibility(View.VISIBLE);
                 } else {
-                    mImageView.setVisibility(View.GONE);
+                    img_delete.setVisibility(View.GONE);
                     onSearchNothing();
                 }
             }
@@ -209,7 +242,7 @@ public class contactActivity extends BaseToolbarActivity {
         /**
          *点击删除键
          */
-        mImageView.setOnClickListener(new View.OnClickListener() {
+        img_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mEditText.setText("");
@@ -217,14 +250,24 @@ public class contactActivity extends BaseToolbarActivity {
             }
         });
 
+        /**
+         *点击进入处理好友请求界面
+         */
+        toHandleRequestActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mContactPresenter.onToHandleRequestActivityClickListener();
+            }
+        });
+
     }
 
-    @Override
-    protected void initHomeButton() {
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-    }
+//    @Override
+//    protected void initHomeButton() {
+//        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//    }
 
     public void onSearchNothing() {
         mContactPresenter.searchNothing();
@@ -232,6 +275,14 @@ public class contactActivity extends BaseToolbarActivity {
 
     public void onSearchSomething(String s) {
         mContactPresenter.searchSomething(s);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(JudgeUtil.isContactListChange()){
+            mContactPresenter.ContactListChange();
+        }
     }
 
 }

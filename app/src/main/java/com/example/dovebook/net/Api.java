@@ -1,5 +1,7 @@
 package com.example.dovebook.net;
 
+import com.example.dovebook.HandleRequest.model.UpdateFriendResponse;
+import com.example.dovebook.HandleRequest.model.UpdateRecordParams;
 import com.example.dovebook.base.model.Friend;
 import com.example.dovebook.base.model.User;
 import com.example.dovebook.bean.Book;
@@ -14,10 +16,13 @@ import java.util.Map;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
@@ -243,17 +248,31 @@ public interface Api {
     /**
      * 获取好友列表
      *
-     * @param userId        用户ID
+     * @param userId 用户ID
      */
-    @GET("{userId}/0/20") Observable<List<Friend>> getFriends(@Path("userId") String userId);
+    @GET("{userId}/0/20")
+    Observable<List<Friend>> getFriends(@Path("userId") String userId);
 
     /**
-     *删除好友
-     *
+     * 删除好友
      */
     @DELETE("{friendId}")
     Observable<retrofit2.Response<Void>> deleteFriend(@Path("friendId") String friendId);
 
+    /**
+     * 获取收到的请求
+     */
+    @GET("{userId}/0/20")
+    Observable<retrofit2.Response<List<Friend>>> getRequests(@Path("userId") String userId);
+
+    /**
+     *提交请求处理结果
+     *
+     */
+    @Headers({"Content-Type: application/json","Accept:  application/json"})
+    @PUT("{friendId}")
+    Observable<UpdateFriendResponse> updateFriendRecord(@Path("friendId") String friendId,
+                                                        @Body UpdateRecordParams updateRecordParams);
 
 
 }

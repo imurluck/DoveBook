@@ -5,17 +5,12 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/head"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#e7e7e7"/>
-
     <RelativeLayout
         android:id="@+id/mainContent"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/recyclerview_item_color">
+        android:background="@color/white">
+
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/circle_image"
@@ -32,16 +27,40 @@
 
         <TextView
             android:id="@+id/text_name"
-            android:layout_width="match_parent"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@id/view"
             android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/agree"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="90dp"
+            android:background="@drawable/new_request_agree"
+            android:textColor="@color/white"
+            android:text="同意" />
+
+        <Button
+            android:id="@+id/disagree"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/new_request_disagree"
+            android:textColor="@color/white"
+            android:text="拒绝" />
     </RelativeLayout>
-<View
-    android:id="@+id/line_view"
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="#bebbbb"/>
+
+    <View
+        android:id="@+id/line_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#bebbbb" />
 
 </LinearLayout>
+

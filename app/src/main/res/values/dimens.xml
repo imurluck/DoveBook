@@ -5,4 +5,5 @@
     <dimen name="secondary_text_size">20sp</dimen>
     <dimen name="third_text_size">16sp</dimen>
     <dimen name="forth_text_size">14sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

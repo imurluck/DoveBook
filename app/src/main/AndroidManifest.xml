@@ -19,9 +19,7 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
     <!-- 鉴权所需该权限获取进程列表 -->
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <!-- 使用步行AR导航，配置Camera权限 -->
@@ -30,7 +28,6 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="DoveBook"
-
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -48,13 +45,21 @@
 
         <activity android:name=".sharedetail.ShareDetailActivity" />
         <activity android:name=".bookupload.BookUploadActivity" />
-        <activity android:name=".base.BaseToolbarActivity"/>
-        <activity android:name=".login.LoginActivity" android:launchMode="singleTask"/>
+        <activity android:name=".base.BaseToolbarActivity" />
+        <activity
+            android:name=".login.LoginActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".Information.InfoManager" />
-        <activity android:name=".register.register"/>
-        <activity android:name=".contact.contactActivity"/>
+        <activity android:name=".register.register" />
+        <activity
+            android:name=".contact.contactActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".bookupload.ScanActivity" />
         <activity android:name=".bookdetail.BookDetailsActivity" />
+        <activity
+            android:name=".HandleRequest.ContactRequestActivity"
+            android:label="@string/title_activity_contact_request"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

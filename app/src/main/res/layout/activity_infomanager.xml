@@ -29,7 +29,6 @@
             android:layout_centerVertical="true"
             android:padding="6dp"
             android:text="头像"
-            android:textColor="#000000"
             android:textSize="20dp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -63,8 +62,7 @@
             android:padding="6dp"
             android:text="姓名"
             android:layout_centerVertical="true"
-            android:textSize="20dp"
-            android:textColor="#000000"/>
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/name_ediText"
@@ -76,8 +74,7 @@
             android:background="@null"
             android:hint="姓名"
             android:textColorHint="#cccccc"
-            android:textSize="20dp"
-            android:textColor="#000000" />
+            android:textSize="20dp" />
 
     </RelativeLayout>
 
@@ -101,8 +98,7 @@
             android:padding="6dp"
             android:text="电话"
             android:layout_centerVertical="true"
-            android:textSize="20dp"
-            android:textColor="#000000"/>
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/tel_ediText"
@@ -114,8 +110,7 @@
             android:background="@null"
             android:hint="电话"
             android:textColorHint="#cccccc"
-            android:textSize="20dp"
-            android:textColor="#000000"/>
+            android:textSize="20dp" />
 
 
     </RelativeLayout>
@@ -140,8 +135,7 @@
             android:padding="6dp"
             android:text="邮箱"
             android:layout_centerVertical="true"
-            android:textSize="20dp"
-            android:textColor="#000000"/>
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/mail_ediText"
@@ -153,8 +147,7 @@
             android:background="@null"
             android:hint="邮箱"
             android:textColorHint="#cccccc"
-            android:textSize="20dp"
-            android:textColor="#000000"/>
+            android:textSize="20dp" />
 
 
     </RelativeLayout>
@@ -178,8 +171,7 @@
             android:padding="6dp"
             android:text="年龄"
             android:layout_centerVertical="true"
-            android:textSize="20dp"
-            android:textColor="#000000"/>
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/age_ediText"
