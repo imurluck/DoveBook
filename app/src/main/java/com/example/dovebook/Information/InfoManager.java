@@ -21,6 +21,7 @@ import com.example.dovebook.R;
 import com.example.dovebook.base.BaseToolbarActivity;
 import com.example.dovebook.base.model.User;
 import com.example.dovebook.login.UserManager;
+import com.example.dovebook.utils.ToastUtil;
 
 import java.io.File;
 
@@ -45,7 +46,6 @@ public class InfoManager extends BaseToolbarActivity {
     @BindView(R.id.circle_image)
     CircleImageView circle_image;
     private User user;
-    UserManager mUserManager;
     InformationPresenter mInformationPresenter;
     private File file;
     private RequestBody requestUserName;
@@ -65,30 +65,29 @@ public class InfoManager extends BaseToolbarActivity {
 
     @Override
     protected void initOptions() {
-        mUserManager = UserManager.getInstance();
         mInformationPresenter = new InformationPresenter(this);
-        Glide.with(this).load(mUserManager.getUser().getUserAvatarPath()).into(circle_image);
+        Glide.with(this).load(UserManager.getUser().getUserAvatarPath()).into(circle_image);
 
-        if (mUserManager.getUser().getUserName() != null) {
-            name_ediText.setText(mUserManager.getUser().getUserName());
-            name_ediText.setHint(mUserManager.getUser().getUserName());
+        if (UserManager.getUser().getUserName() != null) {
+            name_ediText.setText(UserManager.getUser().getUserName());
+            name_ediText.setHint(UserManager.getUser().getUserName());
         }
-        if (mUserManager.getUser().getUserPhone() != 0) {
-            tel_ediText.setText(mUserManager.getUser().getUserPhone().toString());
-            tel_ediText.setHint(mUserManager.getUser().getUserPhone().toString());
+        if (UserManager.getUser().getUserPhone() != 0) {
+            tel_ediText.setText(UserManager.getUser().getUserPhone().toString());
+            tel_ediText.setHint(UserManager.getUser().getUserPhone().toString());
         }
-        if(mUserManager.getUser().getUserEmail()!=null) {
+        if (UserManager.getUser().getUserEmail() != null) {
 
-            mail_ediText.setText(mUserManager.getUser().getUserEmail());
-            mail_ediText.setHint(mUserManager.getUser().getUserEmail());
+            mail_ediText.setText(UserManager.getUser().getUserEmail());
+            mail_ediText.setHint(UserManager.getUser().getUserEmail());
         }
-        if (mUserManager.getUser().getUserAge() != -1) {
-            age_ediText.setText(mUserManager.getUser().getUserAge().toString());
-            age_ediText.setHint(mUserManager.getUser().getUserAge().toString());
+        if (UserManager.getUser().getUserAge() != -1) {
+            age_ediText.setText(UserManager.getUser().getUserAge().toString());
+            age_ediText.setHint(UserManager.getUser().getUserAge().toString());
         }
 
         /*
-        ****************************按下图片进入相册*****************************
+         ****************************按下图片进入相册*****************************
          */
         relative0.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,7 +151,7 @@ public class InfoManager extends BaseToolbarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.information_menu,menu);
+        getMenuInflater().inflate(R.menu.information_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -160,9 +159,9 @@ public class InfoManager extends BaseToolbarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-/*
- **************************按下保存发送网络请求************************
- */
+            /*
+             **************************按下保存发送网络请求************************
+             */
             case R.id.save:
                 if (user == null) {
                     user = new User();
@@ -174,7 +173,7 @@ public class InfoManager extends BaseToolbarActivity {
                     if (isNumericUtil.isNumeric(age_ediText.getText().toString().trim()) && Integer.valueOf(age_ediText.getText().toString().trim()) > -1) {
                         user.setUserAge(Integer.valueOf(age_ediText.getText().toString().trim()));
                     } else {
-                        Toast.makeText(InfoManager.this, "年龄有点不对劲哦-_-", Toast.LENGTH_LONG).show();
+                        ToastUtil.shortToast("年龄有点不对劲哦！");
                         break;
                     }
                 } else {
@@ -184,7 +183,7 @@ public class InfoManager extends BaseToolbarActivity {
                     if (isNumericUtil.isNumeric(tel_ediText.getText().toString().trim())) {
                         user.setUserPhone(Long.valueOf(tel_ediText.getText().toString().trim()));
                     } else {
-                        Toast.makeText(InfoManager.this, "电话有点不对劲哦-_-", Toast.LENGTH_LONG).show();
+                        ToastUtil.shortToast("电话有点不对劲哦！");
                         break;
                     }
                 } else {
@@ -197,9 +196,9 @@ public class InfoManager extends BaseToolbarActivity {
                     if (user.getUserEmail() != null) {
                         requestUserEmail = RequestBody.create(MediaType.parse("multipart/form-data"), user.getUserEmail());
                     }
-                    mInformationPresenter.upFile(mUserManager.getUser().getUserId(), requestUserName, user.getUserPhone(), requestUserEmail, user.getUserAge(), file);
+                    mInformationPresenter.upFile(UserManager.getUser().getUserId(), requestUserName, user.getUserPhone(), requestUserEmail, user.getUserAge(), file);
                 } else {
-                    Toast.makeText(InfoManager.this, "请填写您的昵称", Toast.LENGTH_LONG).show();
+                    ToastUtil.shortToast("请填写您的昵称");
                 }
                 break;
         }

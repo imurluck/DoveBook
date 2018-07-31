@@ -180,8 +180,6 @@ public class ShareDetailActivity extends BaseToolbarActivity
         private boolean isShow = true;
         @Override
         public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-            Log.e(TAG, "onScrollChange: scrollY = " + scrollY);
-            Log.e(TAG, "onScrollChange: oldScrollY = " + oldScrollY);
             if ((scrollY - oldScrollY) > 0 && isShow) {
                 showAnimation.cancel();
                 mActionButton.startAnimation(hideAnimation);

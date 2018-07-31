@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.dovebook.base.BaseApp;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -16,29 +18,27 @@ import java.util.Date;
 
 public class TimeManager {
     private static final String TAG = "TimeManager";
-    private Context mContext;
-    private java.util.Date mDate;
-    private SimpleDateFormat sf;
-    public SharedPreferences pref;
+    private static java.util.Date sDate;
+    private static final SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static SharedPreferences sTimePref;
 
 
-    public TimeManager(Context context){
-        this.mContext=context;
-        sf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        pref=mContext.getSharedPreferences("Time",Context.MODE_PRIVATE);
+
+    public static void getDate(){
+        sDate=new java.util.Date();
     }
 
-    public void getDate(){
-        mDate=new java.util.Date();
-    }
-
-    public boolean isLoginTime(){
+    public static boolean isLoginTime(){
         getDate();
-        String dataStr=pref.getString("data",null);
+        if(sTimePref==null){
+            sTimePref= BaseApp.getContext().getSharedPreferences("Time",Context.MODE_PRIVATE);
+        }
+        String dataStr=sTimePref.getString("data",null);
         if(dataStr!=null){
             try {
                 Date data= (Date) sf.parse(dataStr);
-                int result=mDate.compareTo(data);
+                int result=sDate.compareTo(data);
+                Log.d(TAG, "isLoginTime: before:"+sf.format(sDate)+" after:"+sf.format(data));
                 if(result<0){
                     return true;
                 }
@@ -48,13 +48,24 @@ public class TimeManager {
         }
         return false;
     }
-    public void setTime(){
-        if(mDate==null){
-            mDate=new java.util.Date();
+    public static void setTime(){
+        getDate();
+        if (sTimePref==null){
+            sTimePref= BaseApp.getContext().getSharedPreferences("Time",Context.MODE_PRIVATE);
         }
-        Date date=new Date(mDate.getTime()+24*60*60*1000);
-        SharedPreferences.Editor editor=pref.edit();
-        editor.putString("data",sf.format(date));
-        editor.apply();
+        Date date=new Date(sDate.getTime()+24*60*60*1000);
+        sTimePref.edit()
+        .putString("data",sf.format(date))
+        .apply();
+        Log.d(TAG, "setTime: "+sTimePref.getString("data",null));
+    }
+
+    public static void clearLoginTime(){
+        if(sTimePref==null){
+            sTimePref= BaseApp.getContext().getSharedPreferences("Time",Context.MODE_PRIVATE);
+        }
+        sTimePref.edit()
+                .clear()
+                .apply();
     }
 }

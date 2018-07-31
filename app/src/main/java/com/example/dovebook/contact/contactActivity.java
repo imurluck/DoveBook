@@ -52,7 +52,7 @@ public class contactActivity extends BaseActivity{
 
     public contactAdapter adapter;
     private contactPresenter mContactPresenter;
-    public UserManager mUserManager;
+//    public UserManager mUserManager;
     private boolean hasFocus;
 
 //    @Override
@@ -71,7 +71,6 @@ public class contactActivity extends BaseActivity{
     @Override
     protected void initOptions() {
         super.initOptions();
-        mUserManager = UserManager.getInstance();
         //初始化各种监听事件
         initListener();
         mSideBar.setTextView(mTextView);
@@ -159,27 +158,6 @@ public class contactActivity extends BaseActivity{
         }
     }
 
-//    /**
-//     * 动态加载菜单，设置菜单监听
-//     *
-//     */
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.contact_menu, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.add_contact:
-//                break;
-//            case R.id.search_contact:
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
 
     /**
@@ -262,12 +240,6 @@ public class contactActivity extends BaseActivity{
 
     }
 
-//    @Override
-//    protected void initHomeButton() {
-//        getSupportActionBar().setHomeButtonEnabled(true);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-//    }
 
     public void onSearchNothing() {
         mContactPresenter.searchNothing();

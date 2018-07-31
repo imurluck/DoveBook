@@ -57,7 +57,7 @@
 
         </provider>
         <activity android:name=".bookupload.BookUploadActivity" />
-        
+
         <activity android:name=".base.BaseToolbarActivity" />
         <activity
             android:name=".login.LoginActivity"

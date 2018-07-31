@@ -14,64 +14,49 @@ import com.example.dovebook.base.model.User;
 
 public class UserManager {
     private static String TAG = "UserManager";
-    private static volatile UserManager sUserManager;
-    public static volatile User mUser;
-    private static SharedPreferences pref;
-
-    public UserManager() {
-        pref = BaseApp.getContext().getSharedPreferences("User", Context.MODE_PRIVATE);
-    }
-    public static UserManager getInstance(){
-        if(sUserManager==null){
-            synchronized (UserManager.class){
-                if(sUserManager==null){
-                    sUserManager=new UserManager();
-                }
-            }
-        }
-        return sUserManager;
-    }
+    public static volatile User sUser;
+    private static SharedPreferences sUserPref;
 
 
     public static User getUser() {
-        if (mUser == null) {
-            mUser = new User();
-            mUser.setUserName(pref.getString("userName", null));
-            mUser.setUserId(pref.getString("userId", null));
-            mUser.setUserPhone(pref.getLong("userPhone", 0));
-            Log.d(TAG, "getUser: " + pref.getInt("userAge", -10));
-            mUser.setUserAge(pref.getInt("userAge", -1));
-            mUser.setUserEmail(pref.getString("userEmail", null));
-            mUser.setUserAvatarPath(pref.getString("userAvatarpath", null));
+        if (sUser == null) {
+            sUser=new User();
+            if(sUserPref==null){
+                sUserPref = BaseApp.getContext().getSharedPreferences("User", Context.MODE_PRIVATE);
+            }
+            sUser.setUserName(sUserPref.getString("userName", null));
+            sUser.setUserId(sUserPref.getString("userId", null));
+            sUser.setUserPhone(sUserPref.getLong("userPhone", 0));
+            Log.d(TAG, "getUser: " + sUserPref.getInt("userAge", -10));
+            sUser.setUserAge(sUserPref.getInt("userAge", -1));
+            sUser.setUserEmail(sUserPref.getString("userEmail", null));
+            sUser.setUserAvatarPath(sUserPref.getString("userAvatarpath", null));
         }
-        return mUser;
+        return sUser;
     }
 
-    public void setUser(User user) {
-        mUser = user;
-        SharedPreferences.Editor editor = pref.edit();
+    public static void setUser(User user) {
+        sUser = user;
+        if (sUserPref==null){
+            sUserPref = BaseApp.getContext().getSharedPreferences("User", Context.MODE_PRIVATE);
+        }
+        SharedPreferences.Editor editor = sUserPref.edit();
         editor.putString("userId", user.getUserId());
         editor.putString("userName", user.getUserName());
         editor.putLong("userPhone", user.getUserPhone());
-//        editor.putString("Bgpath",user.getUserBgPath().toString());
         editor.putString("userAvatarpath", user.getUserAvatarPath());
-//        editor.putString("userSex",user.getUserSex().toString());
         Log.d(TAG, "setUser: " + "userage:" + user.getUserAge());
         if (user.getUserAge() != null) {
             editor.putInt("userAge", user.getUserAge());
         } else {
-            mUser.setUserAge(-1);
+            sUser.setUserAge(-1);
             editor.putInt("userAge", -1);
         }
 
         editor.putString("userEmail", user.getUserEmail());
-//        editor.putString("userProfile",user.getUserProfile().toString());
-//        editor.putString("userTaskcapacity",user.getUserTaskCapacity().toString());
         editor.apply();
     }
 
-//    public static String getUserId(){
-//            return mUser.getUserId();
-//    }
+
 
 }

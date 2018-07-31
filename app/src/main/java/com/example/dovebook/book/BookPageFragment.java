@@ -62,6 +62,7 @@ public class BookPageFragment extends BaseFragment {
 
     @Override
     protected void initWidget(View view) {
+        Log.d(TAG, "initWidget: 123456789");
         mFragment = new ArrayList<>();
         mFragment.add(new BookReceived_fragment());
         mFragment.add(new BookSent_fragment());
@@ -79,6 +80,7 @@ public class BookPageFragment extends BaseFragment {
         bookPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
+                Log.d(TAG, "getItem: "+position);
                 return mFragment.get(position);
             }
 

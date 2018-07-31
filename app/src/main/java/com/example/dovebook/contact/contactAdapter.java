@@ -200,7 +200,7 @@ public abstract class contactAdapter extends RecyclerView.Adapter<contactAdapter
                 if(mUserList.get(i).equals(friend)){
                     mUserList.remove(i);
                 }
-                notifyItemChanged(i);
+                notifyDataSetChanged();
                 break;
             }
         }

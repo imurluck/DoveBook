@@ -13,8 +13,10 @@ import android.widget.Toast;
 
 import com.example.dovebook.base.model.User;
 import com.example.dovebook.common.Constant;
+import com.example.dovebook.login.UserManager;
 import com.example.dovebook.net.Api;
 import com.example.dovebook.net.HttpManager;
+import com.example.dovebook.utils.ToastUtil;
 
 import java.io.File;
 
@@ -59,16 +61,16 @@ public class InformationPresenter {
 
                     @Override
                     public void onNext(User user) {
-                        mInfoManager.mUserManager.setUser(user);
+                        UserManager.setUser(user);
                         saving.dismiss();
-                        Toast.makeText(mInfoManager,"保存成功",Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "print: " + mInfoManager.mUserManager.getUser().getUserAvatarPath());
+                        ToastUtil.shortToast("保存成功！");
+//                        Log.d(TAG, "print: " + mInfoManager.mUserManager.getUser().getUserAvatarPath());
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         saving.dismiss();
-                        Toast.makeText(mInfoManager,"保存失败",Toast.LENGTH_SHORT).show();
+                        ToastUtil.shortToast("保存失败！");
                         Log.e(TAG, "updateOnError: " + e.getMessage());
                         //getSelfListFromServer("02a618bf-0241-11e8-bd05-00163e0ac98c");
                     }

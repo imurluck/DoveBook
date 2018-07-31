@@ -41,7 +41,7 @@ public class HomePageFragment extends BaseFragment {
     RelativeLayout home_logoff;
 
 
-    private com.example.dovebook.login.UserManager mUserManager;
+//    private com.example.dovebook.login.UserManager mUserManager;
 
 
     public HomePageFragment() {
@@ -51,7 +51,7 @@ public class HomePageFragment extends BaseFragment {
     @Override
     protected void initWidget(View view) {
         super.initWidget(view);
-        mUserManager= UserManager.getInstance();
+//        mUserManager= UserManager.getInstance();
         home_information.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,9 +69,10 @@ public class HomePageFragment extends BaseFragment {
         home_logoff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor editor = new TimeManager(getContext()).pref.edit();
-                editor.clear();
-                editor.commit();
+//                SharedPreferences.Editor editor = new TimeManager(getContext()).pref.edit();
+//                editor.clear();
+//                editor.commit();
+                TimeManager.clearLoginTime();
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 getActivity().finish();
             }
@@ -93,8 +94,8 @@ public class HomePageFragment extends BaseFragment {
 
 
     private void updateUI(){
-        Log.d(TAG, "print: "+mUserManager.getUser().getUserAvatarPath());
-        Glide.with(getActivity()).load(mUserManager.getUser().getUserAvatarPath()).into(imageView);
-        userName.setText(mUserManager.getUser().getUserName());
+        Log.d(TAG, "print: "+UserManager.getUser().getUserAvatarPath());
+        Glide.with(getActivity()).load(UserManager.getUser().getUserAvatarPath()).into(imageView);
+        userName.setText(UserManager.getUser().getUserName());
     }
 }

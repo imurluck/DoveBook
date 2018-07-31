@@ -38,16 +38,16 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initOptions() {
-        mUserManager= UserManager.getInstance();
+//        mUserManager= UserManager.getInstance();
         loginPresenter = new LoginPresenter(this);
-        mTimeManager = new TimeManager(this);
+//        mTimeManager = new TimeManager(this);
         loginPresenter.hasRememberPas(editTextA, editTextP);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 loginPresenter.isRemember(mCheckBox, editTextA, editTextP);
-                loginPresenter.login(editTextA.getText().toString(), editTextP.getText().toString(), mTimeManager, mUserManager);
+                loginPresenter.login(editTextA.getText().toString(), editTextP.getText().toString()/*, mTimeManager, mUserManager*/);
             }
         });
         btnRegister.setOnClickListener(new View.OnClickListener() {
